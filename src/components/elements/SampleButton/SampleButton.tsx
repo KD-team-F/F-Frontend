@@ -21,7 +21,7 @@ const sizeClass: Record<Size, string> = {
   lg: 'px-6 py-3 text-lg',
 }
 
-export function Button({ variant = 'primary', size = 'md', label, ...props }: Props) {
+export function SampleButton({ variant = 'primary', size = 'md', label, ...props }: Props) {
   return (
     <button
       className={`rounded font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${variantClass[variant]} ${sizeClass[size]}`}

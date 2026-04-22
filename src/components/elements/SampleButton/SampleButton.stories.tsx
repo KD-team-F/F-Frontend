@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { Button } from './Button'
+import { SampleButton } from './SampleButton'
 
-const meta: Meta<typeof Button> = {
-  title: 'Elements/Button',
-  component: Button,
+const meta: Meta<typeof SampleButton> = {
+  title: 'Elements/SampleButton',
+  component: SampleButton,
   tags: ['autodocs'],
   argTypes: {
     variant: {
@@ -19,11 +19,11 @@ const meta: Meta<typeof Button> = {
 }
 
 export default meta
-type Story = StoryObj<typeof Button>
+type Story = StoryObj<typeof SampleButton>
 
 export const Primary: Story = {
   args: {
-    label: 'ボタン',
+    label: 'サンプルボタン',
     variant: 'primary',
     size: 'md',
   },
@@ -31,7 +31,7 @@ export const Primary: Story = {
 
 export const Secondary: Story = {
   args: {
-    label: 'ボタン',
+    label: 'サンプルボタン',
     variant: 'secondary',
     size: 'md',
   },
@@ -39,7 +39,7 @@ export const Secondary: Story = {
 
 export const Danger: Story = {
   args: {
-    label: '削除',
+    label: 'サンプルボタン',
     variant: 'danger',
     size: 'md',
   },
@@ -47,7 +47,7 @@ export const Danger: Story = {
 
 export const Small: Story = {
   args: {
-    label: '小さいボタン',
+    label: 'サンプルボタン',
     variant: 'primary',
     size: 'sm',
   },
@@ -55,7 +55,7 @@ export const Small: Story = {
 
 export const Large: Story = {
   args: {
-    label: '大きいボタン',
+    label: 'サンプルボタン',
     variant: 'primary',
     size: 'lg',
   },
@@ -63,7 +63,7 @@ export const Large: Story = {
 
 export const Disabled: Story = {
   args: {
-    label: '無効',
+    label: 'サンプルボタン',
     variant: 'primary',
     disabled: true,
   },
