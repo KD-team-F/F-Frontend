@@ -1,0 +1,26 @@
+.item {
+  background-color: #6fa8dc;
+  padding: 18px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.item-title {
+  color: white;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.item-content {
+  background-color: #f5f5f5;
+  padding: 14px;
+  border-radius: 3px;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+}
+
+.item-date {
+  text-align: right;
+  color: white;
+  font-size: 12px;
+}
