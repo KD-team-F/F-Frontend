@@ -11,47 +11,23 @@ export function Button({
   variant = 'primary',
   disabled = false,
 }: ButtonProps) {
-  const baseStyle = {
-    width: '140px',
-    height: '56px',
-    border: '2px solid #000',
-    borderRadius: '999px',
-    fontSize: '28px',
-    fontWeight: 500,
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    transition: '0.2s',
-    opacity: disabled ? 0.5 : 1,
-  }
+  const baseStyle =
+    "w-[140px] h-[56px] border-2 border-black rounded-full text-[28px] font-medium transition duration-200"
 
   const variantStyle = {
-    primary: {
-      backgroundColor: '#7f95f5',
-      color: '#000',
-    },
-    secondary: {
-      backgroundColor: '#ffffff',
-      color: '#000',
-    },
+    primary: "bg-[#7f95f5] text-black",
+    secondary: "bg-white text-black",
   }
+
+  const disabledStyle = disabled
+    ? "opacity-50 cursor-not-allowed"
+    : "cursor-pointer hover:opacity-90"
 
   return (
     <button
-      style={{
-        ...baseStyle,
-        ...variantStyle[variant],
-      }}
+      className={`${baseStyle} ${variantStyle[variant]} ${disabledStyle}`}
       onClick={onClick}
       disabled={disabled}
-      onMouseOver={(e) => {
-        if (!disabled) {
-          e.currentTarget.style.opacity = '0.9'
-        }
-      }}
-      onMouseOut={(e) => {
-        if (!disabled) {
-          e.currentTarget.style.opacity = '1'
-        }
-      }}
     >
       {label}
     </button>
