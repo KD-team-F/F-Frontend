@@ -11,7 +11,7 @@ export function Button({
   variant = 'primary',
   disabled = false,
 }: ButtonProps) {
-  const baseStyle =
+  const buttonBaseStyle =
     "w-[140px] h-[56px] border-2 border-black rounded-full text-[28px] font-medium transition duration-200"
 
   const variantStyle = {
@@ -25,7 +25,7 @@ export function Button({
 
   return (
     <button
-      className={`${baseStyle} ${variantStyle[variant]} ${disabledStyle}`}
+      className={`${buttonBaseStyle} ${variantStyle[variant]} ${disabledStyle}`}
       onClick={onClick}
       disabled={disabled}
     >
