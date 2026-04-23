@@ -1,0 +1,29 @@
+.Button {
+    width: 140px;
+    height: 56px;
+    border: 2px solid #000;
+    border-radius: 999px;
+    font-size: 28px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.primary {
+    background-color: #7f95f5;
+    color: #000;
+}
+
+.secondary {
+    background-color: #ffffff;
+    color: #000;
+}
+
+.button:hover {
+    opacity: 0.9;
+}
+
+.button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
