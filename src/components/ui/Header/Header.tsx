@@ -13,15 +13,13 @@ export function Header() {
           </a>
         </div>
 
-        {/* ボタン（後で消すこと） */}
-        <div className="flex justify-center gap-4">
-          <button className="rounded px-6 py-2 text-sm font-bold text-[#FFFFFF] bg-[#87CEFA] border-2 border-[#FFFFFF] hover:bg-white hover:text-[#87CEFA] transition-all shadow-sm shrink-0">
-            質問
-          </button>
-          <button className="rounded px-6 py-2 text-sm font-bold text-[#FFFFFF] bg-[#87CEFA] border-2 border-[#FFFFFF] hover:bg-white hover:text-[#87CEFA] transition-all shadow-sm shrink-0">
-            制作物
-          </button>
-        </div>
+        {/* // TODO: ボタン配置予定 */}
+
+        {/* ここから */}
+
+
+        
+        {/* ここまで */}
 
         {/* 余白 */}
         <div className="hidden md:block"></div>
