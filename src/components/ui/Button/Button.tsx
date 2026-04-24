@@ -1,18 +1,18 @@
 type ButtonProps = {
   label: string
   onClick?: () => void
-  variant?: 'primary' | 'secondary'
+  variant?: "primary" | "secondary"
   disabled?: boolean
+  className?: string
 }
 
 export function Button({
   label,
   onClick,
-  variant = 'primary',
+  variant = "primary",
   disabled = false,
+  className = "",
 }: ButtonProps) {
-  const buttonBaseStyle =
-    "w-[140px] h-[56px] border-2 border-black rounded-full text-[28px] font-medium transition duration-200"
 
   const variantStyle = {
     primary: "bg-[#7f95f5] text-black",
@@ -25,7 +25,20 @@ export function Button({
 
   return (
     <button
-      className={`${buttonBaseStyle} ${variantStyle[variant]} ${disabledStyle}`}
+      className={`
+        w-[140px]
+        h-[56px]
+        border-2
+        border-black
+        rounded-full
+        text-[28px]
+        font-medium
+        transition
+        duration-200
+        ${variantStyle[variant]}
+        ${disabledStyle}
+        ${className}
+        `}
       onClick={onClick}
       disabled={disabled}
     >
