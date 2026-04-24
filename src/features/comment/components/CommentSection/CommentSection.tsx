@@ -1,12 +1,11 @@
 'use client'
 
-import { useState } from 'react'
 import { IconCircle } from '@/components/ui/Icon/Icon'
 import { PostDate } from '@/components/ui/PostDate/PostDate'
 import { ArticleContent } from '@/components/ui/ArticleContent/ArticleContent'
 import { Textarea } from '@/components/ui/Textarea/Textarea'
 import { Button } from '@/components/ui/Button/Button'
-import { postComment } from '@/features/comment/api/commentApi'
+import { useCommentSection } from '@/features/comment/hooks/useCommentSection'
 import type { Comment } from '@/features/comment/types/comment'
 
 type Props = {
@@ -15,27 +14,10 @@ type Props = {
 }
 
 export function CommentSection({ initialComments = [], onSubmit }: Props) {
-  const [comments, setComments] = useState<Comment[]>(initialComments)
-  const [text, setText] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const submitFn = onSubmit ?? postComment
-
-  const handleSubmit = async () => {
-    if (!text.trim()) return
-    setIsLoading(true)
-    setError(null)
-    try {
-      const newComment = await submitFn(text)
-      setComments((prev) => [...prev, newComment])
-      setText('')
-    } catch {
-      setError('コメントの投稿に失敗しました。もう一度お試しください。')
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  const { comments, text, setText, isLoading, error, handleSubmit } = useCommentSection({
+    initialComments,
+    onSubmit,
+  })
 
   return (
     <section className="max-w-3xl mx-auto px-4 py-8">
