@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown'
 
-type Props = {
+type MarkdownPreviewProps = {
   content: string
   minRows?: number
   emptyText?: string
@@ -10,7 +10,7 @@ export function MarkdownPreview({
   content,
   minRows = 10,
   emptyText = 'プレビューする内容がありません',
-}: Props) {
+}: MarkdownPreviewProps) {
   const hasContent = content.trim().length > 0
 
   return (
