@@ -118,6 +118,56 @@ export const LongTitle: Story = {
   },
 }
 
+// 11件以上（...表示）
+export const OverLimit: Story = {
+  args: {
+    title: '質問',
+    items: [
+      ...sampleItems,
+      {
+        title: 'CSSのflexboxとgridはどう使い分けるべきですか？',
+        content: '一次元か二次元かで使い分けると聞きましたが、具体的な判断基準が知りたいです。',
+        date: '2026-04-21',
+      },
+      {
+        title: 'Gitのrebaseとmergeはどちらを使うべきですか？',
+        content: 'チーム開発でどちらを採用すべきか議論になっています。それぞれのメリットを教えてください。',
+        date: '2026-04-20',
+      },
+      {
+        title: 'Dockerの基本的な使い方を教えてください',
+        content: '開発環境をDocker化したいと思っているのですが、何から始めればよいか分かりません。',
+        date: '2026-04-19',
+      },
+      {
+        title: 'REST APIとGraphQLはどちらを選ぶべきですか？',
+        content: '新規プロジェクトでAPIの設計方針を決めています。それぞれのユースケースを教えてください。',
+        date: '2026-04-18',
+      },
+      {
+        title: 'JestとVitestどちらを使うべきか',
+        content: 'テストフレームワークの選定で悩んでいます。Vite環境ではVitestが良いと聞きましたが実際どうでしょうか。',
+        date: '2026-04-17',
+      },
+      {
+        title: 'Zustandの状態管理はどこに書くべきですか？',
+        content: 'グローバルな状態とローカルな状態の使い分けが分かりません。設計指針を教えてください。',
+        date: '2026-04-16',
+      },
+      {
+        title: 'SSRとSSGはどう使い分けるべきですか？',
+        content: 'Next.jsを使っていますが、ページごとにどちらを選ぶか判断基準が知りたいです。',
+        date: '2026-04-15',
+      },
+      {
+        title: 'この件もAPIで取得されるか確認用（11件目）',
+        content: '10件を超えたとき...が表示されるかテストするためのアイテムです。',
+        date: '2026-04-14',
+      },
+    ],
+  },
+}
+
 // 内容が長いアイテム
 export const LongContent: Story = {
   args: {

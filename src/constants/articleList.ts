@@ -1,0 +1,2 @@
+export const ARTICLE_LIST_INITIAL_LIMIT = 6
+export const ARTICLE_LIST_EXPANDED_LIMIT = 10
