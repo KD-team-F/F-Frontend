@@ -1,9 +1,9 @@
-type Props = {
+ type IconProps = {
   name: 'home' | 'user' | 'settings'
   size?: number
 }
 
-export function IconCircle({ name, size = 120 }: Props) {
+export function IconCircle({ name, size = 120 }: IconProps) {
   const icons = {
     home: <path d="M3 12L12 4l9 8v8a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z" />,
     user: (
