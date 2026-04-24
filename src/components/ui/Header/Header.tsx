@@ -13,7 +13,7 @@ export function Header() {
           </a>
         </div>
 
-        {/* // TODO: ボタン配置予定地 */}
+        {/* // TODO: ボタン配置予定地です。 */}
 
         {/* ここから */}
 
