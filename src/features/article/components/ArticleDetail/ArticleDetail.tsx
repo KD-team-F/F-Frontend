@@ -1,6 +1,7 @@
 import { ArticleContent } from '@/components/ui/ArticleContent/ArticleContent'
 import { PostDate } from '@/components/ui/PostDate/PostDate'
 import { Title } from '@/components/ui/Title/Title'
+import { CommentSection } from '@/features/comment/components/CommentSection/CommentSection'
 
 type Props = {
   title: string
@@ -17,6 +18,8 @@ export function ArticleDetail({ title, date, content }: Props) {
         <PostDate date={date} />
       </div>
       <ArticleContent content={content} />
+      <hr className="my-8 border-gray-200" />
+      <CommentSection />
     </article>
   )
 }
