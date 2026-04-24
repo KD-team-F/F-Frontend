@@ -1,4 +1,4 @@
-import { ArticleDetail } from '@/features/article/components/ArticleDetail'
+import { ArticleDetail } from '@/features/article/components/ArticleDetail/ArticleDetail'
 
 type Props = {
   params: Promise<{ id: string }>
