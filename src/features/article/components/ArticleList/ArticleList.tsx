@@ -11,12 +11,12 @@ type ArticleItem = {
   date: string
 }
 
-type Props = {
+type ArticleListProps = {
   title: string
   items: ArticleItem[]
 }
 
-export function ArticleList({ title, items }: Props) {
+export function ArticleList({ title, items }: ArticleListProps) {
   const [expanded, setExpanded] = useState(false)
 
   const displayItems = expanded ? items.slice(0, ARTICLE_LIST_EXPANDED_LIMIT) : items.slice(0, ARTICLE_LIST_INITIAL_LIMIT)
