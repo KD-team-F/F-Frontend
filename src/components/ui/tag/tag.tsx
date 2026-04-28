@@ -1,9 +1,7 @@
-import React from "react";
-
 type TagProps = {
     label: string;
     className?: string;
-    tagId: string; 
+    tagId: string;
 };
 
 export const Tag = ({ label, className = "" }: TagProps) => {

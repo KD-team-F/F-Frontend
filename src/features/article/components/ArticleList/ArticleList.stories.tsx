@@ -5,15 +5,12 @@ const meta: Meta<typeof ArticleList> = {
   title: 'Features/ArticleList',
   component: ArticleList,
   tags: ['autodocs'],
-  argTypes: {
-    title: { control: 'text' },
-  },
 }
 
 export default meta
 type Story = StoryObj<typeof ArticleList>
 
-const sampleItems = [
+const questionItems = [
   {
     title: 'ReactのuseEffectはいつ使うべきですか？',
     content: 'useEffectの適切な使いどころが分からず困っています。どのような場合に使うべきか教えてください。',
@@ -31,99 +28,61 @@ const sampleItems = [
   },
 ]
 
-// 質問一覧
-export const Question: Story = {
+const workItems = [
+  {
+    title: 'ポートフォリオサイト',
+    content: 'Next.js + TailwindCSSで制作した個人ポートフォリオです。Storybookも導入しています。',
+    date: '2026-04-24',
+  },
+  {
+    title: 'タスク管理アプリ',
+    content: 'ReactとFirebaseを使ったリアルタイムタスク管理アプリです。認証機能も実装しています。',
+    date: '2026-04-20',
+  },
+  {
+    title: 'ECサイトLP',
+    content: 'クライアント案件で制作したランディングページです。レスポンシブ対応済み。',
+    date: '2026-04-15',
+  },
+]
+
+// デフォルト（タグで質問↔制作物を切り替えられる）
+export const Default: Story = {
   args: {
-    title: '質問',
-    items: sampleItems,
+    questionItems,
+    workItems,
   },
 }
 
-// 制作物一覧
-export const Works: Story = {
+// 質問アイテムのみ
+export const OnlyQuestions: Story = {
   args: {
-    title: '制作物',
-    items: [
-      {
-        title: 'ポートフォリオサイト',
-        content: 'Next.js + TailwindCSSで制作した個人ポートフォリオです。Storybookも導入しています。',
-        date: '2026-04-24',
-      },
-      {
-        title: 'タスク管理アプリ',
-        content: 'ReactとFirebaseを使ったリアルタイムタスク管理アプリです。認証機能も実装しています。',
-        date: '2026-04-20',
-      },
-      {
-        title: 'ECサイトLP',
-        content: 'クライアント案件で制作したランディングページです。レスポンシブ対応済み。',
-        date: '2026-04-15',
-      },
-    ],
+    questionItems,
+    workItems: [],
   },
 }
 
-// アイテム1件
-export const SingleItem: Story = {
+// 制作物アイテムのみ
+export const OnlyWorks: Story = {
   args: {
-    title: '質問',
-    items: [sampleItems[0]],
-  },
-}
-
-// アイテム多数
-export const ManyItems: Story = {
-  args: {
-    title: '質問',
-    items: [
-      ...sampleItems,
-      {
-        title: 'CSSのflexboxとgridはどう使い分けるべきですか？',
-        content: '一次元か二次元かで使い分けると聞きましたが、具体的な判断基準が知りたいです。',
-        date: '2026-04-21',
-      },
-      {
-        title: 'Gitのrebaseとmergeはどちらを使うべきですか？',
-        content: 'チーム開発でどちらを採用すべきか議論になっています。それぞれのメリットを教えてください。',
-        date: '2026-04-20',
-      },
-      {
-        title: 'Dockerの基本的な使い方を教えてください',
-        content: '開発環境をDocker化したいと思っているのですが、何から始めればよいか分かりません。',
-        date: '2026-04-19',
-      },
-    ],
+    questionItems: [],
+    workItems,
   },
 }
 
 // アイテムなし（空状態）
 export const Empty: Story = {
   args: {
-    title: '質問',
-    items: [],
+    questionItems: [],
+    workItems: [],
   },
 }
 
-// タイトルが長いアイテム
-export const LongTitle: Story = {
-  args: {
-    title: '質問',
-    items: [
-      {
-        title: 'これは非常に長いタイトルのテストです。タイトルが折り返された場合にレイアウトが崩れないか確認するためのストーリーです。',
-        content: '通常の内容です。',
-        date: '2026-04-24',
-      },
-    ],
-  },
-}
-
-// 11件以上（...表示）
+// 質問が11件以上（...表示）
 export const OverLimit: Story = {
   args: {
-    title: '質問',
-    items: [
-      ...sampleItems,
+    questionItems: [
+      ...questionItems,
       {
         title: 'CSSのflexboxとgridはどう使い分けるべきですか？',
         content: '一次元か二次元かで使い分けると聞きましたが、具体的な判断基準が知りたいです。',
@@ -165,26 +124,6 @@ export const OverLimit: Story = {
         date: '2026-04-14',
       },
     ],
-  },
-}
-
-// 内容が長いアイテム
-export const LongContent: Story = {
-  args: {
-    title: '質問',
-    items: [
-      {
-        title: '長文コンテンツのテスト',
-        content: `これは非常に長い内容のテストです。
-複数行にわたる内容が正しく表示されるか確認します。
-
-1. 箇条書きの項目1
-2. 箇条書きの項目2
-3. 箇条書きの項目3
-
-改行やスペースが意図通りに表示されているか、レイアウトが崩れていないかを確認してください。`,
-        date: '2026-04-24',
-      },
-    ],
+    workItems,
   },
 }
