@@ -3,7 +3,7 @@
 import { IconCircle } from '@/components/ui/Icon/Icon'
 import { PostDate } from '@/components/ui/PostDate/PostDate'
 import { ArticleContent } from '@/components/ui/ArticleContent/ArticleContent'
-import { Textarea } from '@/components/ui/Textarea/Textarea'
+import { MarkdownEditor } from '@/features/submission/components/MarkdownEditor/MarkdownEditor'
 import { Button } from '@/components/ui/Button/Button'
 import { useCommentSection } from '@/features/comment/hooks/useCommentSection'
 import type { Comment } from '@/features/comment/types/comment'
@@ -35,18 +35,18 @@ export function CommentSection({ initialComments = [], onSubmit }: Props) {
         ))}
       </div>
 
-      <div className="border border-gray-200 rounded-xl">
-        <Textarea
+      <div>
+        <MarkdownEditor
+          label="コメント"
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={setText}
           placeholder="コメントを入力..."
           rows={4}
-          disabled={isLoading}
         />
         {error && (
-          <p className="px-5 pb-2 text-sm text-red-500">{error}</p>
+          <p className="mt-2 text-sm text-red-500">{error}</p>
         )}
-        <div className="flex justify-end px-4 pb-4">
+        <div className="flex justify-end mt-3">
           <Button
             label="投稿"
             onClick={handleSubmit}
