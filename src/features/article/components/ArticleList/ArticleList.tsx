@@ -43,12 +43,14 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <FilterTab
-        options={TAG_CONFIG}
-        selected={selectedTag}
-        onChange={handleTagChange}
-      />
-      <Title>{currentTitle}</Title>
+      <div className="flex items-center justify-between mb-6">
+        <Title>{currentTitle}</Title>
+        <FilterTab
+          options={TAG_CONFIG}
+          selected={selectedTag}
+          onChange={handleTagChange}
+        />
+      </div>
       <div className="mt-6">
         {displayItems.map((item, index) => (
           <Item key={index} title={item.title} content={item.content} date={item.date} />
