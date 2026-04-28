@@ -2,7 +2,7 @@ import { ArticleList } from '@/features/article/components/ArticleList/ArticleLi
 
 export default async function QuestionsPage() {
   // TODO: APIからデータを取得する
-  const items = [
+  const questionItems = [
     {
       title: '質問タイトル1',
       content: '質問の内容がここに入ります。',
@@ -15,5 +15,5 @@ export default async function QuestionsPage() {
     },
   ]
 
-  return <ArticleList title="質問" items={items} />
+  return <ArticleList questionItems={questionItems} workItems={[]} />
 }
