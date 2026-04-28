@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { ARTICLE_LIST_EXPANDED_LIMIT, ARTICLE_LIST_INITIAL_LIMIT } from '@/constants/articleList'
 import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
-import { Tag } from '@/components/ui/tag/tag'
+import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 
 type ArticleItem = {
   title: string
@@ -19,10 +19,10 @@ type ArticleListProps = {
   workItems: ArticleItem[]
 }
 
-const TAG_CONFIG: { id: TagType; label: string }[] = [
+const TAG_CONFIG = [
   { id: 'question', label: '質問' },
   { id: 'work', label: '制作物' },
-]
+] as const satisfies { id: TagType; label: string }[]
 
 export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   const [selectedTag, setSelectedTag] = useState<TagType>('question')
@@ -43,17 +43,11 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
-      <div className="flex gap-2 mb-6">
-        {TAG_CONFIG.map(({ id, label }) => (
-          <Tag
-            key={id}
-            tagId={id}
-            label={label}
-            isActive={selectedTag === id}
-            onClick={() => handleTagChange(id)}
-          />
-        ))}
-      </div>
+      <FilterTab
+        options={TAG_CONFIG}
+        selected={selectedTag}
+        onChange={handleTagChange}
+      />
       <Title>{currentTitle}</Title>
       <div className="mt-6">
         {displayItems.map((item, index) => (
