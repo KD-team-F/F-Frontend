@@ -19,10 +19,10 @@ type ArticleListProps = {
   workItems: ArticleItem[]
 }
 
-const TAG_CONFIG = [
+const TAG_CONFIG: { id: TagType; label: string }[] = [
   { id: 'question', label: '質問' },
   { id: 'work', label: '制作物' },
-] as const satisfies { id: TagType; label: string }[]
+]
 
 export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   const [selectedTag, setSelectedTag] = useState<TagType>('question')
