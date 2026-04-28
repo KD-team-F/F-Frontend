@@ -7,11 +7,12 @@ type FilterTabProps<T extends string> = {
   options: FilterTabOption<T>[]
   selected: T
   onChange: (id: T) => void
+  className?: string
 }
 
-export function FilterTab<T extends string>({ options, selected, onChange }: FilterTabProps<T>) {
+export function FilterTab<T extends string>({ options, selected, onChange, className = '' }: FilterTabProps<T>) {
   return (
-    <div className="flex gap-2">
+    <div className={`flex gap-2 ${className}`}>
       {options.map(({ id, label }) => (
         <button
           key={id}
