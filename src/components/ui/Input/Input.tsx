@@ -3,13 +3,11 @@ import { cn } from "@/lib/utils";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  icon?: ReactNode;
   error?: string;
 }
 
 export function Input({
   label,
-  icon,
   error,
   id: externalId,
   className,
