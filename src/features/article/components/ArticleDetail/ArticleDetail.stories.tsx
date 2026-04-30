@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { ArticleDetail } from './ArticleDetail'
+import { ArticleDetail, type Tag } from './ArticleDetail'
 import type { Comment } from '@/features/comment/types/comment'
 
 const meta: Meta<typeof ArticleDetail> = {
@@ -78,6 +78,24 @@ export function Counter() {
 2. インタラクションが必要な場合のみ \`'use client'\` を追加
 3. データフェッチはサーバーサイドで行う
 `
+
+// --- Mock tag data ---
+
+const sampleTags: Tag[] = [
+  { id: '485c14aa-d1f5-0124-e12a-8dbb56eb5703', label: 'TypeScript' },
+  { id: 'df8479fb-ef2b-c227-3511-229bd0dd8cb9', label: 'Next.js' },
+  { id: 'a2d0798c-5e2e-d4c0-37a7-cbf14cb8f8e0', label: 'React' },
+]
+
+const manyTags: Tag[] = [
+  { id: 'tag-1', label: 'TypeScript' },
+  { id: 'tag-2', label: 'Next.js' },
+  { id: 'tag-3', label: 'React' },
+  { id: 'tag-4', label: 'App Router' },
+  { id: 'tag-5', label: 'Server Components' },
+  { id: 'tag-6', label: 'Tailwind CSS' },
+  { id: 'tag-7', label: 'Storybook' },
+]
 
 // --- Mock comment data ---
 
@@ -219,5 +237,53 @@ export const CommentFailure: Story = {
     content: standardMarkdown,
     initialComments: [plainComment],
     onSubmit: failureSubmit,
+  },
+}
+
+/** タグが付いている記事 */
+export const WithTags: Story = {
+  args: {
+    title: '記事タイトル',
+    date: '2026-04-23',
+    content: standardMarkdown,
+    tags: sampleTags,
+    initialComments: [],
+    onSubmit: successSubmit,
+  },
+}
+
+/** タグが1つだけ付いている記事 */
+export const WithSingleTag: Story = {
+  args: {
+    title: '記事タイトル',
+    date: '2026-04-23',
+    content: standardMarkdown,
+    tags: [{ id: 'tag-only', label: 'TypeScript' }],
+    initialComments: [],
+    onSubmit: successSubmit,
+  },
+}
+
+/** タグが多数付いている記事（折り返し確認） */
+export const WithManyTags: Story = {
+  args: {
+    title: '記事タイトル',
+    date: '2026-04-23',
+    content: standardMarkdown,
+    tags: manyTags,
+    initialComments: [],
+    onSubmit: successSubmit,
+  },
+}
+
+/** タグ付き＋コメントありのフル表示 */
+export const WithTagsAndComments: Story = {
+  args: {
+    title: '完全ガイド：Next.js App Router',
+    date: '2026-04-01',
+    content: richMarkdown,
+    tags: sampleTags,
+    initialComments: [plainComment, markdownComment],
+    onSubmit: successSubmit,
   },
 }
