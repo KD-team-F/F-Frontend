@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { ArticleDetail, type ArticleTag } from './ArticleDetail'
+import { ArticleDetail, type Tag } from './ArticleDetail'
 import type { Comment } from '@/features/comment/types/comment'
 
 const meta: Meta<typeof ArticleDetail> = {
@@ -81,13 +81,13 @@ export function Counter() {
 
 // --- Mock tag data ---
 
-const sampleTags: ArticleTag[] = [
+const sampleTags: Tag[] = [
   { id: '485c14aa-d1f5-0124-e12a-8dbb56eb5703', label: 'TypeScript' },
   { id: 'df8479fb-ef2b-c227-3511-229bd0dd8cb9', label: 'Next.js' },
   { id: 'a2d0798c-5e2e-d4c0-37a7-cbf14cb8f8e0', label: 'React' },
 ]
 
-const manyTags: ArticleTag[] = [
+const manyTags: Tag[] = [
   { id: 'tag-1', label: 'TypeScript' },
   { id: 'tag-2', label: 'Next.js' },
   { id: 'tag-3', label: 'React' },
