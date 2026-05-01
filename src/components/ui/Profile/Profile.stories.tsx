@@ -14,6 +14,13 @@ export default meta
 
 type Story = StoryObj<typeof Profile>
 
+const baseArgs = {
+	userName: 'ユーザー名',
+	grade: '4年生',
+	specialty: 'ITエキスパート',
+	bio: 'GMOインターネットグループ公式カフェ「GMO cafe」。社員とゲストが集う憩いと共創の場。イベント・勉強会・オープン情報を発信中。 #GMOCafe',
+}
+
 const questionItems = [
 	{
 		id: 'question-1',
@@ -64,10 +71,7 @@ const workItems = [
 
 export const Default: Story = {
 	args: {
-		userName: 'ユーザー名',
-		grade: '4年生',
-		specialty: 'ITエキスパート',
-		bio: 'GMOインターネットグループ公式カフェ「GMO cafe」。社員とゲストが集う憩いと共創の場。イベント・勉強会・オープン情報を発信中。 #GMOCafe',
+		...baseArgs,
 		questionItems,
 		workItems,
 		defaultTab: 'questions',
@@ -76,12 +80,43 @@ export const Default: Story = {
 
 export const WorksTab: Story = {
 	args: {
-		userName: 'ユーザー名',
-		grade: '4年生',
-		specialty: 'ITエキスパート',
-		bio: 'GMOインターネットグループ公式カフェ「GMO cafe」。社員とゲストが集う憩いと共創の場。イベント・勉強会・オープン情報を発信中。 #GMOCafe',
+		...baseArgs,
 		questionItems,
 		workItems,
 		defaultTab: 'works',
+	},
+}
+
+export const QuestionTableOnly: Story = {
+	name: '質問テーブル表示',
+	args: {
+		...baseArgs,
+		questionItems,
+		workItems: [],
+		defaultTab: 'questions',
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: '質問テーブルのみを表示して、質問一覧の見え方を確認するストーリーです。',
+			},
+		},
+	},
+}
+
+export const WorkTableOnly: Story = {
+	name: '制作物テーブル表示',
+	args: {
+		...baseArgs,
+		questionItems: [],
+		workItems,
+		defaultTab: 'works',
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: '制作物テーブルのみを表示して、制作物一覧の見え方を確認するストーリーです。',
+			},
+		},
 	},
 }
