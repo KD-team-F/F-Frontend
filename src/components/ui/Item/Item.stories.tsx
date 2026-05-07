@@ -35,3 +35,47 @@ Tailwindのwhitespace-pre-wrapが効いているか確認。`,
     date: "2026/04/23",
   },
 };
+
+// 評価数0・自分も未評価
+export const NoRating: Story = {
+  args: {
+    title: "質問題名(仮)",
+    content: "質問内容\nooooooooooooooo",
+    date: "20xx/xx/xx",
+    likes: 0,
+    liked: false,
+  },
+};
+
+// 評価数1・自分のみ評価済み
+export const LikedByUserOnly: Story = {
+  args: {
+    title: "質問題名(仮)",
+    content: "質問内容\nooooooooooooooo",
+    date: "20xx/xx/xx",
+    likes: 1,
+    liked: true,
+  },
+};
+
+// 評価数5・他ユーザーが評価済み・自分は未評価
+export const LikedByOthers: Story = {
+  args: {
+    title: "質問題名(仮)",
+    content: "質問内容\nooooooooooooooo",
+    date: "20xx/xx/xx",
+    likes: 5,
+    liked: false,
+  },
+};
+
+// 評価数10・他ユーザーも自分も評価済み
+export const LikedByAll: Story = {
+  args: {
+    title: "質問題名(仮)",
+    content: "質問内容\nooooooooooooooo",
+    date: "20xx/xx/xx",
+    likes: 10,
+    liked: true,
+  },
+};

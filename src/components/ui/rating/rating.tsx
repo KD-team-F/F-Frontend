@@ -3,11 +3,13 @@ import { useState } from "react";
 type Props = {
   defaultLiked?: boolean;
   defaultCount?: number;
+  readOnly?: boolean;
 };
 
 export const RatingHeart = ({
   defaultLiked = false,
   defaultCount = 0,
+  readOnly = false,
 }: Props) => {
   const [liked, setLiked] = useState(defaultLiked);
   const [count, setCount] = useState(defaultCount);
@@ -15,6 +17,10 @@ export const RatingHeart = ({
   const currentColor = liked ? "#ff0062" : "#5b5f6d";
 
   const handleClick = () => {
+    if (readOnly) {
+      return;
+    }
+
     if (liked) {
       setCount((prev) => prev - 1);
     } else {
@@ -28,7 +34,9 @@ export const RatingHeart = ({
     <button
       type="button"
       onClick={handleClick}
-      className="flex items-center gap-2 cursor-pointer select-none"
+      className={`flex items-center gap-2 select-none ${readOnly ? "cursor-default" : "cursor-pointer"}`}
+      aria-label={`likes: ${count}`}
+      aria-disabled={readOnly}
     >
       {/* ハート */}
       <svg

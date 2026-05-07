@@ -1,17 +1,23 @@
 import { PostDate } from "../PostDate/PostDate";
+import { RatingHeart } from "../rating/rating";
 
 type Props = {
     title: string;
     content: string;
     date: string;
+    likes?: number;
+    liked?: boolean;
 };
 
-export const Item = ({ title, content, date }: Props) => {
+export const Item = ({ title, content, date, likes = 0, liked = false }: Props) => {
     return (
         <div className="bg-blue-400 p-4 rounded-md mb-4 transition hover:-translate-y-1 hover:shadow-md">
-            <h2 className="text-white text-xl font-bold mb-3">
-                {title}
-            </h2>
+            <div className="flex items-start justify-between gap-3 mb-3">
+                <h2 className="text-white text-xl font-bold leading-tight flex-1">
+                    {title}
+                </h2>
+                <RatingHeart defaultCount={likes} defaultLiked={liked} readOnly />
+            </div>
 
             <div className="bg-gray-100 p-3 rounded-sm mb-3 whitespace-pre-wrap">
                 <p className="text-gray-800">{content}</p>
