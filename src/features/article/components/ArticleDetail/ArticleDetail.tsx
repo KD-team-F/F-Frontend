@@ -4,6 +4,7 @@ import { Title } from '@/components/ui/Title/Title'
 import { Tag } from '@/components/ui/tag/tag'
 import { CommentSection } from '@/features/comment/components/CommentSection/CommentSection'
 import type { Comment } from '@/features/comment/types/comment'
+import { RatingHeart } from '@/components/ui/rating/rating'
 
 export type Tag = {
   id: string
@@ -26,6 +27,8 @@ export function ArticleDetail({ title, date, content, tags = [], initialComments
       <div className="flex items-center gap-4 mt-2 mb-4">
         {/* アイコン群がここに入る予定 */}
         <PostDate date={date} />
+        <div className="ml-auto" />
+        <RatingHeart />
       </div>
       {tags.length > 0 && (
         <div className="flex flex-wrap items-center gap-2 mb-8">
@@ -37,6 +40,6 @@ export function ArticleDetail({ title, date, content, tags = [], initialComments
       <ArticleContent content={content} />
       <hr className="my-8 border-gray-200" />
       <CommentSection initialComments={initialComments} onSubmit={onSubmit} />
-    </article>
+    </article> 
   )
 }
