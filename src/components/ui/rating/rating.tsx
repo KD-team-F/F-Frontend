@@ -2,19 +2,31 @@ import { useState } from "react";
 
 type Props = {
   defaultLiked?: boolean;
+  defaultCount?: number;
 };
 
-export const RatingHeart = ({ defaultLiked = false }: Props) => {
+export const RatingHeart = ({
+  defaultLiked = false,
+  defaultCount = 0,
+}: Props) => {
   const [liked, setLiked] = useState(defaultLiked);
+  const [count, setCount] = useState(defaultCount);
 
-  const count = liked ? 1 : 0;
+  const currentColor = liked ? "#ff0062" : "#5b5f6d";
 
   const handleClick = () => {
+    if (liked) {
+      setCount((prev) => prev - 1);
+    } else {
+      setCount((prev) => prev + 1);
+    }
+
     setLiked((prev) => !prev);
   };
 
   return (
     <button
+      type="button"
       onClick={handleClick}
       className="flex items-center gap-2 cursor-pointer select-none"
     >
@@ -22,10 +34,10 @@ export const RatingHeart = ({ defaultLiked = false }: Props) => {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        stroke="currentColor"
+        stroke={currentColor}
         strokeWidth={2}
         className="w-6 h-6 transition-colors"
-        fill={liked ? "currentColor" : "none"}
+        fill={liked ? currentColor : "none"}
       >
         <path
           strokeLinecap="round"

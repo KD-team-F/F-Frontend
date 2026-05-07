@@ -11,16 +11,16 @@ export default meta;
 
 type Story = StoryObj<typeof RatingHeart>;
 
-/** 初期状態：未いいね */
 export const Default: Story = {
   args: {
     defaultLiked: false,
+    defaultCount: 0,
   },
 };
 
-/** 初期状態：いいね済み */
 export const Liked: Story = {
   args: {
     defaultLiked: true,
+    defaultCount: 10,
   },
 };
