@@ -40,8 +40,6 @@ export function ArticleDetail({ title, date, content, tags = [], initialComments
       <ArticleContent content={content} />
       <hr className="my-8 border-gray-200" />
       <CommentSection initialComments={initialComments} onSubmit={onSubmit} />
-    </article>
-
-    
+    </article> 
   )
 }
