@@ -14,7 +14,7 @@ type ProfileItem = {
 
 type ProfileTab = 'questions' | 'works'
 
-type Props = {
+type ProfileProps = {
 	userName: string
 	grade: string
 	specialty: string
@@ -37,7 +37,7 @@ export function Profile({
 	questionItems,
 	workItems,
 	defaultTab = 'questions',
-}: Props) {
+}: ProfileProps) {
 	const [activeTab, setActiveTab] = useState<ProfileTab>(defaultTab)
 	const items = activeTab === 'questions' ? questionItems : workItems
 

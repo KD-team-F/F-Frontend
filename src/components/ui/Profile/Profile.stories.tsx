@@ -18,7 +18,7 @@ const baseArgs = {
 	userName: 'ユーザー名',
 	grade: '4年生',
 	specialty: 'ITエキスパート',
-	bio: 'GMOインターネットグループ公式カフェ「GMO cafe」。社員とゲストが集う憩いと共創の場。イベント・勉強会・オープン情報を発信中。 #GMOCafe',
+	bio: 'ITエキスパートコースの4年生です。フロントエンド開発を中心に、ReactやNext.jsを使ったプロジェクトに取り組んでいます。趣味はカフェ巡りと旅行です。',
 }
 
 const questionItems = [
