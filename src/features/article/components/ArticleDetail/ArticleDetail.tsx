@@ -28,7 +28,7 @@ export function ArticleDetail({ title, date, content, tags = [], initialComments
         {/* アイコン群がここに入る予定 */}
         <PostDate date={date} />
         <div className="ml-auto" />
-        <RatingHeart defaultLiked={false} defaultCount={0} />
+        <RatingHeart />
       </div>
       {tags.length > 0 && (
         <div className="flex flex-wrap items-center gap-2 mb-8">
