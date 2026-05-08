@@ -1,16 +1,10 @@
 import { http, HttpResponse } from 'msw'
 import { articles } from '@/mocks/data/articles'
 
-const FORCE_ERROR_ID = 'error-500'
-
 export const articleDetailHandlers = [
   http.get('/api/article/detail/:id', async ({ params }) => {
     try {
       const id = params.id as string
-
-      if (id === FORCE_ERROR_ID) {
-        throw new Error('動作確認用の意図的な例外です')
-      }
 
       const article = articles.find((a) => a.id === id)
 
