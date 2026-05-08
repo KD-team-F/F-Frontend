@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import { ArticleList } from '@/features/article/components/ArticleList/ArticleList'
 
 // TODO: APIからデータを取得する
@@ -33,9 +32,5 @@ const workItems = [
 ]
 
 export default function QuestionsPage() {
-  return (
-    <Suspense>
-      <ArticleList questionItems={questionItems} workItems={workItems} />
-    </Suspense>
-  )
+  return <ArticleList questionItems={questionItems} workItems={workItems} />
 }
