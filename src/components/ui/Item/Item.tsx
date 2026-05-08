@@ -1,5 +1,6 @@
 import { PostDate } from "../PostDate/PostDate";
 import { Tag } from "../tag/tag";
+import { RatingHeart } from "../rating/rating";
 import type { Tag as TagType } from "@/types/tag";
 
 type Props = {
@@ -8,10 +9,9 @@ type Props = {
     date: string;
     tags?: TagType[];
     selectedTagIds?: string[];
-    onTagCxlick?: (tagId: string) => void;
+    onTagClick?: (tagId: string) => void;
     likeCount?: number;
     isLikedByCurrentUser?: boolean;
-    
 };
 
 export const Item = ({ title, content, date, tags, selectedTagIds = [],likeCount, isLikedByCurrentUser, onTagClick }: Props) => {
