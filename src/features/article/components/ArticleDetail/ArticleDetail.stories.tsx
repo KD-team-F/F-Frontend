@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import { ArticleDetail, type Tag } from './ArticleDetail'
+import { ArticleDetail } from './ArticleDetail'
+import type { Tag } from '@/types/tag'
 import type { Comment } from '@/features/comment/types/comment'
 
 const meta: Meta<typeof ArticleDetail> = {
