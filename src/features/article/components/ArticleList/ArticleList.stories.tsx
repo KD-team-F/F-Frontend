@@ -15,16 +15,26 @@ const questionItems = [
     title: 'ReactのuseEffectはいつ使うべきですか？',
     content: 'useEffectの適切な使いどころが分からず困っています。どのような場合に使うべきか教えてください。',
     date: '2026-04-24',
+    tags: [
+      { id: 'react', label: 'React' },
+      { id: 'typescript', label: 'TypeScript' },
+    ],
   },
   {
     title: 'TypeScriptのジェネリクスについて',
     content: 'ジェネリクスの概念は理解しているつもりですが、実際のコードでどう活用すればいいか分かりません。',
     date: '2026-04-23',
+    tags: [
+      { id: 'typescript', label: 'TypeScript' },
+    ],
   },
   {
     title: 'Next.jsのApp RouterとPages Routerの違いは？',
     content: '既存プロジェクトをApp Routerに移行すべきか悩んでいます。メリット・デメリットを教えてください。',
     date: '2026-04-22',
+    tags: [
+      { id: 'nextjs', label: 'Next.js' },
+    ],
   },
 ]
 
@@ -33,11 +43,18 @@ const workItems = [
     title: 'ポートフォリオサイト',
     content: 'Next.js + TailwindCSSで制作した個人ポートフォリオです。Storybookも導入しています。',
     date: '2026-04-24',
+    tags: [
+      { id: 'nextjs', label: 'Next.js' },
+      { id: 'tailwind', label: 'Tailwind' },
+    ],
   },
   {
     title: 'タスク管理アプリ',
     content: 'ReactとFirebaseを使ったリアルタイムタスク管理アプリです。認証機能も実装しています。',
     date: '2026-04-20',
+    tags: [
+      { id: 'react', label: 'React' },
+    ],
   },
   {
     title: 'ECサイトLP',
@@ -46,7 +63,6 @@ const workItems = [
   },
 ]
 
-// デフォルト（タグで質問↔制作物を切り替えられる）
 export const Default: Story = {
   args: {
     questionItems,
@@ -54,7 +70,6 @@ export const Default: Story = {
   },
 }
 
-// 質問アイテムのみ
 export const OnlyQuestions: Story = {
   args: {
     questionItems,
@@ -62,7 +77,6 @@ export const OnlyQuestions: Story = {
   },
 }
 
-// 制作物アイテムのみ
 export const OnlyWorks: Story = {
   args: {
     questionItems: [],
@@ -70,7 +84,6 @@ export const OnlyWorks: Story = {
   },
 }
 
-// アイテムなし（空状態）
 export const Empty: Story = {
   args: {
     questionItems: [],
@@ -78,7 +91,6 @@ export const Empty: Story = {
   },
 }
 
-// 質問が11件以上（...表示）
 export const OverLimit: Story = {
   args: {
     questionItems: [
@@ -87,6 +99,7 @@ export const OverLimit: Story = {
         title: 'CSSのflexboxとgridはどう使い分けるべきですか？',
         content: '一次元か二次元かで使い分けると聞きましたが、具体的な判断基準が知りたいです。',
         date: '2026-04-21',
+        tags: [{ id: 'css', label: 'CSS' }],
       },
       {
         title: 'Gitのrebaseとmergeはどちらを使うべきですか？',
@@ -97,6 +110,7 @@ export const OverLimit: Story = {
         title: 'Dockerの基本的な使い方を教えてください',
         content: '開発環境をDocker化したいと思っているのですが、何から始めればよいか分かりません。',
         date: '2026-04-19',
+        tags: [{ id: 'docker', label: 'Docker' }],
       },
       {
         title: 'REST APIとGraphQLはどちらを選ぶべきですか？',
@@ -107,6 +121,7 @@ export const OverLimit: Story = {
         title: 'JestとVitestどちらを使うべきか',
         content: 'テストフレームワークの選定で悩んでいます。Vite環境ではVitestが良いと聞きましたが実際どうでしょうか。',
         date: '2026-04-17',
+        tags: [{ id: 'typescript', label: 'TypeScript' }],
       },
       {
         title: 'Zustandの状態管理はどこに書くべきですか？',
@@ -117,6 +132,7 @@ export const OverLimit: Story = {
         title: 'SSRとSSGはどう使い分けるべきですか？',
         content: 'Next.jsを使っていますが、ページごとにどちらを選ぶか判断基準が知りたいです。',
         date: '2026-04-15',
+        tags: [{ id: 'nextjs', label: 'Next.js' }],
       },
       {
         title: 'この件もAPIで取得されるか確認用（11件目）',
