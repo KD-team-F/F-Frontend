@@ -4,11 +4,13 @@ import { ArticleList } from '@/features/article/components/ArticleList/ArticleLi
 
 const questionItems = [
   {
+    id: '1',
     title: 'ReactのuseStateについて',
     content: 'useStateの使い方を教えてください。',
     date: '2026-05-08',
   },
   {
+    id: '2',
     title: 'Tailwind CSSについて',
     content: '中央寄せの方法が知りたいです。',
     date: '2026-05-07',
@@ -17,11 +19,13 @@ const questionItems = [
 
 const workItems = [
   {
+    id: '3',
     title: 'ポートフォリオサイト',
     content: 'Next.jsで制作しました。',
     date: '2026-05-01',
   },
   {
+    id: '4',
     title: 'Todoアプリ',
     content: 'ReactとTypeScriptで作成しました。',
     date: '2026-04-28',

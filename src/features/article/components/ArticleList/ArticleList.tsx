@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 import { ARTICLE_LIST_EXPANDED_LIMIT, ARTICLE_LIST_INITIAL_LIMIT } from '@/constants/articleList'
 import { Item } from '@/components/ui/Item/Item'
@@ -7,6 +8,7 @@ import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 
 type ArticleItem = {
+  id: string
   title: string
   content: string
   date: string
@@ -28,13 +30,18 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
   const [expanded, setExpanded] = useState(false)
 
-  const currentItems = selectedFilter === 'question' ? questionItems : workItems
-  const currentTitle = selectedFilter === 'question' ? '質問' : '制作物'
+  const currentItems =
+    selectedFilter === 'question' ? questionItems : workItems
+
+  const currentTitle =
+    selectedFilter === 'question' ? '質問' : '制作物'
 
   const displayItems = expanded
     ? currentItems.slice(0, ARTICLE_LIST_EXPANDED_LIMIT)
     : currentItems.slice(0, ARTICLE_LIST_INITIAL_LIMIT)
-  const showMore = !expanded && currentItems.length > ARTICLE_LIST_INITIAL_LIMIT
+
+  const showMore =
+    !expanded && currentItems.length > ARTICLE_LIST_INITIAL_LIMIT
 
   const handleFilterChange = (tag: FilterType) => {
     setSelectedFilter(tag)
@@ -45,16 +52,29 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
     <div className="max-w-3xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <Title>{currentTitle}</Title>
+
         <FilterTab
           options={FILTER_CONFIG}
           selected={selectedFilter}
           onChange={handleFilterChange}
         />
       </div>
-      <div className="mt-6">
-        {displayItems.map((item, index) => (
-          <Item key={index} title={item.title} content={item.content} date={item.date} />
+
+      <div className="mt-6 space-y-3">
+        {displayItems.map((item) => (
+          <Link
+            key={item.id}
+            href={`/articles/${item.id}`}
+            className="block"
+          >
+            <Item
+              title={item.title}
+              content={item.content}
+              date={item.date}
+            />
+          </Link>
         ))}
+
         {showMore && (
           <button
             onClick={() => setExpanded(true)}
