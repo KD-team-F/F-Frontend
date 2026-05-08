@@ -8,6 +8,7 @@ import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 import { Tag } from '@/components/ui/tag/tag'
 import type { ArticleItem } from '@/types/article'
 
+
 type FilterType = 'question' | 'work'
 
 type ArticleListProps = {
@@ -107,6 +108,8 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
             tags={item.tags}
             selectedTagIds={selectedTagIds}
             onTagClick={handleTagToggle}
+            likes={item.likes}
+            liked={item.liked}
           />
         ))}
         {showMore && (

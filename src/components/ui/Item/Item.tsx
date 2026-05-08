@@ -8,16 +8,19 @@ type Props = {
     date: string;
     tags?: TagType[];
     selectedTagIds?: string[];
-    onTagClick?: (tagId: string) => void;
+    onTagCxlick?: (tagId: string) => void;
+    likeCount?: number;
+    isLikedByCurrentUser?: boolean;
+    
 };
 
-export const Item = ({ title, content, date, tags, selectedTagIds = [], onTagClick }: Props) => {
+export const Item = ({ title, content, date, tags, selectedTagIds = [],likeCount, isLikedByCurrentUser, onTagClick }: Props) => {
     return (
         <div className="bg-blue-400 p-4 rounded-md mb-4 transition hover:-translate-y-1 hover:shadow-md">
             <h2 className="text-white text-xl font-bold mb-3">
                 {title}
             </h2>
-
+              <RatingHeart defaultCount={likeCount} defaultLiked={isLikedByCurrentUser} isReadOnly />
             <div className="bg-gray-100 p-3 rounded-sm mb-3 whitespace-pre-wrap">
                 <p className="text-gray-800">{content}</p>
             </div>
