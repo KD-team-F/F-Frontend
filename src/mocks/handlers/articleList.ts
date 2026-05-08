@@ -1,18 +1,18 @@
-import { http, HttpResponse } from 'msw'
+import { http, HttpResponse } from "msw";
 
-type ArticleItem = 'question' | 'work'
+type ArticleItem = "question" | "work";
 
 type ArticleListResponse = {
-  id: string
-  title: string
-  content: string
-  date: string
-}
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+};
 
 const questionArticles: ArticleListResponse[] = [
   {
-    id: 'q-1',
-    title: 'Reactのレンダリング最適化について',
+    id: "q-1",
+    title: "Reactのレンダリング最適化について",
     content: `## 困っていること
 
 \`useMemo\` と \`useCallback\` の使い分けがいまいち分かりません。
@@ -26,11 +26,11 @@ const questionArticles: ArticleListResponse[] = [
 
 - どんな基準で使い分けるのが正解でしょうか？
 - React 19 の \`React Compiler\` を使えば不要になりますか？`,
-    date: '2026-05-01',
+    date: "2026-05-01",
   },
   {
-    id: 'q-2',
-    title: 'TypeScriptの型推論が効かないケース',
+    id: "q-2",
+    title: "TypeScriptの型推論が効かないケース",
     content: `ジェネリクスを使うと推論が外れてしまうことがあります。
 
 \`\`\`ts
@@ -43,11 +43,11 @@ const v = pick(user, 'name') // string になってほしいが unknown にな�
 \`\`\`
 
 何が原因でしょうか？`,
-    date: '2026-04-30',
+    date: "2026-04-30",
   },
   {
-    id: 'q-3',
-    title: 'Next.js App Routerでのデータ取得',
+    id: "q-3",
+    title: "Next.js App Routerでのデータ取得",
     content: `## 質問
 
 サーバーコンポーネントとクライアントコンポーネントの使い分けが分かりません。
@@ -57,11 +57,11 @@ const v = pick(user, 'name') // string になってほしいが unknown にな�
 - どこに \`'use client'\` を書くのが良い？
 
 [公式ドキュメント](https://nextjs.org/docs) は読んだのですが、実例だとどう判断していますか？`,
-    date: '2026-04-28',
+    date: "2026-04-28",
   },
   {
-    id: 'q-4',
-    title: 'CSSのz-indexが効かない',
+    id: "q-4",
+    title: "CSSのz-indexが効かない",
     content: `親要素に \`position: relative\` を付けても上に表示されません。
 
 \`\`\`css
@@ -70,11 +70,11 @@ const v = pick(user, 'name') // string になってほしいが unknown にな�
 \`\`\`
 
 スタッキングコンテキストの問題でしょうか？`,
-    date: '2026-04-25',
+    date: "2026-04-25",
   },
   {
-    id: 'q-5',
-    title: 'GitHubでforce pushしてしまった',
+    id: "q-5",
+    title: "GitHubでforce pushしてしまった",
     content: `## やってしまったこと
 
 間違って他人のブランチに \`git push --force\` してしまいました…
@@ -85,11 +85,11 @@ const v = pick(user, 'name') // string になってほしいが unknown にな�
 - \`git reflog\` はローカルにしか効かないですよね？
 
 助けてください 🙏`,
-    date: '2026-04-22',
+    date: "2026-04-22",
   },
   {
-    id: 'q-6',
-    title: 'Tailwind CSSのカスタムカラー設定',
+    id: "q-6",
+    title: "Tailwind CSSのカスタムカラー設定",
     content: `\`tailwind.config.ts\` でカスタムカラーが反映されません。
 
 \`\`\`ts
@@ -105,11 +105,11 @@ export default {
 \`\`\`
 
 \`bg-brand\` を付けても効かない…**Tailwind v4** だと書き方が違うのでしょうか？`,
-    date: '2026-04-20',
+    date: "2026-04-20",
   },
   {
-    id: 'q-7',
-    title: 'Dockerコンテナが起動しない',
+    id: "q-7",
+    title: "Dockerコンテナが起動しない",
     content: `\`docker compose up\` で以下のエラーが出ます。
 
 \`\`\`
@@ -120,14 +120,14 @@ Error response from daemon: driver failed programming external connectivity
 - Docker Desktop は再起動済み
 
 何を確認すれば良いでしょうか？`,
-    date: '2026-04-18',
+    date: "2026-04-18",
   },
-]
+];
 
 const workArticles: ArticleListResponse[] = [
   {
-    id: 'w-1',
-    title: 'ToDoアプリを作りました',
+    id: "w-1",
+    title: "ToDoアプリを作りました",
     content: `## 概要
 
 React + TypeScript + Tailwind で作ったシンプルな ToDo アプリです。
@@ -143,11 +143,11 @@ React + TypeScript + Tailwind で作ったシンプルな ToDo アプリです�
 
 - [GitHub](https://github.com/example/todo)
 - [デモ](https://example.com/todo)`,
-    date: '2026-05-02',
+    date: "2026-05-02",
   },
   {
-    id: 'w-2',
-    title: 'ポートフォリオサイトを公開しました',
+    id: "w-2",
+    title: "ポートフォリオサイトを公開しました",
     content: `## ポートフォリオを作りました 🎉
 
 Next.js と microCMS を使って自分のポートフォリオを作成しました。
@@ -159,11 +159,11 @@ Next.js と microCMS を使って自分のポートフォリオを作成しま�
 3. **Vercel** にデプロイして CI/CD 自動化
 
 ぜひ見てください！`,
-    date: '2026-04-29',
+    date: "2026-04-29",
   },
   {
-    id: 'w-3',
-    title: 'マークダウンエディタを自作',
+    id: "w-3",
+    title: "マークダウンエディタを自作",
     content: `## 作ったもの
 
 リアルタイムプレビュー付きのマークダウンエディタです。
@@ -180,11 +180,11 @@ Next.js と microCMS を使って自分のポートフォリオを作成しま�
 - **シンタックスハイライト** 対応
 - 編集 / プレビュー / 分割の **3 モード切替**
 - ショートカット (\`Cmd+B\` で太字 etc.)`,
-    date: '2026-04-26',
+    date: "2026-04-26",
   },
   {
-    id: 'w-4',
-    title: 'Slackボットを作ってみた',
+    id: "w-4",
+    title: "Slackボットを作ってみた",
     content: `## 概要
 
 日次のスタンドアップを自動化する Slack ボットです。
@@ -200,11 +200,11 @@ Next.js と microCMS を使って自分のポートフォリオを作成しま�
 - Bolt for JavaScript
 - Cloudflare Workers
 - Notion API`,
-    date: '2026-04-23',
+    date: "2026-04-23",
   },
   {
-    id: 'w-5',
-    title: 'CLIツールを公開しました',
+    id: "w-5",
+    title: "CLIツールを公開しました",
     content: `## 何を作ったか
 
 プロジェクトのテンプレートを生成する CLI ツールを **npm に公開** しました。
@@ -218,30 +218,45 @@ npx create-my-template my-app
 - TypeScript / ESLint / Prettier の設定済み
 - インタラクティブなプロンプトでオプション選択
 - monorepo 対応`,
-    date: '2026-04-19',
+    date: "2026-04-19",
   },
-]
+];
 
 const articlesByItem: Record<ArticleItem, ArticleListResponse[]> = {
   question: questionArticles,
   work: workArticles,
-}
+};
 
 function isArticleItem(value: string | null): value is ArticleItem {
-  return value === 'question' || value === 'work'
+  return value === "question" || value === "work";
 }
 
 export const articleListHandlers = [
-  http.get('/api/articles', ({ request }) => {
-    const item = new URL(request.url).searchParams.get('item')
+  http.get("/api/articles", async ({ request }) => {
+    try {
+      const url = new URL(request.url);
+      const item = url.searchParams.get("item");
 
-    if (!isArticleItem(item)) {
+      if (!isArticleItem(item)) {
+        return HttpResponse.json(
+          {
+            message:
+              "item クエリパラメータには question または work を指定してください",
+          },
+          { status: 400 },
+        );
+      }
+      const data = articlesByItem[item];
+      return HttpResponse.json(data);
+    } catch (error) {
+      console.error("MSW Handler Error:", error);
       return HttpResponse.json(
-        { message: 'item クエリパラメータには question または work を指定してください' },
-        { status: 400 },
-      )
+        {
+          message: "Internal Server Error (MSW)",
+          details: error instanceof Error ? error.message : String(error),
+        },
+        { status: 500 },
+      );
     }
-
-    return HttpResponse.json(articlesByItem[item])
   }),
-]
+];
