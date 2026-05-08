@@ -27,9 +27,9 @@ export function Input({
       <div
         className={cn(
           "flex items-center gap-2",
-          "rounded-2xl border-2 bg-white px-4 py-3",
+          "rounded-xl border bg-[#f3f4f8] px-4 py-3",
           "transition-colors duration-200",
-          "focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20",
+          "focus-within:ring-2 focus-within:ring-[#4a6bff]/40",
           error ? "border-red-400" : "border-gray-200",
         )}
       >
