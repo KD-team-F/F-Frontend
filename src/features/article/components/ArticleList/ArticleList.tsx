@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import { ARTICLE_LIST_EXPANDED_LIMIT, ARTICLE_LIST_INITIAL_LIMIT } from '@/constants/articleList'
 import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
@@ -22,16 +21,12 @@ const FILTER_CONFIG: { id: FilterType; label: string }[] = [
 ]
 
 export function ArticleList({ questionItems, workItems }: ArticleListProps) {
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
   const [expanded, setExpanded] = useState(false)
 
-  const category = (searchParams.get('category') as FilterType) ?? 'question'
-  const selectedTagIds = searchParams.get('tags')?.split(',').filter(Boolean) ?? []
-
-  const currentItems = category === 'question' ? questionItems : workItems
-  const currentTitle = category === 'question' ? '質問' : '制作物'
+  const currentItems = selectedFilter === 'question' ? questionItems : workItems
+  const currentTitle = selectedFilter === 'question' ? '質問' : '制作物'
 
   const filteredItems =
     selectedTagIds.length === 0
@@ -51,29 +46,22 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
     ).values()
   )
 
-  const updateParams = (newCategory: FilterType, newTagIds: string[]) => {
-    const params = new URLSearchParams()
-    params.set('category', newCategory)
-    if (newTagIds.length > 0) params.set('tags', newTagIds.join(','))
-    router.push(`${pathname}?${params.toString()}`)
-  }
-
-  const handleFilterChange = (newCategory: FilterType) => {
+  const handleFilterChange = (newFilter: FilterType) => {
+    setSelectedFilter(newFilter)
+    setSelectedTagIds([])
     setExpanded(false)
-    updateParams(newCategory, [])
   }
 
   const handleTagToggle = (tagId: string) => {
-    const newTagIds = selectedTagIds.includes(tagId)
-      ? selectedTagIds.filter((id) => id !== tagId)
-      : [...selectedTagIds, tagId]
+    setSelectedTagIds((prev) =>
+      prev.includes(tagId) ? prev.filter((id) => id !== tagId) : [...prev, tagId]
+    )
     setExpanded(false)
-    updateParams(category, newTagIds)
   }
 
   const handleClearTags = () => {
+    setSelectedTagIds([])
     setExpanded(false)
-    updateParams(category, [])
   }
 
   return (
@@ -82,7 +70,7 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
         <Title>{currentTitle}</Title>
         <FilterTab
           options={FILTER_CONFIG}
-          selected={category}
+          selected={selectedFilter}
           onChange={handleFilterChange}
         />
       </div>
