@@ -42,8 +42,8 @@ export const NoRating: Story = {
     title: "質問題名(仮)",
     content: "質問内容\nooooooooooooooo",
     date: "20xx/xx/xx",
-    likes: 0,
-    liked: false,
+    likeCount: 0,
+    isLikedByCurrentUser: false,
   },
 };
 
@@ -53,8 +53,8 @@ export const LikedByUserOnly: Story = {
     title: "質問題名(仮)",
     content: "質問内容\nooooooooooooooo",
     date: "20xx/xx/xx",
-    likes: 1,
-    liked: true,
+    likeCount: 1,
+    isLikedByCurrentUser: true,
   },
 };
 
@@ -64,8 +64,8 @@ export const LikedByOthers: Story = {
     title: "質問題名(仮)",
     content: "質問内容\nooooooooooooooo",
     date: "20xx/xx/xx",
-    likes: 5,
-    liked: false,
+    likeCount: 5,
+    isLikedByCurrentUser: false,
   },
 };
 
@@ -75,7 +75,7 @@ export const LikedByAll: Story = {
     title: "質問題名(仮)",
     content: "質問内容\nooooooooooooooo",
     date: "20xx/xx/xx",
-    likes: 10,
-    liked: true,
+    likeCount: 10,
+    isLikedByCurrentUser: true,
   },
 };

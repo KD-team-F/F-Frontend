@@ -5,18 +5,18 @@ type Props = {
     title: string;
     content: string;
     date: string;
-    likes?: number;
-    liked?: boolean;
+    likeCount?: number;
+    isLikedByCurrentUser?: boolean;
 };
 
-export const Item = ({ title, content, date, likes = 0, liked = false }: Props) => {
+export const Item = ({ title, content, date, likeCount = 0, isLikedByCurrentUser = false }: Props) => {
     return (
         <div className="bg-blue-400 p-4 rounded-md mb-4 transition hover:-translate-y-1 hover:shadow-md">
             <div className="flex items-start justify-between gap-3 mb-3">
                 <h2 className="text-white text-xl font-bold leading-tight flex-1">
                     {title}
                 </h2>
-                <RatingHeart defaultCount={likes} defaultLiked={liked} readOnly />
+                <RatingHeart initialLikeCount={likeCount} initialLiked={isLikedByCurrentUser} isReadOnly />
             </div>
 
             <div className="bg-gray-100 p-3 rounded-sm mb-3 whitespace-pre-wrap">
