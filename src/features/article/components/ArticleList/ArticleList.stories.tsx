@@ -10,6 +10,10 @@ const meta: Meta<typeof ArticleList> = {
 export default meta
 type Story = StoryObj<typeof ArticleList>
 
+const render: Story['render'] = (args) => (
+  <ArticleList key={JSON.stringify(args)} {...args} />
+)
+
 const questionItems = [
   {
     title: 'ReactのuseEffectはいつ使うべきですか？',
@@ -19,6 +23,8 @@ const questionItems = [
       { id: 'react', label: 'React' },
       { id: 'typescript', label: 'TypeScript' },
     ],
+    likeCount: 5,
+    isLikedByCurrentUser: true,
   },
   {
     title: 'TypeScriptのジェネリクスについて',
@@ -27,6 +33,8 @@ const questionItems = [
     tags: [
       { id: 'typescript', label: 'TypeScript' },
     ],
+    likeCount: 3,
+    isLikedByCurrentUser: false,
   },
   {
     title: 'Next.jsのApp RouterとPages Routerの違いは？',
@@ -35,6 +43,8 @@ const questionItems = [
     tags: [
       { id: 'nextjs', label: 'Next.js' },
     ],
+    likeCount: 0,
+    isLikedByCurrentUser: false,
   },
 ]
 
@@ -47,6 +57,8 @@ const workItems = [
       { id: 'nextjs', label: 'Next.js' },
       { id: 'tailwind', label: 'Tailwind' },
     ],
+    likeCount: 10,
+    isLikedByCurrentUser: true,
   },
   {
     title: 'タスク管理アプリ',
@@ -55,15 +67,20 @@ const workItems = [
     tags: [
       { id: 'react', label: 'React' },
     ],
+    likeCount: 2,
+    isLikedByCurrentUser: false,
   },
   {
     title: 'ECサイトLP',
     content: 'クライアント案件で制作したランディングページです。レスポンシブ対応済み。',
     date: '2026-04-15',
+    likeCount: 7,
+    isLikedByCurrentUser: false,
   },
 ]
 
 export const Default: Story = {
+  render,
   args: {
     questionItems,
     workItems,
@@ -71,6 +88,7 @@ export const Default: Story = {
 }
 
 export const OnlyQuestions: Story = {
+  render,
   args: {
     questionItems,
     workItems: [],
@@ -78,6 +96,7 @@ export const OnlyQuestions: Story = {
 }
 
 export const OnlyWorks: Story = {
+  render,
   args: {
     questionItems: [],
     workItems,
@@ -85,6 +104,7 @@ export const OnlyWorks: Story = {
 }
 
 export const Empty: Story = {
+  render,
   args: {
     questionItems: [],
     workItems: [],
@@ -92,6 +112,7 @@ export const Empty: Story = {
 }
 
 export const OverLimit: Story = {
+  render,
   args: {
     questionItems: [
       ...questionItems,
@@ -146,14 +167,15 @@ export const OverLimit: Story = {
 
 // 評価数0・自分も未評価
 export const RatingNoLikes: Story = {
+  render,
   args: {
     questionItems: [
       {
         title: '質問題名(仮)',
         content: '質問内容\nooooooooooooooo',
         date: '20xx/xx/xx',
-        likes: 0,
-        liked: false,
+        likeCount: 0,
+        isLikedByCurrentUser: false,
       },
     ],
     workItems: [],
@@ -162,14 +184,15 @@ export const RatingNoLikes: Story = {
 
 // 評価数1・自分のみ評価済み
 export const RatingLikedByUserOnly: Story = {
+  render,
   args: {
     questionItems: [
       {
         title: '質問題名(仮)',
         content: '質問内容\nooooooooooooooo',
         date: '20xx/xx/xx',
-        likes: 1,
-        liked: true,
+        likeCount: 1,
+        isLikedByCurrentUser: true,
       },
     ],
     workItems: [],
@@ -178,14 +201,15 @@ export const RatingLikedByUserOnly: Story = {
 
 // 評価数5・他ユーザーが評価済み・自分は未評価
 export const RatingLikedByOthers: Story = {
+  render,
   args: {
     questionItems: [
       {
         title: '質問題名(仮)',
         content: '質問内容\nooooooooooooooo',
         date: '20xx/xx/xx',
-        likes: 5,
-        liked: false,
+        likeCount: 5,
+        isLikedByCurrentUser: false,
       },
     ],
     workItems: [],
@@ -194,14 +218,15 @@ export const RatingLikedByOthers: Story = {
 
 // 評価数10・他ユーザーも自分も評価済み
 export const RatingLikedByAll: Story = {
+  render,
   args: {
     questionItems: [
       {
         title: '質問題名(仮)',
         content: '質問内容\nooooooooooooooo',
         date: '20xx/xx/xx',
-        likes: 10,
-        liked: true,
+        likeCount: 10,
+        isLikedByCurrentUser: true,
       },
     ],
     workItems: [],
