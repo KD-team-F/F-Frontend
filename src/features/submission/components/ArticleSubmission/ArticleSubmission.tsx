@@ -16,7 +16,6 @@ export function ArticleSubmission({ onSubmit }: ArticleSubmissionProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async () => {
-    if (!title.trim() || !content.trim() || isSubmitting) return
     try {
       setIsSubmitting(true)
       await onSubmit?.(title, content)
