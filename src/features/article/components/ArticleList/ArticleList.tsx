@@ -108,8 +108,8 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
             tags={item.tags}
             selectedTagIds={selectedTagIds}
             onTagClick={handleTagToggle}
-            likes={item.likes}
-            liked={item.liked}
+            likeCount={item.likeCount}
+            isLikedByCurrentUser={item.isLikedByCurrentUser}
           />
         ))}
         {showMore && (
