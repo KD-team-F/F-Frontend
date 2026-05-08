@@ -5,17 +5,13 @@ import { Tag } from '@/components/ui/tag/tag'
 import { CommentSection } from '@/features/comment/components/CommentSection/CommentSection'
 import type { Comment } from '@/features/comment/types/comment'
 import { RatingHeart } from '@/components/ui/rating/rating'
-
-export type Tag = {
-  id: string
-  label: string
-}
+import type { Tag as TagType } from '@/types/tag'
 
 type ArticleDetailProps = {
   title: string
   date: string
   content: string
-  tags?: Tag[]
+  tags?: TagType[]
   initialComments?: Comment[]
   onSubmit?: (content: string) => Promise<Comment>
 }
@@ -32,7 +28,7 @@ export function ArticleDetail({ title, date, content, tags = [], initialComments
       </div>
       {tags.length > 0 && (
         <div className="flex flex-wrap items-center gap-2 mb-8">
-          {tags.map((tag: Tag) => (
+          {tags.map((tag: TagType) => (
             <Tag key={tag.id} tagId={tag.id} label={tag.label} />
           ))}
         </div>
