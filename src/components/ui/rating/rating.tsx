@@ -4,41 +4,49 @@ import { useState } from "react";
 type Props = {
   defaultLiked?: boolean;
   defaultCount?: number;
+  isReadOnly?: boolean;
 };
 
 export const RatingHeart = ({
   defaultLiked = false,
   defaultCount = 0,
+  isReadOnly = false,
 }: Props) => {
-  const [liked, setLiked] = useState(defaultLiked);
-  const [count, setCount] = useState(defaultCount);
+  const [isLiked, setIsLiked] = useState(defaultLiked);
+  const [likeCount, setLikeCount] = useState(defaultCount);
 
-  const currentColor = liked ? "#ff0062" : "#5b5f6d";
+  const heartStrokeColor = isLiked ? "#ff0062" : "#5b5f6d";
 
-  const handleClick = () => {
-    if (liked) {
-      setCount((prev) => prev - 1);
-    } else {
-      setCount((prev) => prev + 1);
+  const handleHeartClick = () => {
+    if (isReadOnly) {
+      return;
     }
 
-    setLiked((prev) => !prev);
+    if (isLiked) {
+      setLikeCount((prev) => prev - 1);
+    } else {
+      setLikeCount((prev) => prev + 1);
+    }
+
+    setIsLiked((prev) => !prev);
   };
 
   return (
     <button
       type="button"
-      onClick={handleClick}
-      className="flex items-center gap-2 cursor-pointer select-none"
+      onClick={handleHeartClick}
+      className={`flex items-center gap-2 select-none ${isReadOnly ? "cursor-default" : "cursor-pointer"}`}
+      aria-label={`likes: ${likeCount}`}
+      aria-disabled={isReadOnly}
     >
       {/* ハート */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
-        stroke={currentColor}
+        stroke={heartStrokeColor}
         strokeWidth={2}
         className="w-6 h-6 transition-colors"
-        fill={liked ? currentColor : "none"}
+        fill={isLiked ? heartStrokeColor : "none"}
       >
         <path
           strokeLinecap="round"
@@ -48,7 +56,7 @@ export const RatingHeart = ({
       </svg>
 
       {/* 数字 */}
-      <span className="text-lg font-medium">{count}</span>
+      <span className="text-lg font-medium">{likeCount}</span>
     </button>
   );
 };
