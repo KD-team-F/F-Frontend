@@ -16,7 +16,7 @@ export const Item = ({ title, content, date, likeCount = 0, isLikedByCurrentUser
                 <h2 className="text-white text-xl font-bold leading-tight flex-1">
                     {title}
                 </h2>
-                <RatingHeart initialLikeCount={likeCount} initialLiked={isLikedByCurrentUser} isReadOnly />
+                <RatingHeart defaultCount={likeCount} defaultLiked={isLikedByCurrentUser} isReadOnly />
             </div>
 
             <div className="bg-gray-100 p-3 rounded-sm mb-3 whitespace-pre-wrap">

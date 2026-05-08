@@ -13,14 +13,14 @@ type Story = StoryObj<typeof RatingHeart>;
 
 export const Default: Story = {
   args: {
-    initialLiked: false,
-    initialLikeCount: 0,
+    defaultLiked: false,
+    defaultCount: 0,
   },
 };
 
 export const Liked: Story = {
   args: {
-    initialLiked: true,
-    initialLikeCount: 10,
+    defaultLiked: true,
+    defaultCount: 10,
   },
 };

@@ -1,18 +1,18 @@
 import { useState } from "react";
 
 type Props = {
-  initialLiked?: boolean;
-  initialLikeCount?: number;
+  defaultLiked?: boolean;
+  defaultCount?: number;
   isReadOnly?: boolean;
 };
 
 export const RatingHeart = ({
-  initialLiked = false,
-  initialLikeCount = 0,
+  defaultLiked = false,
+  defaultCount = 0,
   isReadOnly = false,
 }: Props) => {
-  const [isLiked, setIsLiked] = useState(initialLiked);
-  const [likeCount, setLikeCount] = useState(initialLikeCount);
+  const [isLiked, setIsLiked] = useState(defaultLiked);
+  const [likeCount, setLikeCount] = useState(defaultCount);
 
   const heartStrokeColor = isLiked ? "#ff0062" : "#5b5f6d";
 
