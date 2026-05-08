@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 import { ARTICLE_LIST_EXPANDED_LIMIT, ARTICLE_LIST_INITIAL_LIMIT } from '@/constants/articleList'
 import { Item } from '@/components/ui/Item/Item'
@@ -7,7 +8,6 @@ import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 import { Tag } from '@/components/ui/tag/tag'
 import type { ArticleItem } from '@/types/article'
-
 
 type FilterType = 'question' | 'work'
 
@@ -99,19 +99,30 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
       )}
 
       <div className="mt-6">
-        {displayItems.map((item, index) => (
-          <Item
-            key={index}
-            title={item.title}
-            content={item.content}
-            date={item.date}
-            tags={item.tags}
-            selectedTagIds={selectedTagIds}
-            onTagClick={handleTagToggle}
-            likeCount={item.likeCount}
-            isLikedByCurrentUser={item.isLikedByCurrentUser}
-          />
-        ))}
+        {displayItems.map((item, index) => {
+          const itemNode = (
+            <Item
+              key={item.id ?? index}
+              title={item.title}
+              content={item.content}
+              date={item.date}
+              tags={item.tags}
+              selectedTagIds={selectedTagIds}
+              likeCount={item.likeCount}
+              isLikedByCurrentUser={item.isLikedByCurrentUser}
+            />
+          )
+
+          if (!item.id) {
+            return itemNode
+          }
+
+          return (
+            <Link key={item.id} href={`/articles/${item.id}`} className="block">
+              {itemNode}
+            </Link>
+          )
+        })}
         {showMore && (
           <button
             onClick={() => setExpanded(true)}
