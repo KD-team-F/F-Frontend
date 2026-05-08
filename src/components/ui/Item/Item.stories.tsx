@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import  {Item}  from "./Item";
+import { Item } from "./Item";
 
 const meta: Meta<typeof Item> = {
   title: "Components/Item",
@@ -23,6 +23,31 @@ export const Default: Story = {
 ooooooooooooooo
 ooooooooooooooo`,
     date: "20xx/xx/xx",
+  },
+};
+
+export const WithTags: Story = {
+  args: {
+    title: "ReactのuseEffectはいつ使うべきですか？",
+    content: "useEffectの適切な使いどころが分からず困っています。",
+    date: "2026-04-24",
+    tags: [
+      { id: "react", label: "React" },
+      { id: "typescript", label: "TypeScript" },
+    ],
+  },
+};
+
+export const WithActiveTags: Story = {
+  args: {
+    title: "ReactのuseEffectはいつ使うべきですか？",
+    content: "useEffectの適切な使いどころが分からず困っています。",
+    date: "2026-04-24",
+    tags: [
+      { id: "react", label: "React" },
+      { id: "typescript", label: "TypeScript" },
+    ],
+    selectedTagIds: ["react"],
   },
 };
 
