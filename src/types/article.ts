@@ -5,6 +5,6 @@ export type ArticleItem = {
   content: string
   date: string
   tags?: Tag[]
-  likes?: number
-  liked?: boolean
+  likeCount?: number
+  isLikedByCurrentUser?: boolean
 }
