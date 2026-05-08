@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import  {Item}  from "./Item";
+import { Item } from "./Item";
 
 const meta: Meta<typeof Item> = {
   title: "Components/Item",
@@ -26,6 +26,31 @@ ooooooooooooooo`,
   },
 };
 
+export const WithTags: Story = {
+  args: {
+    title: "ReactのuseEffectはいつ使うべきですか？",
+    content: "useEffectの適切な使いどころが分からず困っています。",
+    date: "2026-04-24",
+    tags: [
+      { id: "react", label: "React" },
+      { id: "typescript", label: "TypeScript" },
+    ],
+  },
+};
+
+export const WithActiveTags: Story = {
+  args: {
+    title: "ReactのuseEffectはいつ使うべきですか？",
+    content: "useEffectの適切な使いどころが分からず困っています。",
+    date: "2026-04-24",
+    tags: [
+      { id: "react", label: "React" },
+      { id: "typescript", label: "TypeScript" },
+    ],
+    selectedTagIds: ["react"],
+  },
+};
+
 export const LongContent: Story = {
   args: {
     title: "長文テスト",
@@ -35,8 +60,7 @@ Tailwindのwhitespace-pre-wrapが効いているか確認。`,
     date: "2026/04/23",
   },
 };
-
-// 評価数0・自分も未評価
+  // 評価数0・自分も未評価
 export const NoRating: Story = {
   args: {
     title: "質問題名(仮)",
