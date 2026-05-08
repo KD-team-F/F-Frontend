@@ -10,6 +10,8 @@ type ArticleItem = {
   title: string
   content: string
   date: string
+  likes?: number
+  liked?: boolean
 }
 
 type FilterType = 'question' | 'work'
@@ -53,7 +55,14 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
       </div>
       <div className="mt-6">
         {displayItems.map((item, index) => (
-          <Item key={index} title={item.title} content={item.content} date={item.date} />
+          <Item
+            key={index}
+            title={item.title}
+            content={item.content}
+            date={item.date}
+            likes={item.likes}
+            liked={item.liked}
+          />
         ))}
         {showMore && (
           <button
