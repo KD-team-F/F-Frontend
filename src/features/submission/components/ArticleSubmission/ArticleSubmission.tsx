@@ -1,64 +1,63 @@
-'use client'
+import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import { ArticleEdit } from './ArticleEdit'
 
-import { useState } from 'react'
-import { Title } from '@/components/ui/Title/Title'
-import { Button } from '@/components/ui/Button/Button'
-import { Input } from '@/components/ui/Input/Input'
-import { MarkdownEditor } from '@/features/submission/components/MarkdownEditor/MarkdownEditor'
-
-type ArticleSubmissionProps = {
-  onSubmit?: (title: string, content: string) => void | Promise<void>
+const meta: Meta<typeof ArticleEdit> = {
+  title: 'Features/Article/ArticleEdit',
+  component: ArticleEdit,
+  tags: ['autodocs'],
+  parameters: {
+    layout: 'fullscreen',
+  },
 }
 
-export function ArticleSubmission({ onSubmit }: ArticleSubmissionProps) {
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
+export default meta
 
-  const handleSubmit = async () => {
-    try {
-      setIsSubmitting(true)
-      await onSubmit?.(title, content)
-    } finally {
-      setIsSubmitting(false)
-    }
-  }
+type Story = StoryObj<typeof ArticleEdit>
 
-  return (
-    <section className="max-w-3xl mx-auto px-4 py-8">
-      <Title className="mb-8">記事を投稿する</Title>
+/**
+ * 通常の編集画面
+ */
+export const Default: Story = {
+  args: {
+    defaultTitle: 'サンプル記事タイトル',
+    defaultContent: 'これはサンプルの本文です。\n\nマークダウンも使えます。',
+    onSubmit: async (title, content) => {
+      console.log('submit:', { title, content })
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+    },
+    onDelete: () => {
+      console.log('delete clicked')
+    },
+  },
+}
 
-      <div className="mb-8">
-        <Input
-          id="article-title"
-          name="title"
-          label="タイトル"
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="記事のタイトルを入力してください"  
-        />
-      </div>
+/**
+ * 削除ボタンなしバージョン
+ */
+export const WithoutDelete: Story = {
+  args: {
+    defaultTitle: '削除不可の記事',
+    defaultContent: '削除ボタンが表示されないパターンです。',
+    onSubmit: async (title, content) => {
+      console.log('submit:', { title, content })
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+    },
+  },
+}
 
-      <div className="mb-8">
-        <MarkdownEditor
-          id="article-content"
-          name="content"
-          label="質問の内容"
-          required
-          value={content}
-          onChange={setContent}
-          placeholder="エラーメッセージ、期待する動作、試したことなどを詳しく記載してください（マークダウン形式が使えます）..."
-        />
-      </div>
-
-      <div className="flex justify-end">
-        <Button
-          label="投稿"
-          onClick={handleSubmit}
-          disabled={isSubmitting || !title.trim() || !content.trim()}
-        />
-      </div>
-    </section>
-  )
+/**
+ * 初期値なし（新規編集に近い状態）
+ */
+export const Empty: Story = {
+  args: {
+    defaultTitle: '',
+    defaultContent: '',
+    onSubmit: async (title, content) => {
+      console.log('submit:', { title, content })
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+    },
+    onDelete: () => {
+      console.log('delete clicked')
+    },
+  },
 }
