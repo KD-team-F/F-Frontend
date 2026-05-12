@@ -8,6 +8,8 @@ import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 import { Tag } from '@/components/ui/tag/tag'
 import type { ArticleItem } from '@/types/article'
+import { useRouter } from 'next/navigation'
+import { RefreshCw } from 'lucide-react'
 
 type FilterType = 'question' | 'work'
 
@@ -25,6 +27,7 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
   const [expanded, setExpanded] = useState(false)
+  const router = useRouter()
 
   const currentItems = selectedFilter === 'question' ? questionItems : workItems
   const currentTitle = selectedFilter === 'question' ? '質問' : '制作物'
@@ -51,6 +54,7 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
     setSelectedFilter(newFilter)
     setSelectedTagIds([])
     setExpanded(false)
+    
   }
 
   const handleTagToggle = (tagId: string) => {
@@ -66,15 +70,25 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <Title>{currentTitle}</Title>
-        <FilterTab
-          options={FILTER_CONFIG}
-          selected={selectedFilter}
-          onChange={handleFilterChange}
-        />
-      </div>
+<div className="max-w-3xl mx-auto px-4 py-8">
+  <div className="flex items-center justify-between mb-6">
+    <div className="flex items-center gap-3">
+      <Title>{currentTitle}</Title>
+
+      <button
+        onClick={() => router.refresh()}
+        className="p-2 rounded-full hover:bg-gray-200 transition"
+      >
+        <RefreshCw size={18} />
+      </button>
+    </div>
+
+    <FilterTab
+      options={FILTER_CONFIG}
+      selected={selectedFilter}
+      onChange={handleFilterChange}
+    />
+  </div>
 
       {allTags.length > 0 && (
         <div className="flex flex-wrap items-center gap-2 mb-4">
