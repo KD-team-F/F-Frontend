@@ -97,3 +97,11 @@ export const SameLikesOrdering: Story = {
     workItems: [],
   },
 }
+
+// データがない場合の確認用
+export const Empty: Story = {
+  args: {
+    questionItems: [],
+    workItems: [],
+  },
+}

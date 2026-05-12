@@ -1,12 +1,18 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
-import { useMemo } from 'react'
 import type { ArticleItem } from '@/types/article'
+
+const DISPLAY_LIMIT = 10;
+const EPOCH_TIME = 0;
+
+const RANK_GOLD = 1;
+const RANK_SILVER = 2;
+const RANK_BRONZE = 3;
 
 type FilterType = 'question' | 'work'
 
@@ -20,22 +26,35 @@ const FILTER_CONFIG: { id: FilterType; label: string }[] = [
   { id: 'work', label: '制作物' },
 ]
 
+const RANK_BADGE_STYLES: Record<number, string> = {
+  [RANK_GOLD]: 'bg-yellow-400 text-white shadow-sm',
+  [RANK_SILVER]: 'bg-gray-300 text-white',
+  [RANK_BRONZE]: 'bg-orange-400 text-white',
+}
+
+const DEFAULT_BADGE_STYLE = 'text-gray-400 border border-gray-200'
+
+const getRankBadgeStyle = (rank: number): string => {
+  return RANK_BADGE_STYLES[rank] ?? DEFAULT_BADGE_STYLE
+}
+
 export function ArticleRanking({ questionItems, workItems }: ArticleRankingProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
 
-  const currentItems = selectedFilter === 'question' ? questionItems : workItems;
+  const currentItems = selectedFilter === 'question' ? questionItems : workItems
 
   const sortedItems = useMemo(() => {
     return [...currentItems]
       .sort((a, b) => {
-        const diff = (b.likeCount ?? 0) - (a.likeCount ?? 0);
-        if (diff !== 0) return diff;
-        return new Date(b.date || 0).getTime() - new Date(a.date || 0).getTime();
-      })
-      .slice(0, 10);
-  }, [currentItems]);
+        const diff = (b.likeCount ?? 0) - (a.likeCount ?? 0)
+        if (diff !== 0) return diff
 
-  
+        const dateA = new Date(a.date || EPOCH_TIME).getTime()
+        const dateB = new Date(b.date || EPOCH_TIME).getTime()
+        return dateB - dateA
+      })
+      .slice(0, DISPLAY_LIMIT)
+  }, [currentItems])
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
@@ -53,15 +72,12 @@ export function ArticleRanking({ questionItems, workItems }: ArticleRankingProps
           <p className="text-gray-500 text-center py-10">データがありません</p>
         ) : (
           sortedItems.map((item, index) => {
+            const rank = index + 1
+            
             const itemNode = (
               <div className="relative pl-12">
-                {/* 順位バッジ */}
-                <div className={`absolute left-0 top-0 w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm
-                  ${index === 0 ? 'bg-yellow-400 text-white shadow-sm' : 
-                    index === 1 ? 'bg-gray-300 text-white' : 
-                    index === 2 ? 'bg-orange-400 text-white' : 'text-gray-400 border border-gray-200'}`}
-                >
-                  {index + 1}
+                <div className={`absolute left-0 top-0 w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm ${getRankBadgeStyle(rank)}`}>
+                  {rank}
                 </div>
                 
                 <Item
