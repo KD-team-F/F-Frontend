@@ -73,13 +73,6 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   <div className="flex items-center justify-between mb-6">
     <div className="flex items-center gap-3">
       <Title>{currentTitle}</Title>
-
-      <button
-        onClick={() => window.location.reload()}
-        className="p-2 rounded-full hover:bg-gray-200 transition"
-      >
-        <RefreshCw size={18} />
-      </button>
     </div>
 
     <FilterTab
@@ -89,27 +82,37 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
     />
   </div>
 
-      {allTags.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 mb-4">
-          {allTags.map((tag) => (
-            <Tag
-              key={tag.id}
-              tagId={tag.id}
-              label={tag.label}
-              isActive={selectedTagIds.includes(tag.id)}
-              onClick={() => handleTagToggle(tag.id)}
-            />
-          ))}
-          {selectedTagIds.length > 0 && (
-            <button
-              onClick={handleClearTags}
-              className="text-sm text-gray-500 underline hover:text-gray-700"
-            >
-              クリア
-            </button>
-          )}
-        </div>
+     {allTags.length > 0 && (
+  <div className="flex items-center justify-between mb-4">
+    <div className="flex flex-wrap items-center gap-2">
+      {allTags.map((tag) => (
+        <Tag
+          key={tag.id}
+          tagId={tag.id}
+          label={tag.label}
+          isActive={selectedTagIds.includes(tag.id)}
+          onClick={() => handleTagToggle(tag.id)}
+        />
+      ))}
+
+      {selectedTagIds.length > 0 && (
+        <button
+          onClick={handleClearTags}
+          className="text-sm text-gray-500 underline hover:text-gray-700"
+        >
+          クリア
+        </button>
       )}
+    </div>
+
+    <button
+      onClick={() => window.location.reload()}
+      className="p-2 rounded-full hover:bg-gray-200 transition"
+    >
+      <RefreshCw size={18} />
+    </button>
+  </div>
+)}
 
       <div className="mt-6">
         {displayItems.map((item, index) => {
