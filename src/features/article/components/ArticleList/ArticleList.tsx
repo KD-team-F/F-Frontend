@@ -8,7 +8,6 @@ import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 import { Tag } from '@/components/ui/tag/tag'
 import type { ArticleItem } from '@/types/article'
-import { useRouter } from 'next/navigation'
 import { RefreshCw } from 'lucide-react'
 
 type FilterType = 'question' | 'work'
@@ -27,7 +26,7 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
   const [expanded, setExpanded] = useState(false)
-  const router = useRouter()
+
 
   const currentItems = selectedFilter === 'question' ? questionItems : workItems
   const currentTitle = selectedFilter === 'question' ? '質問' : '制作物'
@@ -76,7 +75,7 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
       <Title>{currentTitle}</Title>
 
       <button
-        onClick={() => router.refresh()}
+        onClick={() => window.location.reload()}
         className="p-2 rounded-full hover:bg-gray-200 transition"
       >
         <RefreshCw size={18} />
