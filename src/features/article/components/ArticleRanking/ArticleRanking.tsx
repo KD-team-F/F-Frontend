@@ -9,10 +9,10 @@ import type { ArticleItem } from '@/types/article'
 
 const DISPLAY_LIMIT = 10;
 const EPOCH_TIME = 0;
-
 const RANK_GOLD = 1;
 const RANK_SILVER = 2;
 const RANK_BRONZE = 3;
+const RANK_OFFSET = 1;
 
 type FilterType = 'question' | 'work'
 
@@ -72,7 +72,7 @@ export function ArticleRanking({ questionItems, workItems }: ArticleRankingProps
           <p className="text-gray-500 text-center py-10">データがありません</p>
         ) : (
           sortedItems.map((item, index) => {
-            const rank = index + 1
+            const rank = index + RANK_OFFSET;
             
             const itemNode = (
               <div className="relative pl-12">
