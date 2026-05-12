@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw'
 import { users } from '@/mocks/data/users'
 import type { User } from '@/types/user/user'
 
-export const authHandlers = [
+export const registerHandlers = [
   http.post('/api/auth/register', async ({ request }) => {
     try {
       const body = (await request.json()) as User
