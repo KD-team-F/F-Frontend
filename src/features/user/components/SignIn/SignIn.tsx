@@ -57,20 +57,14 @@ export function SignIn({ onSubmit, onNavigateToSignUp }: SignInProps) {
     }
   }
 
-  
+
   // SignInコンポーネントは、メールアドレス、パスワード、送信状態、ステータスメッセージ、およびステータスタイプを表示します。
   return (
     
     // 最小の高さを画面全体に設定し、中央に配置された背景色のあるコンテナを作成します。
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      
-      // ログインフォームを含む白い背景のカードを作成します。
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-        
-        // タイトルを表示します。
         <h1 className="text-4xl font-bold text-center mb-8">Sign In</h1>
-        
-        // 送信状態に応じて、ロード中のメッセージやステータスメッセージを表示します。
         {isSubmitting ? (
           <div className="text-center text-blue-700 mb-6">ロード中です...</div>
         )
@@ -85,11 +79,7 @@ export function SignIn({ onSubmit, onNavigateToSignUp }: SignInProps) {
         // ステータスメッセージが存在しない場合は、何も表示しません。
         : null}
 
-
-        // フォームの入力フィールドとボタンを配置するためのスペースを作成します。
         <div className="space-y-6">
-          
-          // メールアドレスの入力フィールドを表示します。ユーザーが入力した値はemail状態に保存されます。
           <div>
             <Input
               id="email"
@@ -103,8 +93,6 @@ export function SignIn({ onSubmit, onNavigateToSignUp }: SignInProps) {
               disabled={isSubmitting}
             />
           </div>
-
-          // パスワードの入力フィールドを表示します。ユーザーが入力した値はpassword状態に保存されます。
           <div>
             <Input
               id="password"
@@ -117,8 +105,6 @@ export function SignIn({ onSubmit, onNavigateToSignUp }: SignInProps) {
               disabled={isSubmitting}
             />
           </div>
-
-          // ログインボタンを表示します。ユーザーがクリックするとhandleSubmit関数が呼び出されます。
           <div className="flex justify-center pt-4">
             <Button
               label="ログイン"
@@ -128,13 +114,9 @@ export function SignIn({ onSubmit, onNavigateToSignUp }: SignInProps) {
               className="w-full"
             />
           </div>
-
-          // 新規登録への案内テキストを表示します。
           <div className="text-center text-sm text-gray-600 py-4">
             はじめてご利用の方（新規会員登録）
           </div>
-
-          // 新規登録ボタンを表示します。ユーザーがクリックするとonNavigateToSignUp関数が呼び出されます。
           <div className="flex justify-center">
             <Button
               label="新規登録はこちら"

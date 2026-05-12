@@ -79,6 +79,7 @@ export const Loading: Story = {
 
 /** 登録ボタンを押すとエラーがスローされる */
 export const WithFailure: Story = {
+
   // ストーリーの引数を定義します。
   // ここでは、onSubmitに登録に失敗するシナリオをシミュレートする関数を渡し、
   // onNavigateToSignInにはログイン画面への遷移をコンソールに出力する関数を渡します。

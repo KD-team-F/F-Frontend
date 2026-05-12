@@ -77,21 +77,15 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
     }
   }
 
-  
+
   // SignUpコンポーネントは、
   // ユーザーID、学年、学科、メールアドレス、パスワード、およびパスワード確認の入力フィールドとサインアップボタンを表示します。
   return (
     
     // 最小の高さを画面全体に設定し、中央に配置された背景色のあるコンテナを作成します。
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-    
-      // サインアップフォームを含む白い背景のカードを作成します。
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-    
-        // サインアップ画面のタイトルを表示します。
         <h1 className="text-4xl font-bold text-center mb-8">Sign Up</h1>
-
-        // 送信状態に応じて、ロード中のメッセージやステータスメッセージを表示します。
         {isSubmitting ? (
           <div className="text-center text-blue-700 mb-6">ロード中です...</div>
         )
@@ -105,10 +99,8 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
         // ステータスメッセージが存在しない場合は、何も表示しません。
         : null}
 
-        // フォームの入力フィールドとボタンを配置するためのスペースを作成します。
         <div className="space-y-6">
           <div>
-            // ユーザーIDの入力フィールドを表示します。ユーザーが入力すると、userIdの状態が更新されます。
             <Input
               id="userId"
               name="userId"
@@ -120,8 +112,6 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
               disabled={isSubmitting}
             />
           </div>
-
-          // 学年の入力フィールドを表示します。ユーザーが入力すると、gradeの状態が更新されます。
           <div>
             <Input
               id="grade"
@@ -134,8 +124,6 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
               disabled={isSubmitting}
             />
           </div>
-
-          // 学科の入力フィールドを表示します。ユーザーが入力すると、departmentの状態が更新されます。
           <div>
             <Input
               id="department"
@@ -148,8 +136,6 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
               disabled={isSubmitting}
             />
           </div>
-
-          // メールアドレスの入力フィールドを表示します。ユーザーが入力すると、emailの状態が更新されます。
           <div>
             <Input
               id="email"
@@ -163,8 +149,6 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
               disabled={isSubmitting}
             />
           </div>
-
-          // パスワードの入力フィールドを表示します。ユーザーが入力すると、passwordの状態が更新されます。
           <div>
             <Input
               id="password"
@@ -177,8 +161,6 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
               disabled={isSubmitting}
             />
           </div>
-
-          // パスワード確認の入力フィールドを表示します。ユーザーが入力すると、passwordConfirmの状態が更新されます。
           <div>
             <Input
               id="passwordConfirm"
@@ -191,8 +173,6 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
               disabled={isSubmitting}
             />
           </div>
-
-          // サインアップボタンを表示します。ユーザーがクリックするとhandleSubmit関数が呼び出されます。
           <div className="flex justify-center pt-4">
             <Button
               label="新規登録"
@@ -202,13 +182,9 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
               className="w-full"
             />
           </div>
-
-          // ログインへの案内テキストを表示します。
           <div className="text-center text-sm text-gray-600 py-4">
             既にサイトをご利用の方（ログイン）
           </div>
-
-          // ログインボタンを表示します。ユーザーがクリックするとonNavigateToSignIn関数が呼び出されます。
           <div className="flex justify-center">
             <Button
               label="ログインはこちら"
