@@ -5,12 +5,7 @@ import {
   type ArticleItem,
 } from "@/mocks/data/articles";
 import type { Tag } from "@/types/tag";
-
-type ArticlePostRequestBody = {
-  title: string;
-  content: string;
-  tag: unknown;
-};
+import type { ArticlePostRequestBody } from "@/types/article";
 
 function isArticleItem(value: string | null): value is ArticleItem {
   return value === "question" || value === "work";

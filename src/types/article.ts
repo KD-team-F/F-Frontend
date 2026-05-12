@@ -9,3 +9,9 @@ export type ArticleItem = {
   likeCount?: number
   isLikedByCurrentUser?: boolean
 }
+
+export type ArticlePostRequestBody = {
+  title: string;
+  content: string;
+  tag: unknown;
+};
