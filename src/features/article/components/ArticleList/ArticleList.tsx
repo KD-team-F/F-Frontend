@@ -8,6 +8,7 @@ import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 import { Tag } from '@/components/ui/tag/tag'
 import type { ArticleItem } from '@/types/article'
+import { RefreshCw } from 'lucide-react'
 
 type FilterType = 'question' | 'work'
 
@@ -66,37 +67,50 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <Title>{currentTitle}</Title>
-        <FilterTab
-          options={FILTER_CONFIG}
-          selected={selectedFilter}
-          onChange={handleFilterChange}
-        />
-      </div>
+<div className="max-w-3xl mx-auto px-4 py-8">
+  <div className="flex items-center justify-between mb-6">
+    <div className="flex items-center gap-3">
+      <Title>{currentTitle}</Title>
+    </div>
 
-      {allTags.length > 0 && (
-        <div className="flex flex-wrap items-center gap-2 mb-4">
-          {allTags.map((tag) => (
-            <Tag
-              key={tag.id}
-              tagId={tag.id}
-              label={tag.label}
-              isActive={selectedTagIds.includes(tag.id)}
-              onClick={() => handleTagToggle(tag.id)}
-            />
-          ))}
-          {selectedTagIds.length > 0 && (
-            <button
-              onClick={handleClearTags}
-              className="text-sm text-gray-500 underline hover:text-gray-700"
-            >
-              クリア
-            </button>
-          )}
-        </div>
+    <FilterTab
+      options={FILTER_CONFIG}
+      selected={selectedFilter}
+      onChange={handleFilterChange}
+    />
+  </div>
+
+     {allTags.length > 0 && (
+  <div className="flex items-center justify-between mb-4">
+    <div className="flex flex-wrap items-center gap-2">
+      {allTags.map((tag) => (
+        <Tag
+          key={tag.id}
+          tagId={tag.id}
+          label={tag.label}
+          isActive={selectedTagIds.includes(tag.id)}
+          onClick={() => handleTagToggle(tag.id)}
+        />
+      ))}
+
+      {selectedTagIds.length > 0 && (
+        <button
+          onClick={handleClearTags}
+          className="text-sm text-gray-500 underline hover:text-gray-700"
+        >
+          クリア
+        </button>
       )}
+    </div>
+
+    <button
+      onClick={() => window.location.reload()}
+      className="p-2 rounded-full hover:bg-gray-200 transition"
+    >
+      <RefreshCw size={18} />
+    </button>
+  </div>
+)}
 
       <div className="mt-6">
         {displayItems.map((item, index) => {
