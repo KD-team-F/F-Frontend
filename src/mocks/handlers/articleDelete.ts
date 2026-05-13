@@ -1,6 +1,8 @@
 import { http, HttpResponse } from 'msw'
 import { articles } from '@/mocks/data/articles'
 
+const PAGE_NOT_FOUND = -1;
+
 export const articleDeleteHandlers = [
   http.delete('/api/article/delete/:id', async ({ params }) => {
     try {
@@ -8,7 +10,7 @@ export const articleDeleteHandlers = [
 
       const index = articles.findIndex((article) => article.id === id)
 
-      if (index === -1) {
+      if (index === PAGE_NOT_FOUND) {
         return HttpResponse.json(
           { message: `id: ${id} の記事は存在しません` },
           { status: 404 },
