@@ -27,7 +27,6 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
   const [expanded, setExpanded] = useState(false)
 
-
   const currentItems = selectedFilter === 'question' ? questionItems : workItems
   const currentTitle = selectedFilter === 'question' ? '質問' : '制作物'
 
@@ -53,7 +52,6 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
     setSelectedFilter(newFilter)
     setSelectedTagIds([])
     setExpanded(false)
-    
   }
 
   const handleTagToggle = (tagId: string) => {
