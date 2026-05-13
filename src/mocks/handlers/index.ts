@@ -5,6 +5,7 @@ import { articlePostHandlers } from '@/mocks/handlers/articlePost'
 import { articleDeleteHandlers } from '@/mocks/handlers/articleDelete'
 import { registerHandlers } from '@/mocks/handlers/register'
 import { loginHandlers } from '@/mocks/handlers/login'
+import { articleEditHandlers } from '@/mocks/handlers/articleEdit'
 
 export const handlers = [
   ...articleListHandlers,
@@ -12,6 +13,7 @@ export const handlers = [
   ...articleCommentHandlers,
   ...articlePostHandlers,
   ...articleDeleteHandlers,
+  ...articleEditHandlers,
   ...registerHandlers,
   ...loginHandlers,
 ]
