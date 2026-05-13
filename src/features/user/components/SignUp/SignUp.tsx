@@ -13,11 +13,9 @@ type SignUpProps = {
     password: string
     passwordConfirm: string
   }) => void | Promise<void>
-  
-  onNavigateToSignIn?: () => void
 }
 
-export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
+export function SignUp({ onSubmit }: SignUpProps) {
 
   const [userId, setUserId] = useState('')
   const [grade, setGrade] = useState('')
@@ -35,7 +33,7 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
     setStatusType('info')
 
     if (password !== passwordConfirm) {
-      setStatusMessage('パスワードが違います')
+      setStatusMessage('確認用パスワードが違います')
       setStatusType('error')
       return
     } try {
@@ -73,7 +71,7 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
             <Input
               id="userId"
               name="userId"
-              label="userid"
+              label="userId"
               required
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
@@ -157,7 +155,6 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
           <div className="flex justify-center">
             <Button
               label="ログインはこちら"
-              onClick={onNavigateToSignIn}
               disabled={isSubmitting}
               variant="secondary"
               className="w-full"

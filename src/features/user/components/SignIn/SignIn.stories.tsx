@@ -34,7 +34,6 @@ const loadingSubmit = async (): Promise<void> => {
 export const Default: Story = {
   args: {
     onSubmit: successSubmit,
-    onNavigateToSignUp: () => console.log('登録画面へ遷移'),
   },
 }
 
@@ -42,7 +41,6 @@ export const Default: Story = {
 export const Loading: Story = {
   args: {
     onSubmit: loadingSubmit,
-    onNavigateToSignUp: () => console.log('登録画面へ遷移'),
   },
 }
 
@@ -50,6 +48,5 @@ export const Loading: Story = {
 export const WithFailure: Story = {
   args: {
     onSubmit: failureSubmit,
-    onNavigateToSignUp: () => console.log('登録画面へ遷移'),
   },
 }

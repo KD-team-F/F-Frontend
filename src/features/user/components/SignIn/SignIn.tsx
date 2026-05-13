@@ -9,10 +9,9 @@ type SignInProps = {
     email: string
     password: string
   }) => void | Promise<void>
-  onNavigateToSignUp?: () => void
 }
 
-export function SignIn({ onSubmit, onNavigateToSignUp }: SignInProps) {
+export function SignIn({ onSubmit }: SignInProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -90,7 +89,6 @@ export function SignIn({ onSubmit, onNavigateToSignUp }: SignInProps) {
           <div className="flex justify-center">
             <Button
               label="新規登録はこちら"
-              onClick={onNavigateToSignUp}
               disabled={isSubmitting}
               variant="secondary"
               className="w-full"
