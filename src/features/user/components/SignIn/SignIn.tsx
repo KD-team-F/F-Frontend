@@ -20,18 +20,39 @@ export function SignIn({ onSubmit }: SignInProps) {
   const handleSubmit = async () => {
     setStatusMessage(null)
     setStatusType('info')
+
     try {
       setIsSubmitting(true)
-      await onSubmit?.({
-        email,
-        password,
-      })
-    }
-    catch {
-      setStatusMessage('エラーが発生しました')
+
+      if (onSubmit) {
+        await onSubmit({
+          email,
+          password,
+        })
+      } else {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        })
+
+        const data = await response.json()
+        if (!response.ok) {
+          throw new Error(data.message ?? 'ログインに失敗しました')
+        }
+
+        setStatusMessage('ログインに成功しました')
+      }
+    } catch (error) {
+      setStatusMessage(
+        error instanceof Error
+          ? error.message
+          : 'エラーが発生しました',
+      )
       setStatusType('error')
-    }
-    finally {
+    } finally {
       setIsSubmitting(false)
     }
   }

@@ -15,7 +15,7 @@ type Story = StoryObj<typeof SignUp>
 
 const successSubmit = async (formData: {
   userId: string
-  grade: string
+  grade: number
   department: string
   email: string
   password: string
