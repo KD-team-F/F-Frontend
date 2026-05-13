@@ -4,11 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/Button/Button'
 import { Input } from '@/components/ui/Input/Input'
 
-// SignUpPropsは、SignUpコンポーネントが受け取るプロパティの型を定義します。
 type SignUpProps = {
-
-  // onSubmitプロパティは、ユーザーがサインアップフォームを送信したときに呼び出される関数の型を定義します。
-  // 送信されたフォームデータには、ユーザーID、学年、学科、メールアドレス、パスワード、およびパスワード確認が含まれます。
   onSubmit?: (formData: {
     userId: string
     grade: string
@@ -17,16 +13,12 @@ type SignUpProps = {
     password: string
     passwordConfirm: string
   }) => void | Promise<void>
-
-  // onNavigateToSignInプロパティは、ユーザーがサインイン画面に移動したときに呼び出される関数の型を定義します。
+  
   onNavigateToSignIn?: () => void
 }
 
-// SignUpコンポーネントは、ユーザーがサインアップできるフォームを提供します。
 export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
 
-  // useStateフックを使用して、
-  // ユーザーID、学年、学科、メールアドレス、パスワード、パスワード確認、送信状態、ステータスメッセージ、およびステータスタイプを管理します。
   const [userId, setUserId] = useState('')
   const [grade, setGrade] = useState('')
   const [department, setDepartment] = useState('')
@@ -36,25 +28,17 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
   const [statusType, setStatusType] = useState<'info' | 'error'>('info')
-
-  // handleSubmit関数は、ユーザーがサインアップボタンをクリックしたときに呼び出されます。
+  
   const handleSubmit = async () => {
 
-    // ステータスメッセージとステータスタイプを初期化し、送信状態をtrueにします。
     setStatusMessage(null)
     setStatusType('info')
 
-    // パスワードとパスワード確認が一致しない場合は、
-    // ステータスメッセージにエラーメッセージを設定し、ステータスタイプを'error'に変更して、関数を終了します。
     if (password !== passwordConfirm) {
       setStatusMessage('パスワードが違います')
       setStatusType('error')
       return
-    }
-
-    // onSubmitプロパティが提供されている場合は、フォームデータを渡して呼び出します。
-    try {
-      // onSubmitがPromiseを返す場合は、awaitを使用して完了を待ちます。
+    } try {
       setIsSubmitting(true)
       await onSubmit?.({
         userId,
@@ -64,40 +48,25 @@ export function SignUp({ onSubmit, onNavigateToSignIn }: SignUpProps) {
         password,
         passwordConfirm,
       })
-    }
-    // エラーが発生した場合は、
-    // ステータスメッセージをエラーメッセージに設定し、ステータスタイプを'error'に変更します。
-    catch {
+    } catch {
       setStatusMessage('エラーが発生しました')
       setStatusType('error')
-    }
-    // 最後に、送信状態をfalseに戻します。
-    finally {
+    } finally {
       setIsSubmitting(false)
     }
   }
-
-
-  // SignUpコンポーネントは、
-  // ユーザーID、学年、学科、メールアドレス、パスワード、およびパスワード確認の入力フィールドとサインアップボタンを表示します。
+  
   return (
-    
-    // 最小の高さを画面全体に設定し、中央に配置された背景色のあるコンテナを作成します。
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-4xl font-bold text-center mb-8">Sign Up</h1>
         {isSubmitting ? (
           <div className="text-center text-blue-700 mb-6">ロード中です...</div>
-        )
-        
-        // ステータスメッセージが存在する場合は、それを表示します。エラーの場合は赤色、情報の場合は青色で表示します。
-       : statusMessage ? (
+        ) : statusMessage ? (
           <div className={`text-center mb-6 ${statusType === 'error' ? 'text-red-600' : 'text-blue-700'}`}>
             {statusMessage}
           </div>
-        )
-        // ステータスメッセージが存在しない場合は、何も表示しません。
-        : null}
+        ) : null}
 
         <div className="space-y-6">
           <div>
