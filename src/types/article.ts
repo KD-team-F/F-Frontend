@@ -10,8 +10,9 @@ export type ArticleItem = {
   isLikedByCurrentUser?: boolean
 }
 
-export type ArticlePostRequestBody = {
+export type ArticleRequestBody = {
   title: string;
   content: string;
   tag: unknown;
 };
+
