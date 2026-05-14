@@ -67,6 +67,8 @@ export const articlePostHandlers = [
         content,
         date: new Date().toISOString().slice(0, 10),
         tags,
+        likeCount: 0,
+        isLikedByCurrentUser: false,
         initialComments: [],
       };
 

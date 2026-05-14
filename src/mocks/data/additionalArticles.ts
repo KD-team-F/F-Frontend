@@ -24,6 +24,8 @@ export const additionalArticles: MockArticle[] = [
 
 - 関数コンポーネントで同じことを実現する方法はありますか？
 - Suspense と組み合わせる場合の注意点があれば教えてください。`,
+    likeCount: 0,
+    isLikedByCurrentUser: false,
     initialComments: [],
   },
   {
@@ -49,6 +51,8 @@ expect(user).toEqual({ name: 'taro' })
 \`\`\`
 
 どちらが推奨でしょうか？`,
+    likeCount: 0,
+    isLikedByCurrentUser: false,
     initialComments: [],
   },
   {
@@ -72,6 +76,8 @@ const useStore = create<BearSlice & FishSlice>()((...a) => ({
 \`\`\`
 
 型推論がうまく効く書き方を教えてください。`,
+    likeCount: 0,
+    isLikedByCurrentUser: false,
     initialComments: [],
   },
   {
@@ -100,6 +106,8 @@ OpenAI API と Next.js App Router で作ったストリーミング対応のチ�
 - **ストリーミング対応**: \`streamText\` でリアルタイム表示
 - **会話履歴の保持**: ローカルストレージで永続化
 - **マークダウン表示**: コードブロックのシンタックスハイライト付き`,
+    likeCount: 0,
+    isLikedByCurrentUser: false,
     initialComments: [],
   },
   {
@@ -127,6 +135,8 @@ GitHub の PR レビューを効率化するブラウザ拡張機能です。
 - React + TypeScript (Popup UI)
 - Chrome Extension Manifest V3
 - Content Scripts でページに注入`,
+    likeCount: 0,
+    isLikedByCurrentUser: false,
     initialComments: [],
   },
   {
@@ -153,6 +163,8 @@ GitHub の PR レビューを効率化するブラウザ拡張機能です。
 
 - アクセシビリティ (ARIA 属性、キーボード操作) を全コンポーネントに対応
 - Chromatic で Visual Regression Test を自動化`,
+    likeCount: 0,
+    isLikedByCurrentUser: false,
     initialComments: [],
   },
 ]
