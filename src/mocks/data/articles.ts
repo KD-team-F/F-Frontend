@@ -1,19 +1,13 @@
-import type { Tag } from '@/types/tag'
+import type { Article, ArticleCategory } from '@/types/article'
 import type { Comment } from '@/features/comment/types/comment'
 
-export type ArticleItem = 'question' | 'work'
+export type { ArticleCategory }
 
-export type Article = {
-  id: string
-  item: ArticleItem
-  title: string
-  content: string
-  date: string
-  tags: Tag[]
+export type MockArticle = Article & {
   initialComments: Comment[]
 }
 
-export const articles: Article[] = [
+export const articles: MockArticle[] = [
   {
     id: 'q-1',
     item: 'question',

@@ -1,13 +1,9 @@
 import { http, HttpResponse } from "msw";
-import {
-  articles,
-  type Article,
-  type ArticleItem,
-} from "@/mocks/data/articles";
+import { articles, type MockArticle } from "@/mocks/data/articles";
 import type { Tag } from "@/types/tag";
-import type { ArticleRequestBody } from "@/types/article";
+import type { ArticleCategory, ArticleRequestBody } from "@/types/article";
 
-function isArticleItem(value: string | null): value is ArticleItem {
+function isArticleItem(value: string | null): value is ArticleCategory {
   return value === "question" || value === "work";
 }
 
@@ -64,7 +60,7 @@ export const articlePostHandlers = [
         .filter((tag): tag is Tag => tag !== null);
 
       const prefix = item === "question" ? "q" : "w";
-      const newArticle: Article = {
+      const newArticle: MockArticle = {
         id: `${prefix}-${crypto.randomUUID()}`,
         item,
         title,
