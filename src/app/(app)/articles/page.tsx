@@ -1,6 +1,6 @@
 import { Header } from '@/components/layouts/Header/Header'
 import { Footer } from '@/components/layouts/Footer/Footer'
-import { ArticleList } from '@/features/article/components/ArticleList/ArticleList'
+import { ArticleRanking } from '@/features/article/components/ArticleRanking/ArticleRanking'
 
 const questionItems = [
   {
@@ -38,7 +38,7 @@ export default function Page() {
       <Header />
 
       <main className="flex-1">
-        <ArticleList
+        <ArticleRanking
           questionItems={questionItems}
           workItems={workItems}
         />
