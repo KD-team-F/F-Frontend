@@ -5,6 +5,8 @@ export type { ArticleCategory }
 
 export type MockArticle = Article & {
   initialComments: Comment[]
+  likeCount: number
+  isLikedByCurrentUser: boolean
 }
 
 export const articles: MockArticle[] = [
@@ -17,6 +19,8 @@ export const articles: MockArticle[] = [
       { id: 'react', label: 'React' },
       { id: 'performance', label: 'Performance' },
     ],
+    likeCount: 120,
+    isLikedByCurrentUser: false,
     content: `## 困っていること
 
 \`useMemo\` と \`useCallback\` の使い分けがいまいち分かりません。
@@ -52,6 +56,8 @@ export const articles: MockArticle[] = [
       { id: 'typescript', label: 'TypeScript' },
       { id: 'generics', label: 'Generics' },
     ],
+    likeCount: 85,
+    isLikedByCurrentUser: true,
     content: `ジェネリクスを使うと推論が外れてしまうことがあります。
 
 \`\`\`ts
@@ -81,6 +87,8 @@ const v = pick(user, 'name') // string になってほしいが unknown にな�
       { id: 'nextjs', label: 'Next.js' },
       { id: 'app-router', label: 'App Router' },
     ],
+    likeCount: 85,
+    isLikedByCurrentUser: false,
     content: `## 質問
 
 サーバーコンポーネントとクライアントコンポーネントの使い分けが分かりません。
@@ -112,6 +120,8 @@ const v = pick(user, 'name') // string になってほしいが unknown にな�
       { id: 'css', label: 'CSS' },
       { id: 'stacking-context', label: 'Stacking Context' },
     ],
+    likeCount: 42,
+    isLikedByCurrentUser: false,
     content: `親要素に \`position: relative\` を付けても上に表示されません。
 
 \`\`\`css
@@ -137,6 +147,8 @@ const v = pick(user, 'name') // string になってほしいが unknown にな�
       { id: 'git', label: 'Git' },
       { id: 'github', label: 'GitHub' },
     ],
+    likeCount: 200,
+    isLikedByCurrentUser: false,
     content: `## やってしまったこと
 
 間違って他人のブランチに \`git push --force\` してしまいました…
@@ -169,6 +181,8 @@ const v = pick(user, 'name') // string になってほしいが unknown にな�
       { id: 'tailwind', label: 'Tailwind CSS' },
       { id: 'css', label: 'CSS' },
     ],
+    likeCount: 30,
+    isLikedByCurrentUser: false,
     content: `\`tailwind.config.ts\` でカスタムカラーが反映されません。
 
 \`\`\`ts
@@ -201,6 +215,8 @@ export default {
       { id: 'docker', label: 'Docker' },
       { id: 'devops', label: 'DevOps' },
     ],
+    likeCount: 50,
+    isLikedByCurrentUser: false,
     content: `\`docker compose up\` で以下のエラーが出ます。
 
 \`\`\`
@@ -220,6 +236,61 @@ Error response from daemon: driver failed programming external connectivity
     ],
   },
   {
+    id: 'q-8',
+    item: 'question',
+    title: 'Prismaのマイグレーションエラー',
+    date: '2026-04-15',
+    tags: [{ id: 'prisma', label: 'Prisma' }],
+    likeCount: 15,
+    isLikedByCurrentUser: false,
+    content: 'データベースサーバーに接続できないエラーが出ます。',
+    initialComments: []
+  },
+  {
+    id: 'q-9',
+    item: 'question',
+    title: 'useEffectが2回実行される',
+    date: '2026-04-12',
+    tags: [{ id: 'react', label: 'React' }],
+    likeCount: 60,
+    isLikedByCurrentUser: false,
+    content: 'Strict Modeによる挙動について教えてください。',
+    initialComments: []
+  },
+  {
+    id: 'q-10',
+    item: 'question',
+    title: 'Jestで非同期関数のテスト',
+    date: '2026-04-10',
+    tags: [{ id: 'jest', label: 'Jest' }],
+    likeCount: 25,
+    isLikedByCurrentUser: false,
+    content: 'awaitしているのにテストが先に終了してしまいます。',
+    initialComments: []
+  },
+  {
+    id: 'q-11',
+    item: 'question',
+    title: 'Node.jsのバージョン切り替え',
+    date: '2026-04-08',
+    tags: [{ id: 'nodejs', label: 'Node.js' }],
+    likeCount: 40,
+    isLikedByCurrentUser: true,
+    content: 'nvmとfnm、どちらがおすすめですか？',
+    initialComments: []
+  },
+  {
+    id: 'q-12',
+    item: 'question',
+    title: 'ESLintとPrettierの競合',
+    date: '2026-04-05',
+    tags: [{ id: 'eslint', label: 'ESLint' }],
+    likeCount: 18,
+    isLikedByCurrentUser: false,
+    content: '保存時にフォーマットが崩れてしまいます。',
+    initialComments: []
+  },
+  {
     id: 'w-1',
     item: 'work',
     title: 'ToDoアプリを作りました',
@@ -229,6 +300,8 @@ Error response from daemon: driver failed programming external connectivity
       { id: 'typescript', label: 'TypeScript' },
       { id: 'tailwind', label: 'Tailwind CSS' },
     ],
+    likeCount: 150,
+    isLikedByCurrentUser: false,
     content: `## 概要
 
 React + TypeScript + Tailwind で作ったシンプルな ToDo アプリです。
@@ -262,6 +335,8 @@ React + TypeScript + Tailwind で作ったシンプルな ToDo アプリです�
       { id: 'microcms', label: 'microCMS' },
       { id: 'portfolio', label: 'Portfolio' },
     ],
+    likeCount: 95,
+    isLikedByCurrentUser: false,
     content: `## ポートフォリオを作りました 🎉
 
 Next.js と microCMS を使って自分のポートフォリオを作成しました。
@@ -295,6 +370,8 @@ Next.js と microCMS を使って自分のポートフォリオを作成しま�
       { id: 'react', label: 'React' },
       { id: 'markdown', label: 'Markdown' },
     ],
+    likeCount: 95,
+    isLikedByCurrentUser: false,
     content: `## 作ったもの
 
 リアルタイムプレビュー付きのマークダウンエディタです。
@@ -329,6 +406,8 @@ Next.js と microCMS を使って自分のポートフォリオを作成しま�
       { id: 'cloudflare', label: 'Cloudflare Workers' },
       { id: 'notion', label: 'Notion' },
     ],
+    likeCount: 70,
+    isLikedByCurrentUser: false,
     content: `## 概要
 
 日次のスタンドアップを自動化する Slack ボットです。
@@ -362,6 +441,8 @@ Next.js と microCMS を使って自分のポートフォリオを作成しま�
       { id: 'npm', label: 'npm' },
       { id: 'typescript', label: 'TypeScript' },
     ],
+    likeCount: 50,
+    isLikedByCurrentUser: false,
     content: `## 何を作ったか
 
 プロジェクトのテンプレートを生成する CLI ツールを **npm に公開** しました。
@@ -377,4 +458,81 @@ npx create-my-template my-app
 - monorepo 対応`,
     initialComments: [],
   },
+  {
+    id: 'w-6',
+    item: 'work',
+    title: '個人開発用のUIコンポーネント集',
+    date: '2026-04-19',
+    tags: [{ id: 'react', label: 'React' }],
+    likeCount: 110,
+    isLikedByCurrentUser: false,
+    content: 'Radix UIベースのライブラリを作りました。',
+    initialComments: []
+  },
+  {
+    id: 'w-7',
+    item: 'work',
+    title: '読書管理Webアプリ',
+    date: '2026-04-17',
+    tags: [{ id: 'nextjs', label: 'Next.js' }],
+    likeCount: 130,
+    isLikedByCurrentUser: false,
+    content: 'Google Books APIを使った管理ツールです。',
+    initialComments: []
+  },
+  {
+    id: 'w-8',
+    item: 'work',
+    title: 'Rust製のCLIツール',
+    date: '2026-04-14',
+    tags: [{ id: 'rust', label: 'Rust' }],
+    likeCount: 180,
+    isLikedByCurrentUser: true,
+    content: 'ディレクトリサイズを爆速で集計します。',
+    initialComments: []
+  },
+  {
+    id: 'w-9',
+    item: 'work',
+    title: 'Tech Blog クローン',
+    date: '2026-04-11',
+    tags: [{ id: 'nextjs', label: 'Next.js' }],
+    likeCount: 250,
+    isLikedByCurrentUser: false,
+    content: 'Supabaseをバックエンドに使用したブログです。',
+    initialComments: []
+  },
+  {
+    id: 'w-10',
+    item: 'work',
+    title: 'オリジナルフォントの試作',
+    date: '2026-04-09',
+    tags: [{ id: 'design', label: 'Design' }],
+    likeCount: 45,
+    isLikedByCurrentUser: false,
+    content: 'プログラミングで見やすいフォントをデザイン。',
+    initialComments: []
+  },
+  {
+    id: 'w-11',
+    item: 'work',
+    title: 'スマホで動く家計簿アプリ',
+    date: '2026-04-06',
+    tags: [{ id: 'react-native', label: 'React Native' }],
+    likeCount: 160,
+    isLikedByCurrentUser: false,
+    content: 'React Native + Expo で開発しました。',
+    initialComments: []
+  },
+  {
+    id: 'w-12',
+    item: 'work',
+    title: 'WebGLによる3D作品集',
+    date: '2026-04-03',
+    tags: [{ id: 'threejs', label: 'Three.js' }],
+    likeCount: 320,
+    isLikedByCurrentUser: true,
+    content: 'ブラウザで動く3Dアート作品集です。',
+    initialComments: []
+  }
 ]
