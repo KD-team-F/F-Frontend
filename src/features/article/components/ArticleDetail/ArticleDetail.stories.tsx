@@ -14,48 +14,59 @@ export default meta
 
 type Story = StoryObj<typeof ArticleDetail>
 
-const mockComments = [
-  {
-    id: '1',
-    content: 'とても参考になりました！',
-    createdAt: '2026-05-13',
-    date: '2026-05-13',
-    author: '田中',
-  },
-  {
-    id: '2',
-    content: '続きを楽しみにしています。',
-    createdAt: '2026-05-13',
-    date: '2026-05-13',
-    author: '佐藤',
-  },
-]
+const mockSubmit = async (content: string) => {
+  return {
+    id: crypto.randomUUID(),
+    content,
+    date: new Date().toISOString(),
+    author: {
+      id: 'user-1',
+      name: 'テストユーザー',
+    },
+  }
+}
 
 export const Default: Story = {
   args: {
-    title: 'Article Detail Sample',
-    date: '2026-05-13',
+    title: 'ReactとNext.jsで記事詳細ページを作成する',
+    date: '2026-05-14',
     content: `
-# 見出し
+# 見出しサンプル
 
-これは記事詳細画面のサンプルです。
+これは記事本文のサンプルです。
 
-- 編集ボタン
-- 評価ボタン
-- コメント欄
+- Tailwind CSS
+- Storybook
+- TypeScript
 
-を表示しています。
-    `,
-    initialComments: mockComments,
-    onSubmit: async (content: string) => {
-      const timestamp = new Date().toISOString()
-      return {
-        id: crypto.randomUUID(),
-        content,
-        createdAt: timestamp,
-        date: timestamp,
-        author: 'ゲストユーザー',
-      }
-    },
+などを利用しています。
+`,
+    tags: [
+      {
+        id: '1',
+        label: 'React',
+      },
+      {
+        id: '2',
+        label: 'Next.js',
+      },
+      {
+        id: '3',
+        label: 'TypeScript',
+      },
+    ],
+    initialComments: [
+      {
+        id: 'comment-1',
+        content: 'とても参考になりました！',
+        date: '2026-05-14',
+      },
+      {
+        id: 'comment-2',
+        content: '編集ボタンのデザインが良いですね。',
+        date: '2026-05-14',
+      },
+    ],
+    onSubmit: mockSubmit,
   },
 }
