@@ -7,15 +7,16 @@ import { Input } from '@/components/ui/Input/Input'
 type SignUpProps = {
   onSubmit?: (formData: {
     userId: string
-    grade: string
+    grade: number
     department: string
     email: string
     password: string
     passwordConfirm: string
   }) => void | Promise<void>
+  onNavigateToLogin?: () => void
 }
 
-export function SignUp({ onSubmit }: SignUpProps) {
+export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
 
   const [userId, setUserId] = useState('')
   const [grade, setGrade] = useState('')
@@ -28,7 +29,6 @@ export function SignUp({ onSubmit }: SignUpProps) {
   const [statusType, setStatusType] = useState<'info' | 'error'>('info')
   
   const handleSubmit = async () => {
-
     setStatusMessage(null)
     setStatusType('info')
 
@@ -36,18 +36,57 @@ export function SignUp({ onSubmit }: SignUpProps) {
       setStatusMessage('確認用パスワードが違います')
       setStatusType('error')
       return
-    } try {
+    }
+
+    const parsedGrade = Number(grade)
+    if (!Number.isInteger(parsedGrade) || parsedGrade < 1 || parsedGrade > 4) {
+      setStatusMessage('grade は 1〜4 の数値で指定してください')
+      setStatusType('error')
+      return
+    }
+
+    try {
       setIsSubmitting(true)
-      await onSubmit?.({
-        userId,
-        grade,
-        department,
-        email,
-        password,
-        passwordConfirm,
-      })
-    } catch {
-      setStatusMessage('エラーが発生しました')
+
+      if (onSubmit) {
+        await onSubmit({
+          userId,
+          grade: parsedGrade,
+          department,
+          email,
+          password,
+          passwordConfirm,
+        })
+        setStatusMessage('登録が完了しました')
+        setStatusType('info')
+      } else {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId,
+            grade: parsedGrade,
+            department,
+            email,
+            password,
+          }),
+        })
+
+        const data = await response.json()
+        if (!response.ok) {
+          throw new Error(data.message ?? '登録に失敗しました')
+        }
+
+        setStatusMessage('登録が完了しました')
+      }
+    } catch (error) {
+      setStatusMessage(
+        error instanceof Error
+          ? error.message
+          : 'エラーが発生しました',
+      )
       setStatusType('error')
     } finally {
       setIsSubmitting(false)
@@ -84,10 +123,11 @@ export function SignUp({ onSubmit }: SignUpProps) {
               id="grade"
               name="grade"
               label="grade"
+              type="number"
               required
               value={grade}
               onChange={(e) => setGrade(e.target.value)}
-              placeholder="1年生"
+              placeholder="1"
               disabled={isSubmitting}
             />
           </div>
@@ -155,6 +195,7 @@ export function SignUp({ onSubmit }: SignUpProps) {
           <div className="flex justify-center">
             <Button
               label="ログインはこちら"
+              onClick={onNavigateToLogin}
               disabled={isSubmitting}
               variant="secondary"
               className="w-full"
