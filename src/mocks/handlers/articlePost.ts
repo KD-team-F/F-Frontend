@@ -5,7 +5,7 @@ import {
   type ArticleItem,
 } from "@/mocks/data/articles";
 import type { Tag } from "@/types/tag";
-import type { ArticlePostRequestBody } from "@/types/article";
+import type { ArticleRequestBody } from "@/types/article";
 
 function isArticleItem(value: string | null): value is ArticleItem {
   return value === "question" || value === "work";
@@ -33,7 +33,7 @@ export const articlePostHandlers = [
         );
       }
 
-      const body = (await request.json()) as ArticlePostRequestBody;
+      const body = (await request.json()) as ArticleRequestBody;
       const title = body?.title;
       const content = body?.content;
       const rawTag = body?.tag;
