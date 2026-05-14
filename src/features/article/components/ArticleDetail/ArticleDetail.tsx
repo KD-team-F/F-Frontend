@@ -29,7 +29,7 @@ export function ArticleDetail({
     <article className="max-w-3xl mx-auto px-4 py-8">
       <Title>{title}</Title>
 
-      <div className="flex items-center justify-between mt-2 mb-6">
+      <div className="flex items-center justify-between mt-2">
         <PostDate date={date} />
 
         <div className="flex items-center gap-2">
@@ -38,10 +38,8 @@ export function ArticleDetail({
         </div>
       </div>
 
-      <ArticleContent content={content} />
-
       {tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-8 mb-8">
+        <div className="flex flex-wrap gap-2 mt-4 mb-8">
           {tags.map((tag: TagType) => (
             <TagUI
               key={tag.id}
@@ -51,6 +49,8 @@ export function ArticleDetail({
           ))}
         </div>
       )}
+
+      <ArticleContent content={content} />
 
       <hr className="my-8 border-gray-200" />
 
