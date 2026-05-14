@@ -7,7 +7,7 @@ import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 import { Tag } from '@/components/ui/tag/tag'
-import type { ArticleItem } from '@/types/article'
+import type { ArticleItem } from '@/types/articleItem'
 import { RefreshCw } from 'lucide-react'
 
 type FilterType = 'question' | 'work'

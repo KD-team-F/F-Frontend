@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
-import type { ArticleItem } from '@/types/article'
+import type { ArticleItem } from '@/types/articleItem'
 
 const DISPLAY_LIMIT = 10;
 const EPOCH_TIME = 0;
