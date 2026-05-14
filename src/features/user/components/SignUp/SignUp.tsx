@@ -47,39 +47,16 @@ export function SignUp({ onSubmit }: SignUpProps) {
     try {
       setIsSubmitting(true)
 
-      if (onSubmit) {
-        await onSubmit({
-          userId,
-          grade: parsedGrade,
-          department,
-          email,
-          password,
-          passwordConfirm,
-        })
-        setStatusMessage('登録が完了しました')
-        setStatusType('info')
-      } else {
-        const response = await fetch('/api/auth/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId,
-            grade: parsedGrade,
-            department,
-            email,
-            password,
-          }),
-        })
-
-        const data = await response.json()
-        if (!response.ok) {
-          throw new Error(data.message ?? '登録に失敗しました')
-        }
-
-        setStatusMessage('登録が完了しました')
-      }
+      await onSubmit?.({
+        userId,
+        grade: parsedGrade,
+        department,
+        email,
+        password,
+        passwordConfirm,
+      })
+      setStatusMessage('登録が完了しました')
+      setStatusType('info')
     } catch (error) {
       setStatusMessage(
         error instanceof Error

@@ -24,29 +24,12 @@ export function SignIn({ onSubmit }: SignInProps) {
     try {
       setIsSubmitting(true)
 
-      if (onSubmit) {
-        await onSubmit({
-          email,
-          password,
-        })
-        setStatusMessage('ログインに成功しました')
-        setStatusType('info')
-      } else {
-        const response = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        })
-
-        const data = await response.json()
-        if (!response.ok) {
-          throw new Error(data.message ?? 'ログインに失敗しました')
-        }
-
-        setStatusMessage('ログインに成功しました')
-      }
+      await onSubmit?.({
+        email,
+        password,
+      })
+      setStatusMessage('ログインに成功しました')
+      setStatusType('info')
     } catch (error) {
       setStatusMessage(
         error instanceof Error
