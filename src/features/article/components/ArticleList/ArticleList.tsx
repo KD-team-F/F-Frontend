@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
+import useSWR from 'swr'
 import { ARTICLE_LIST_EXPANDED_LIMIT, ARTICLE_LIST_INITIAL_LIMIT } from '@/constants/articleList'
 import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
@@ -12,9 +13,15 @@ import { RefreshCw } from 'lucide-react'
 
 type FilterType = 'question' | 'work'
 
-type ArticleListProps = {
+type RefreshResult = {
   questionItems: ArticleItem[]
   workItems: ArticleItem[]
+}
+
+type ArticleListProps = {
+  questionItems?: ArticleItem[]
+  workItems?: ArticleItem[]
+  onRefresh?: () => Promise<RefreshResult>
 }
 
 const FILTER_CONFIG: { id: FilterType; label: string }[] = [
@@ -22,10 +29,48 @@ const FILTER_CONFIG: { id: FilterType; label: string }[] = [
   { id: 'work', label: '制作物' },
 ]
 
-export function ArticleList({ questionItems, workItems }: ArticleListProps) {
+const fetcher = (url: string) => fetch(url).then((r) => r.json())
+
+export function ArticleList({
+  questionItems: initialQuestionItems,
+  workItems: initialWorkItems,
+  onRefresh,
+}: ArticleListProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
   const [expanded, setExpanded] = useState(false)
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [updatedData, setUpdatedData] = useState<RefreshResult | null>(null)
+
+  const shouldFetch = initialQuestionItems === undefined && initialWorkItems === undefined
+
+  const { data: questionData } = useSWR<ArticleItem[]>(
+    shouldFetch ? '/api/articles?item=question' : null,
+    fetcher,
+  )
+  const { data: workData } = useSWR<ArticleItem[]>(
+    shouldFetch ? '/api/articles?item=work' : null,
+    fetcher,
+  )
+
+  const questionItems = updatedData?.questionItems ?? (shouldFetch ? (questionData ?? []) : (initialQuestionItems ?? []))
+  const workItems = updatedData?.workItems ?? (shouldFetch ? (workData ?? []) : (initialWorkItems ?? []))
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true)
+    try {
+      if (onRefresh) {
+        const result = await onRefresh()
+        setUpdatedData(result)
+      } else {
+        const res = await fetch('/api/articles/update', { method: 'POST' })
+        const data: RefreshResult = await res.json()
+        setUpdatedData(data)
+      }
+    } finally {
+      setIsRefreshing(false)
+    }
+  }
 
   const currentItems = selectedFilter === 'question' ? questionItems : workItems
   const currentTitle = selectedFilter === 'question' ? '質問' : '制作物'
@@ -67,50 +112,49 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   }
 
   return (
-<div className="max-w-3xl mx-auto px-4 py-8">
-  <div className="flex items-center justify-between mb-6">
-    <div className="flex items-center gap-3">
-      <Title>{currentTitle}</Title>
-    </div>
+    <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <Title>{currentTitle}</Title>
+        </div>
 
-    <FilterTab
-      options={FILTER_CONFIG}
-      selected={selectedFilter}
-      onChange={handleFilterChange}
-    />
-  </div>
-
-     {allTags.length > 0 && (
-  <div className="flex items-center justify-between mb-4">
-    <div className="flex flex-wrap items-center gap-2">
-      {allTags.map((tag) => (
-        <Tag
-          key={tag.id}
-          tagId={tag.id}
-          label={tag.label}
-          isActive={selectedTagIds.includes(tag.id)}
-          onClick={() => handleTagToggle(tag.id)}
+        <FilterTab
+          options={FILTER_CONFIG}
+          selected={selectedFilter}
+          onChange={handleFilterChange}
         />
-      ))}
+      </div>
 
-      {selectedTagIds.length > 0 && (
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {allTags.map((tag) => (
+            <Tag
+              key={tag.id}
+              tagId={tag.id}
+              label={tag.label}
+              isActive={selectedTagIds.includes(tag.id)}
+              onClick={() => handleTagToggle(tag.id)}
+            />
+          ))}
+
+          {selectedTagIds.length > 0 && (
+            <button
+              onClick={handleClearTags}
+              className="text-sm text-gray-500 underline hover:text-gray-700"
+            >
+              クリア
+            </button>
+          )}
+        </div>
+
         <button
-          onClick={handleClearTags}
-          className="text-sm text-gray-500 underline hover:text-gray-700"
+          onClick={handleRefresh}
+          disabled={isRefreshing}
+          className="p-2 rounded-full hover:bg-gray-200 transition disabled:opacity-50"
         >
-          クリア
+          <RefreshCw size={18} className={isRefreshing ? 'animate-spin' : ''} />
         </button>
-      )}
-    </div>
-
-    <button
-      onClick={() => window.location.reload()}
-      className="p-2 rounded-full hover:bg-gray-200 transition"
-    >
-      <RefreshCw size={18} />
-    </button>
-  </div>
-)}
+      </div>
 
       <div className="mt-6">
         {displayItems.map((item, index) => {
