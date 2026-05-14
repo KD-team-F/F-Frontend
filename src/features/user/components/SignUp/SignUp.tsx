@@ -56,6 +56,8 @@ export function SignUp({ onSubmit }: SignUpProps) {
           password,
           passwordConfirm,
         })
+        setStatusMessage('登録が完了しました')
+        setStatusType('info')
       } else {
         const response = await fetch('/api/auth/register', {
           method: 'POST',

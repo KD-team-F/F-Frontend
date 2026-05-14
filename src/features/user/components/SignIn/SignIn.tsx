@@ -29,6 +29,8 @@ export function SignIn({ onSubmit }: SignInProps) {
           email,
           password,
         })
+        setStatusMessage('ログインに成功しました')
+        setStatusType('info')
       } else {
         const response = await fetch('/api/auth/login', {
           method: 'POST',
