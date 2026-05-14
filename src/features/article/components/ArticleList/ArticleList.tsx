@@ -2,7 +2,6 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import useSWR from 'swr'
 import { ARTICLE_LIST_EXPANDED_LIMIT, ARTICLE_LIST_INITIAL_LIMIT } from '@/constants/articleList'
 import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
@@ -10,6 +9,7 @@ import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 import { Tag } from '@/components/ui/tag/tag'
 import type { ArticleItem } from '@/types/articleItem'
 import { RefreshCw } from 'lucide-react'
+import { useArticleList } from '@/features/article/hooks/useArticleList'
 
 type FilterType = 'question' | 'work'
 
@@ -29,8 +29,6 @@ const FILTER_CONFIG: { id: FilterType; label: string }[] = [
   { id: 'work', label: '制作物' },
 ]
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json())
-
 export function ArticleList({
   questionItems: initialQuestionItems,
   workItems: initialWorkItems,
@@ -39,38 +37,12 @@ export function ArticleList({
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
   const [expanded, setExpanded] = useState(false)
-  const [isRefreshing, setIsRefreshing] = useState(false)
-  const [updatedData, setUpdatedData] = useState<RefreshResult | null>(null)
 
-  const shouldFetch = initialQuestionItems === undefined && initialWorkItems === undefined
-
-  const { data: questionData } = useSWR<ArticleItem[]>(
-    shouldFetch ? '/api/articles?item=question' : null,
-    fetcher,
-  )
-  const { data: workData } = useSWR<ArticleItem[]>(
-    shouldFetch ? '/api/articles?item=work' : null,
-    fetcher,
-  )
-
-  const questionItems = updatedData?.questionItems ?? (shouldFetch ? (questionData ?? []) : (initialQuestionItems ?? []))
-  const workItems = updatedData?.workItems ?? (shouldFetch ? (workData ?? []) : (initialWorkItems ?? []))
-
-  const handleRefresh = async () => {
-    setIsRefreshing(true)
-    try {
-      if (onRefresh) {
-        const result = await onRefresh()
-        setUpdatedData(result)
-      } else {
-        const res = await fetch('/api/articles/update', { method: 'POST' })
-        const data: RefreshResult = await res.json()
-        setUpdatedData(data)
-      }
-    } finally {
-      setIsRefreshing(false)
-    }
-  }
+  const { questionItems, workItems, isRefreshing, handleRefresh } = useArticleList({
+    initialQuestionItems,
+    initialWorkItems,
+    onRefresh,
+  })
 
   const currentItems = selectedFilter === 'question' ? questionItems : workItems
   const currentTitle = selectedFilter === 'question' ? '質問' : '制作物'
