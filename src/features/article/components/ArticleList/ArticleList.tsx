@@ -7,14 +7,21 @@ import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 import { Tag } from '@/components/ui/tag/tag'
-import type { ArticleItem } from '@/types/article'
+import type { ArticleItem } from '@/types/articleItem'
 import { RefreshCw } from 'lucide-react'
+import { useArticleList } from '@/features/article/hooks/useArticleList'
 
 type FilterType = 'question' | 'work'
 
-type ArticleListProps = {
+type RefreshResult = {
   questionItems: ArticleItem[]
   workItems: ArticleItem[]
+}
+
+type ArticleListProps = {
+  questionItems?: ArticleItem[]
+  workItems?: ArticleItem[]
+  onRefresh?: () => Promise<RefreshResult>
 }
 
 const FILTER_CONFIG: { id: FilterType; label: string }[] = [
@@ -22,10 +29,20 @@ const FILTER_CONFIG: { id: FilterType; label: string }[] = [
   { id: 'work', label: '制作物' },
 ]
 
-export function ArticleList({ questionItems, workItems }: ArticleListProps) {
+export function ArticleList({
+  questionItems: initialQuestionItems,
+  workItems: initialWorkItems,
+  onRefresh,
+}: ArticleListProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
   const [expanded, setExpanded] = useState(false)
+
+  const { questionItems, workItems, isRefreshing, handleRefresh } = useArticleList({
+    initialQuestionItems,
+    initialWorkItems,
+    onRefresh,
+  })
 
   const currentItems = selectedFilter === 'question' ? questionItems : workItems
   const currentTitle = selectedFilter === 'question' ? '質問' : '制作物'
@@ -67,50 +84,49 @@ export function ArticleList({ questionItems, workItems }: ArticleListProps) {
   }
 
   return (
-<div className="max-w-3xl mx-auto px-4 py-8">
-  <div className="flex items-center justify-between mb-6">
-    <div className="flex items-center gap-3">
-      <Title>{currentTitle}</Title>
-    </div>
+    <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <Title>{currentTitle}</Title>
+        </div>
 
-    <FilterTab
-      options={FILTER_CONFIG}
-      selected={selectedFilter}
-      onChange={handleFilterChange}
-    />
-  </div>
-
-     {allTags.length > 0 && (
-  <div className="flex items-center justify-between mb-4">
-    <div className="flex flex-wrap items-center gap-2">
-      {allTags.map((tag) => (
-        <Tag
-          key={tag.id}
-          tagId={tag.id}
-          label={tag.label}
-          isActive={selectedTagIds.includes(tag.id)}
-          onClick={() => handleTagToggle(tag.id)}
+        <FilterTab
+          options={FILTER_CONFIG}
+          selected={selectedFilter}
+          onChange={handleFilterChange}
         />
-      ))}
+      </div>
 
-      {selectedTagIds.length > 0 && (
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {allTags.map((tag) => (
+            <Tag
+              key={tag.id}
+              tagId={tag.id}
+              label={tag.label}
+              isActive={selectedTagIds.includes(tag.id)}
+              onClick={() => handleTagToggle(tag.id)}
+            />
+          ))}
+
+          {selectedTagIds.length > 0 && (
+            <button
+              onClick={handleClearTags}
+              className="text-sm text-gray-500 underline hover:text-gray-700"
+            >
+              クリア
+            </button>
+          )}
+        </div>
+
         <button
-          onClick={handleClearTags}
-          className="text-sm text-gray-500 underline hover:text-gray-700"
+          onClick={handleRefresh}
+          disabled={isRefreshing}
+          className="p-2 rounded-full hover:bg-gray-200 transition disabled:opacity-50"
         >
-          クリア
+          <RefreshCw size={18} className={isRefreshing ? 'animate-spin' : ''} />
         </button>
-      )}
-    </div>
-
-    <button
-      onClick={() => window.location.reload()}
-      className="p-2 rounded-full hover:bg-gray-200 transition"
-    >
-      <RefreshCw size={18} />
-    </button>
-  </div>
-)}
+      </div>
 
       <div className="mt-6">
         {displayItems.map((item, index) => {

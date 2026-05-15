@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import { fn } from 'storybook/test'
 import { ArticleList } from './ArticleList'
 
 const meta: Meta<typeof ArticleList> = {
@@ -230,5 +231,58 @@ export const RatingLikedByAll: Story = {
       },
     ],
     workItems: [],
+  },
+}
+
+// 更新ボタン押下で質問3件・制作物3件が追加されるパターン
+export const WithRefresh: Story = {
+  render,
+  args: {
+    questionItems,
+    workItems,
+    onRefresh: fn(async () => ({
+      questionItems: [
+        ...questionItems,
+        {
+          title: 'Reactのエラーバウンダリの使い方',
+          content: 'ErrorBoundaryを使ってコンポーネントのエラーをキャッチしたいのですが、関数コンポーネントでの書き方を教えてください。',
+          date: '2026-05-10',
+          tags: [{ id: 'react', label: 'React' }, { id: 'typescript', label: 'TypeScript' }],
+        },
+        {
+          title: 'Vitestで非同期テストを書く方法',
+          content: 'resolves/rejectsとasync/awaitの使い分けが分からず困っています。推奨パターンを教えてください。',
+          date: '2026-05-09',
+          tags: [{ id: 'vitest', label: 'Vitest' }, { id: 'typescript', label: 'TypeScript' }],
+        },
+        {
+          title: 'Zustandのsliceパターンについて',
+          content: 'ストアが大きくなってきたのでsliceパターンで分割したいのですが、TypeScriptでの型定義が難しくて困っています。',
+          date: '2026-05-08',
+          tags: [{ id: 'zustand', label: 'Zustand' }, { id: 'typescript', label: 'TypeScript' }],
+        },
+      ],
+      workItems: [
+        ...workItems,
+        {
+          title: 'AIチャットアプリを作りました',
+          content: 'OpenAI APIとNext.js App Routerで作ったストリーミング対応のチャットアプリです。Vercel AI SDKを使っています。',
+          date: '2026-05-10',
+          tags: [{ id: 'openai', label: 'OpenAI' }, { id: 'nextjs', label: 'Next.js' }],
+        },
+        {
+          title: 'ブラウザ拡張機能を作りました',
+          content: 'GitHubのPRレビューを効率化するChrome拡張機能です。ファイルツリー表示やレビュー管理機能を実装しました。',
+          date: '2026-05-07',
+          tags: [{ id: 'chrome-extension', label: 'Chrome Extension' }, { id: 'react', label: 'React' }],
+        },
+        {
+          title: 'デザインシステムを構築しました',
+          content: '社内プロジェクト向けにStorybookベースのコンポーネントライブラリを構築しました。アクセシビリティにも対応しています。',
+          date: '2026-05-05',
+          tags: [{ id: 'storybook', label: 'Storybook' }, { id: 'react', label: 'React' }],
+        },
+      ],
+    })),
   },
 }
