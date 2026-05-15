@@ -3,33 +3,41 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button/Button'
 import { Input } from '@/components/ui/Input/Input'
+import { login } from '@/features/user/actions/login'
 
 type SignInProps = {
   onSubmit?: (formData: {
     email: string
     password: string
   }) => void | Promise<void>
+  onNavigateToRegister?: () => void
 }
 
-export function SignIn({ onSubmit }: SignInProps) {
+export function SignIn({ onSubmit, onNavigateToRegister }: SignInProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
   const [statusType, setStatusType] = useState<'info' | 'error'>('info')
+
   const handleSubmit = async () => {
     setStatusMessage(null)
     setStatusType('info')
+    setIsSubmitting(true)
 
     try {
-      setIsSubmitting(true)
+      if (onSubmit) {
+        await onSubmit({
+          email,
+          password,
+        })
+      } else {
+        await login({
+          email,
+          password,
+        })
+      }
 
-      await onSubmit?.({
-        email,
-        password,
-      })
-      setStatusMessage('ログインに成功しました')
-      setStatusType('info')
     } catch (error) {
       setStatusMessage(
         error instanceof Error
@@ -95,6 +103,7 @@ export function SignIn({ onSubmit }: SignInProps) {
           <div className="flex justify-center">
             <Button
               label="新規登録はこちら"
+              onClick={onNavigateToRegister}
               disabled={isSubmitting}
               variant="secondary"
               className="w-full"

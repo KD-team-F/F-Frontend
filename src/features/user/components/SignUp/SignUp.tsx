@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button/Button'
 import { Input } from '@/components/ui/Input/Input'
+import { register } from '@/features/user/actions/register'
 
 type SignUpProps = {
   onSubmit?: (formData: {
@@ -13,9 +14,10 @@ type SignUpProps = {
     password: string
     passwordConfirm: string
   }) => void | Promise<void>
+  onNavigateToLogin?: () => void
 }
 
-export function SignUp({ onSubmit }: SignUpProps) {
+export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
 
   const [userId, setUserId] = useState('')
   const [grade, setGrade] = useState('')
@@ -30,10 +32,12 @@ export function SignUp({ onSubmit }: SignUpProps) {
   const handleSubmit = async () => {
     setStatusMessage(null)
     setStatusType('info')
+    setIsSubmitting(true)
 
     if (password !== passwordConfirm) {
       setStatusMessage('確認用パスワードが違います')
       setStatusType('error')
+      setIsSubmitting(false)
       return
     }
 
@@ -41,22 +45,29 @@ export function SignUp({ onSubmit }: SignUpProps) {
     if (!Number.isInteger(parsedGrade) || parsedGrade < 1 || parsedGrade > 4) {
       setStatusMessage('grade は 1〜4 の数値で指定してください')
       setStatusType('error')
+      setIsSubmitting(false)
       return
     }
 
     try {
-      setIsSubmitting(true)
-
-      await onSubmit?.({
-        userId,
-        grade: parsedGrade,
-        department,
-        email,
-        password,
-        passwordConfirm,
-      })
-      setStatusMessage('登録が完了しました')
-      setStatusType('info')
+      if (onSubmit) {
+        await onSubmit({
+          userId,
+          grade: parsedGrade,
+          department,
+          email,
+          password,
+          passwordConfirm,
+        })
+      } else {
+        await register({
+          userId,
+          grade: parsedGrade,
+          department,
+          email,
+          password,
+        })
+      }
     } catch (error) {
       setStatusMessage(
         error instanceof Error
@@ -171,6 +182,7 @@ export function SignUp({ onSubmit }: SignUpProps) {
           <div className="flex justify-center">
             <Button
               label="ログインはこちら"
+              onClick={onNavigateToLogin}
               disabled={isSubmitting}
               variant="secondary"
               className="w-full"
