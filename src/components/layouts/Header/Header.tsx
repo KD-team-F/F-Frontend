@@ -5,24 +5,36 @@ export function Header() {
         
         {/* アプリ名 */}
         <div className="flex justify-start">
-          <a 
-            href="/" 
+          <a
+            href="/"
             className="text-xl font-extrabold tracking-tight text-[#FFFFFF] hover:opacity-80 transition-opacity"
           >
             アプリ名
           </a>
         </div>
 
-        {/* // TODO: ボタン配置予定地です。 */}
-
-        {/* ここから */}
-
-        
-        {/* ここまで */}
+        {/* ランキングボタン */}
+        <div className="flex justify-center">
+          <a
+            href="/ranking"
+            className="
+              flex items-center gap-2
+              rounded-full
+              bg-yellow-400
+              px-5 py-2
+              text-sm font-bold text-white
+              shadow-md
+              transition-all duration-200
+              hover:scale-105 hover:bg-yellow-500
+            "
+          >
+            👑 ランキング
+          </a>
+        </div>
 
         {/* 余白 */}
         <div className="hidden md:block"></div>
-        
+
       </div>
     </header>
   )
