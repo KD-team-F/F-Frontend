@@ -7,6 +7,7 @@ import type { Comment } from '@/features/comment/types/comment'
 import { RatingHeart } from '@/components/ui/rating/rating'
 import type { Tag as TagType } from '@/types/tag'
 import { EditButton } from '@/components/ui/EditButton/editbutton'
+import { Header } from '@/components/layouts/Header/Header'
 
 type ArticleDetailProps = {
   title: string
@@ -26,38 +27,42 @@ export function ArticleDetail({
   onSubmit,
 }: ArticleDetailProps) {
   return (
-    <article className="max-w-3xl mx-auto px-4 py-8">
-      <Title>{title}</Title>
+    <>
+      <Header />
 
-      <div className="flex items-center justify-between mt-2">
-        <PostDate date={date} />
+      <article className="max-w-3xl mx-auto px-4 py-8">
+        <Title>{title}</Title>
 
-        <div className="flex items-center gap-2">
-          <EditButton />
-          <RatingHeart />
+        <div className="flex items-center justify-between mt-2">
+          <PostDate date={date} />
+
+          <div className="flex items-center gap-2">
+            <EditButton />
+            <RatingHeart />
+          </div>
         </div>
-      </div>
 
-      {tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-4 mb-8">
-          {tags.map((tag: TagType) => (
-            <TagUI
-              key={tag.id}
-              tagId={tag.id}
-              label={tag.label}
-            />
-          ))}
-        </div>
-      )}
+        {tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-4 mb-8">
+            {tags.map((tag: TagType) => (
+              <TagUI
+                key={tag.id}
+                tagId={tag.id}
+                label={tag.label}
+              />
+            ))}
+          </div>
+        )}
 
-      <ArticleContent content={content} />
+        <ArticleContent content={content} />
 
-      <hr className="my-8 border-gray-200" />
+        <hr className="my-8 border-gray-200" />
 
-      <CommentSection
-        initialComments={initialComments}
-        onSubmit={onSubmit}
-      />
-    </article>
+        <CommentSection
+          initialComments={initialComments}
+          onSubmit={onSubmit}
+        />
+      </article>
+    </>
   )
 }
