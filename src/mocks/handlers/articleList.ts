@@ -1,8 +1,20 @@
 import { http, HttpResponse } from "msw";
-import { articles, type ArticleItem } from "@/mocks/data/articles";
+import { articles } from "@/mocks/data/articles";
+import { additionalArticles } from "@/mocks/data/additionalArticles";
+import type { ArticleCategory } from "@/types/article";
 
-function isArticleItem(value: string | null): value is ArticleItem {
+function isArticleItem(value: string | null): value is ArticleCategory {
   return value === "question" || value === "work";
+}
+
+function toResponse(list: typeof articles) {
+  return list.map(({ id, title, content, date, tags }) => ({
+    id,
+    title,
+    content,
+    date,
+    tags,
+  }));
 }
 
 export const articleListHandlers = [
@@ -21,11 +33,33 @@ export const articleListHandlers = [
         );
       }
 
-      const data = articles
-        .filter((article) => article.item === item)
-        .map(({ id, title, content, date }) => ({ id, title, content, date }));
+      const data = toResponse(articles.filter((a) => a.item === item));
 
       return HttpResponse.json(data);
+    } catch (error) {
+      console.error("MSW Handler Error:", error);
+      return HttpResponse.json(
+        {
+          message: "Internal Server Error (MSW)",
+          details: error instanceof Error ? error.message : String(error),
+        },
+        { status: 500 },
+      );
+    }
+  }),
+
+  http.post("/api/articles/update", async () => {
+    try {
+      const updatedArticles = [...articles, ...additionalArticles];
+
+      const questionItems = toResponse(
+        updatedArticles.filter((a) => a.item === "question"),
+      );
+      const workItems = toResponse(
+        updatedArticles.filter((a) => a.item === "work"),
+      );
+
+      return HttpResponse.json({ questionItems, workItems });
     } catch (error) {
       console.error("MSW Handler Error:", error);
       return HttpResponse.json(

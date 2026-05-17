@@ -2,6 +2,7 @@ import { PostDate } from "../PostDate/PostDate";
 import { Tag } from "../tag/tag";
 import { RatingHeart } from "../rating/rating";
 import type { Tag as TagType } from "@/types/tag";
+import { stripMarkdown } from "@/lib/utils";
 
 type Props = {
     title: string;
@@ -21,8 +22,8 @@ export const Item = ({ title, content, date, tags, selectedTagIds = [],likeCount
                 {title}
             </h2>
               <RatingHeart defaultCount={likeCount} defaultLiked={isLikedByCurrentUser} isReadOnly />
-            <div className="bg-gray-100 p-3 rounded-sm mb-3 whitespace-pre-wrap">
-                <p className="text-gray-800">{content}</p>
+            <div className="bg-gray-100 p-3 rounded-sm mb-3">
+                <p className="text-gray-800 line-clamp-3">{stripMarkdown(content)}</p>
             </div>
 
             {tags && tags.length > 0 && (

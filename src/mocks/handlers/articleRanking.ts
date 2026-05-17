@@ -1,7 +1,8 @@
 import { http, HttpResponse } from 'msw'
-import { articles, type ArticleItem } from '../data/articles'
+import { articles } from '../data/articles'
+import type { ArticleCategory } from '@/types/article'
 
-function isArticleItem(value: string | null): value is ArticleItem {
+function isArticleItem(value: string | null): value is ArticleCategory {
   return value === "question" || value === "work";
 }
 
