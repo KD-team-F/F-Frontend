@@ -5,9 +5,11 @@ import { Title } from '@/components/ui/Title/Title'
 import { Button } from '@/components/ui/Button/Button'
 import { Input } from '@/components/ui/Input/Input'
 import { MarkdownEditor } from '@/features/submission/components/MarkdownEditor/MarkdownEditor'
-import { DeleteIcon } from '@/components/ui/Delete-icon/delete-icon' // 追加: DeleteIconのインポート
+import { DeleteIcon } from '@/components/ui/Delete-icon/delete-icon'
+import { updateArticleWithMockApi } from '@/features/article/actions/updateArticleWithMockApi'
 
 type ArticleEditProps = {
+  articleId?: string
   defaultTitle?: string
   defaultContent?: string
   onSubmit?: (title: string, content: string) => void | Promise<void>
@@ -15,6 +17,7 @@ type ArticleEditProps = {
 }
 
 export function ArticleEdit({
+  articleId,
   defaultTitle = '',
   defaultContent = '',
   onSubmit,
@@ -23,11 +26,20 @@ export function ArticleEdit({
   const [title, setTitle] = useState(defaultTitle)
   const [content, setContent] = useState(defaultContent)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const handleSubmit = async () => {
     try {
       setIsSubmitting(true)
-      await onSubmit?.(title, content)
+      setSubmitError(null)
+      if (onSubmit) {
+        await onSubmit(title, content)
+      } else if (articleId) {
+        const result = await updateArticleWithMockApi(articleId, title, content)
+        if (!result.ok) {
+          setSubmitError(result.message)
+        }
+      }
     } finally {
       setIsSubmitting(false)
     }
@@ -35,12 +47,19 @@ export function ArticleEdit({
 
   return (
     <section className="max-w-3xl mx-auto px-4 py-8">
-      {/* タイトル */}
+      {submitError ? (
+        <p
+          role="alert"
+          className="mb-6 text-center text-sm text-red-600"
+        >
+          {submitError}
+        </p>
+      ) : null}
+
       <div className="mb-8">
         <Title>記事を編集する</Title>
       </div>
 
-      {/* タイトル入力 */}
       <div className="mb-8">
         <Input
           id="article-title"
@@ -53,7 +72,6 @@ export function ArticleEdit({
         />
       </div>
 
-      {/* 本文 */}
       <div className="mb-8">
         <MarkdownEditor
           id="article-content"
@@ -66,7 +84,6 @@ export function ArticleEdit({
         />
       </div>
 
-      {/* ボタンエリア */}
       <div className="flex justify-end items-center gap-4">
         {onDelete && (
           <DeleteIcon onClick={onDelete} />
@@ -75,7 +92,12 @@ export function ArticleEdit({
         <Button
           label="更新"
           onClick={handleSubmit}
-          disabled={isSubmitting || !title.trim() || !content.trim()}
+          disabled={
+            isSubmitting
+            || !title.trim()
+            || !content.trim()
+            || (!onSubmit && !articleId)
+          }
         />
       </div>
     </section>
