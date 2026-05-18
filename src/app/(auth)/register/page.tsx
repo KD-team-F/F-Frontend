@@ -1,9 +1,12 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { SignUp } from '@/features/user/components/SignUp/SignUp'
 import { register } from '@/features/user/actions/register'
 
 export default function RegisterPage() {
+  const router = useRouter()
+
   const handleSubmit = async (formData: {
     userId: string
     grade: number
@@ -19,9 +22,17 @@ export default function RegisterPage() {
       email: formData.email,
       password: formData.password,
     })
+    router.push('/login')
+  }
+
+  const navigateToLogin = () => {
+    router.push('/login')
   }
 
   return (
-    <SignUp onSubmit={handleSubmit} />
+    <SignUp
+      onSubmit={handleSubmit}
+      onNavigateToLogin={navigateToLogin}
+    />
   )
 }

@@ -14,9 +14,10 @@ type SignUpProps = {
     password: string
     passwordConfirm: string
   }) => void | Promise<void>
+  onNavigateToLogin?: () => void
 }
 
-export function SignUp({ onSubmit }: SignUpProps) {
+export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
 
   const [userId, setUserId] = useState('')
   const [grade, setGrade] = useState('')
@@ -216,6 +217,7 @@ export function SignUp({ onSubmit }: SignUpProps) {
             <Button
               label="ログインはこちら"
               disabled={isSubmitting}
+              onClick={onNavigateToLogin}
               variant="secondary"
               className="w-full"
             />
