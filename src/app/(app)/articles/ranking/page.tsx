@@ -8,10 +8,7 @@ export default function RankingPage() {
       <Header />
 
       <main className="flex-1">
-        <ArticleRanking
-          questionItems={[]}
-          workItems={[]}
-        />
+        <ArticleRanking />
       </main>
 
       <Footer />

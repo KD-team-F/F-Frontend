@@ -6,6 +6,7 @@ import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 import type { ArticleItem } from '@/types/articleItem'
+import { useArticleRanking } from '@/features/article/hooks/useArticleRanking'
 
 const DISPLAY_LIMIT = 10;
 const EPOCH_TIME = 0;
@@ -17,8 +18,8 @@ const RANK_OFFSET = 1;
 type FilterType = 'question' | 'work'
 
 type ArticleRankingProps = {
-  questionItems: ArticleItem[]
-  workItems: ArticleItem[]
+  questionItems?: ArticleItem[]
+  workItems?: ArticleItem[]
 }
 
 const FILTER_CONFIG: { id: FilterType; label: string }[] = [
@@ -38,8 +39,16 @@ const getRankBadgeStyle = (rank: number): string => {
   return RANK_BADGE_STYLES[rank] ?? DEFAULT_BADGE_STYLE
 }
 
-export function ArticleRanking({ questionItems, workItems }: ArticleRankingProps) {
+export function ArticleRanking({
+  questionItems: initialQuestionItems,
+  workItems: initialWorkItems,
+}: ArticleRankingProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
+
+  const { questionItems, workItems } = useArticleRanking({
+    initialQuestionItems,
+    initialWorkItems,
+  })
 
   const currentItems = selectedFilter === 'question' ? questionItems : workItems
 
