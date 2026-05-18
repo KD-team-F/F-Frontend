@@ -10,10 +10,9 @@ type SignInProps = {
     email: string
     password: string
   }) => void | Promise<void>
-  onNavigateToRegister?: () => void
 }
 
-export function SignIn({ onSubmit, onNavigateToRegister }: SignInProps) {
+export function SignIn({ onSubmit }: SignInProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -23,6 +22,18 @@ export function SignIn({ onSubmit, onNavigateToRegister }: SignInProps) {
   const handleSubmit = async () => {
     setStatusMessage(null)
     setStatusType('info')
+
+    if (!/^[\x20-\x7E]+$/.test(email)) {
+      setStatusMessage('email は半角のみ入力できます')
+      setStatusType('error')
+      return
+    }
+    if (password.length < 8) {
+      setStatusMessage('password は8文字以上で指定してください')
+      setStatusType('error')
+      return
+    }
+    
     setIsSubmitting(true)
 
     try {
@@ -37,7 +48,6 @@ export function SignIn({ onSubmit, onNavigateToRegister }: SignInProps) {
           password,
         })
       }
-
     } catch (error) {
       setStatusMessage(
         error instanceof Error
@@ -71,7 +81,13 @@ export function SignIn({ onSubmit, onNavigateToRegister }: SignInProps) {
               type="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value
+
+                if (/^[\x20-\x7E]*$/.test(value)) {
+                  setEmail(value)
+                }
+              }}
               placeholder="sample@email.com"
               disabled={isSubmitting}
             />
@@ -103,7 +119,6 @@ export function SignIn({ onSubmit, onNavigateToRegister }: SignInProps) {
           <div className="flex justify-center">
             <Button
               label="新規登録はこちら"
-              onClick={onNavigateToRegister}
               disabled={isSubmitting}
               variant="secondary"
               className="w-full"

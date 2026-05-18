@@ -20,7 +20,7 @@ export const registerHandlers = [
           { status: 400 },
         )
       }
-      if (!department || typeof department !== 'string' || department.trim() === '') {
+      if (!['1', '2', '3', '4'].includes(department)) {
         return HttpResponse.json(
           { message: 'department は必須です' },
           { status: 400 },

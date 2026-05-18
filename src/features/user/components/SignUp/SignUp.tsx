@@ -14,14 +14,13 @@ type SignUpProps = {
     password: string
     passwordConfirm: string
   }) => void | Promise<void>
-  onNavigateToLogin?: () => void
 }
 
-export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
+export function SignUp({ onSubmit }: SignUpProps) {
 
   const [userId, setUserId] = useState('')
   const [grade, setGrade] = useState('')
-  const [department, setDepartment] = useState('')
+  const [department, setDepartment] = useState<'0' | '1' | '2' | '3' | '4'>('0')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
@@ -30,6 +29,16 @@ export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
   const [statusType, setStatusType] = useState<'info' | 'error'>('info')
   
   const handleSubmit = async () => {
+    if (!/^[\x20-\x7E]+$/.test(userId)) {
+      setStatusMessage('userId は半角のみ入力できます')
+      setStatusType('error')
+      return
+    }
+    if (!/^[\x20-\x7E]+$/.test(email)) {
+      setStatusMessage('email は半角のみ入力できます')
+      setStatusType('error')
+      return
+    }
     setStatusMessage(null)
     setStatusType('info')
     setIsSubmitting(true)
@@ -42,6 +51,12 @@ export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
     }
 
     const parsedGrade = Number(grade)
+    if (department === '0') {
+      setStatusMessage('まだ学科が選択されていません')
+      setStatusType('error')
+      setIsSubmitting(false)
+      return
+    }
     if (!Number.isInteger(parsedGrade) || parsedGrade < 1 || parsedGrade > 4) {
       setStatusMessage('grade は 1〜4 の数値で指定してください')
       setStatusType('error')
@@ -100,8 +115,14 @@ export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
               label="userId"
               required
               value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-              placeholder="山田　太郎"
+              onChange={(e) => {
+                const value = e.target.value
+
+                if (/^[\x20-\x7E]*$/.test(value)) {
+                  setUserId(value)
+                }
+              }}
+              placeholder="yamada tarou"
               disabled={isSubmitting}
             />
           </div>
@@ -111,6 +132,8 @@ export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
               name="grade"
               label="grade"
               type="number"
+              min="1"
+              max="4"
               required
               value={grade}
               onChange={(e) => setGrade(e.target.value)}
@@ -119,16 +142,20 @@ export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
             />
           </div>
           <div>
-            <Input
-              id="department"
-              name="department"
-              label="department"
-              required
+            <select
               value={department}
-              onChange={(e) => setDepartment(e.target.value)}
-              placeholder="ITエキスパート学科"
+              onChange={(e) =>
+                setDepartment(e.target.value as '0' | '1' | '2' | '3' | '4')
+              }
               disabled={isSubmitting}
-            />
+              className="w-full border rounded px-3 py-2"
+            >
+              <option value="0">学科</option>
+              <option value="1">AIシステム学科</option>
+              <option value="2">情報処理学科</option>
+              <option value="3">ITスペシャリスト学科</option>
+              <option value="4">ITエキスパート学科</option>
+            </select>
           </div>
           <div>
             <Input
@@ -138,7 +165,13 @@ export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
               type="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value
+
+                if (/^[\x20-\x7E]*$/.test(value)) {
+                  setEmail(value)
+                }
+              }}
               placeholder="sample@email.com"
               disabled={isSubmitting}
             />
@@ -171,7 +204,7 @@ export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
             <Button
               label="新規登録"
               onClick={handleSubmit}
-              disabled={isSubmitting}
+              disabled={ isSubmitting || password.length < 8 || department === '0' }
               variant="primary"
               className="w-full"
             />
@@ -182,7 +215,6 @@ export function SignUp({ onSubmit, onNavigateToLogin }: SignUpProps) {
           <div className="flex justify-center">
             <Button
               label="ログインはこちら"
-              onClick={onNavigateToLogin}
               disabled={isSubmitting}
               variant="secondary"
               className="w-full"
