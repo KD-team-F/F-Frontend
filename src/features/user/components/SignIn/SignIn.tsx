@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button/Button'
 import { Input } from '@/components/ui/Input/Input'
+import { login } from '@/features/user/actions/login'
 
 type SignInProps = {
   onSubmit?: (formData: {
@@ -17,21 +18,44 @@ export function SignIn({ onSubmit }: SignInProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
   const [statusType, setStatusType] = useState<'info' | 'error'>('info')
+
   const handleSubmit = async () => {
     setStatusMessage(null)
     setStatusType('info')
-    try {
-      setIsSubmitting(true)
-      await onSubmit?.({
-        email,
-        password,
-      })
-    }
-    catch {
-      setStatusMessage('エラーが発生しました')
+
+    if (!/^[\x20-\x7E]+$/.test(email)) {
+      setStatusMessage('email は半角のみ入力できます')
       setStatusType('error')
+      return
     }
-    finally {
+    if (password.length < 8) {
+      setStatusMessage('password は8文字以上で指定してください')
+      setStatusType('error')
+      return
+    }
+    
+    setIsSubmitting(true)
+
+    try {
+      if (onSubmit) {
+        await onSubmit({
+          email,
+          password,
+        })
+      } else {
+        await login({
+          email,
+          password,
+        })
+      }
+    } catch (error) {
+      setStatusMessage(
+        error instanceof Error
+          ? error.message
+          : 'エラーが発生しました',
+      )
+      setStatusType('error')
+    } finally {
       setIsSubmitting(false)
     }
   }
@@ -57,7 +81,13 @@ export function SignIn({ onSubmit }: SignInProps) {
               type="email"
               required
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value
+
+                if (/^[\x20-\x7E]*$/.test(value)) {
+                  setEmail(value)
+                }
+              }}
               placeholder="sample@email.com"
               disabled={isSubmitting}
             />
