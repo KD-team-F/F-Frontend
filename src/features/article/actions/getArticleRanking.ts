@@ -1,24 +1,25 @@
-import { articles } from '@/mocks/data/articles'
-import type { ArticleCategory } from '@/types/article'
-import type { ArticleItem } from '@/types/articleItem'
+import { articles } from "@/mocks/data/articles";
+import type { ArticleCategory } from "@/types/article";
+import type { ArticleItem } from "@/types/articleItem";
 
 export type ArticleRankingData = {
-  questionItems: ArticleItem[]
-  workItems: ArticleItem[]
-}
+  questionItems: ArticleItem[];
+  workItems: ArticleItem[];
+};
 
-function toRankingItems(category: ArticleCategory): ArticleItem[] {
+function filterArticlesByCategory(category: ArticleCategory): ArticleItem[] {
   return articles
     .filter((article) => article.item === category)
-    .map(({ id, title, content, date, tags, likeCount, isLikedByCurrentUser }) => ({
-      id,
-      title,
-      content,
-      date,
-      tags,
-      likeCount,
-      isLikedByCurrentUser,
-    }))
+    .map((article) => ({
+      ...article,
+      id: article.id,
+      title: article.title,
+      content: article.content,
+      date: article.date,
+      tags: article.tags,
+      likeCount: article.likeCount,
+      isLikedByCurrentUser: article.isLikedByCurrentUser,
+    }));
 }
 
 /**
@@ -26,7 +27,7 @@ function toRankingItems(category: ArticleCategory): ArticleItem[] {
  */
 export async function getArticleRanking(): Promise<ArticleRankingData> {
   return {
-    questionItems: toRankingItems('question'),
-    workItems: toRankingItems('work'),
-  }
+    questionItems: filterArticlesByCategory("question"),
+    workItems: filterArticlesByCategory("work"),
+  };
 }
