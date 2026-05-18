@@ -1,0 +1,39 @@
+name: Gemini PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [develop]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "レビューするPR番号"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  gemini-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install google-genai PyGithub requests
+
+      - name: Review with Gemini and post comment
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.number || inputs.pr_number }}
+          REPO_FULL_NAME: ${{ github.repository }}
+        run: python .github/scripts/gemini_review.py
