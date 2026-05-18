@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Title } from "@/components/ui/Title/Title";
 import { Button } from "@/components/ui/Button/Button";
 import { Input } from "@/components/ui/Input/Input";
 import { MarkdownEditor } from "@/features/submission/components/MarkdownEditor/MarkdownEditor";
 import { DeleteIcon } from "@/components/ui/Delete-icon/delete-icon";
 import { updateArticleWithMockApi } from "@/features/article/actions/updateArticleWithMockApi";
+import { useArticleById } from "@/features/article/hooks/useArticleById";
 
 type ArticleEditProps = {
   articleId?: string;
@@ -18,15 +20,30 @@ type ArticleEditProps = {
 
 export function ArticleEdit({
   articleId,
-  defaultTitle = "",
-  defaultContent = "",
+  defaultTitle,
+  defaultContent,
   onSubmit,
   onDelete,
 }: ArticleEditProps) {
-  const [title, setTitle] = useState(defaultTitle);
-  const [content, setContent] = useState(defaultContent);
+  const router = useRouter();
+  const shouldFetch =
+    articleId !== undefined &&
+    defaultTitle === undefined &&
+    defaultContent === undefined;
+
+  const { article, isLoading } = useArticleById(shouldFetch ? articleId : undefined);
+
+  const [title, setTitle] = useState(defaultTitle ?? "");
+  const [content, setContent] = useState(defaultContent ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (article) {
+      setTitle(article.title);
+      setContent(article.content);
+    }
+  }, [article]);
 
   const handleSubmit = async () => {
     try {
@@ -42,6 +59,8 @@ export function ArticleEdit({
         );
         if (!result.ok) {
           setSubmitError(result.message);
+        } else {
+          router.push("/articles");
         }
       }
     } catch (error) {
@@ -52,6 +71,18 @@ export function ArticleEdit({
       setIsSubmitting(false);
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-16 text-center text-gray-500">
+        読み込み中…
+      </div>
+    );
+  }
+
+  if (shouldFetch && !article) {
+    return null;
+  }
 
   return (
     <section className="max-w-3xl mx-auto px-4 py-8">
