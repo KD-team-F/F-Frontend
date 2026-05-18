@@ -1,6 +1,7 @@
 import { Header } from '@/components/layouts/Header/Header'
 import { Footer } from '@/components/layouts/Footer/Footer'
 import { ArticleDetail } from '@/features/article/components/ArticleDetail/ArticleDetail'
+import { getArticle } from '@/features/article/actions/getArticle'
 
 type Props = {
   params: Promise<{ id: string }>
@@ -8,13 +9,7 @@ type Props = {
 
 export default async function ArticleDetailPage({ params }: Props) {
   const { id } = await params
-
-  // TODO: API取得（idでfetch）
-  const article = {
-    title: 'サンプル記事タイトル',
-    date: '2026-04-23',
-    content: '## はじめに\n\nここに記事の本文が入ります。',
-  }
+  const article = await getArticle(id);
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
