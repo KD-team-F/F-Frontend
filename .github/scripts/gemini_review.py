@@ -43,6 +43,8 @@ prompt = f"""以下のPR（プルリクエスト）の diff を詳しくレビ�
 {diff}{truncated_note}
 ```"""
 
+# gemini-3.1-pro-preview はフリープラン対象外のため gemini-2.5-flash を使用
+# 有料プランに切り替えた場合は "gemini-3.1-pro-preview" に変更可能
 response = client.models.generate_content(
     model="gemini-2.5-flash",
     contents=prompt,
