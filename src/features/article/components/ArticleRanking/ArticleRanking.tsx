@@ -38,7 +38,10 @@ const getRankBadgeStyle = (rank: number): string => {
   return RANK_BADGE_STYLES[rank] ?? DEFAULT_BADGE_STYLE
 }
 
-export function ArticleRanking({ questionItems, workItems }: ArticleRankingProps) {
+export function ArticleRanking({
+  questionItems,
+  workItems,
+}: ArticleRankingProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
 
   const currentItems = selectedFilter === 'question' ? questionItems : workItems
