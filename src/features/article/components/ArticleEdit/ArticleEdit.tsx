@@ -31,7 +31,9 @@ export function ArticleEdit({
     defaultTitle === undefined &&
     defaultContent === undefined;
 
-  const { article, isLoading } = useArticleById(shouldFetch ? articleId : undefined);
+  const { article, isLoading, error } = useArticleById(
+    shouldFetch ? articleId : undefined,
+  );
 
   const [title, setTitle] = useState(defaultTitle ?? "");
   const [content, setContent] = useState(defaultContent ?? "");
@@ -60,7 +62,7 @@ export function ArticleEdit({
         if (!result.ok) {
           setSubmitError(result.message);
         } else {
-          router.push("/articles");
+          router.push(`/articles/${articleId}`);
         }
       }
     } catch (error) {
@@ -80,8 +82,20 @@ export function ArticleEdit({
     );
   }
 
+  if (error) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-16 text-center text-red-500">
+        記事の読み込み中にエラーが発生しました: {error.message}
+      </div>
+    );
+  }
+
   if (shouldFetch && !article) {
-    return null;
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-16 text-center text-gray-500">
+        記事が見つかりませんでした。
+      </div>
+    );
   }
 
   return (

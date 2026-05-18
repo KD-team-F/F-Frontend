@@ -26,5 +26,6 @@ export function useArticleById(articleId: string | undefined) {
     article: data,
     isLoading: shouldFetch && isLoading,
     shouldFetch,
+    error,
   }
 }
