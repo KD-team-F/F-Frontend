@@ -1,7 +1,7 @@
 import { Header } from '@/components/layouts/Header/Header'
 import { Footer } from '@/components/layouts/Footer/Footer'
 import { ArticleEdit } from '@/features/article/components/ArticleEdit/ArticleEdit'
-import { getArticleForEdit } from '@/features/article/actions/getArticleForEdit'
+import { getArticle } from '@/features/article/actions/getArticle'
 
 type Props = {
   params: Promise<{ id: string }>
@@ -9,7 +9,7 @@ type Props = {
 
 export default async function ArticleEditPage({ params }: Props) {
   const { id } = await params
-  const article = await getArticleForEdit(id)
+  const article = await getArticle(id)
 
   return (
     <div className="min-h-screen flex flex-col bg-white">
