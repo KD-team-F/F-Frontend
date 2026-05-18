@@ -1,7 +1,14 @@
 import os
+import sys
 import requests
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from github import Github
+
+api_key = os.environ.get("GEMINI_API_KEY", "")
+if not api_key:
+    print("Error: GEMINI_API_KEY が設定されていません。GitHub Secrets を確認してください。")
+    sys.exit(1)
 
 headers = {
     "Authorization": f"token {os.environ['GITHUB_TOKEN']}",
@@ -15,15 +22,10 @@ truncated = len(diff) > MAX_DIFF_SIZE
 if truncated:
     diff = diff[:MAX_DIFF_SIZE]
 
-genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-model = genai.GenerativeModel(
-    "gemini-3.1-pro-preview",
-    system_instruction="あなたは日本語でコードレビューを行うレビュアーです。説明文・コメント・提案はすべて日本語で記述してください。ただし、変数名・関数名・クラス名・ファイル名などのコード上の識別子はそのまま英語で表記して構いません。",
-)
+client = genai.Client(api_key=api_key)
 
 truncated_note = "\n...(差分が長すぎるため一部省略されました)" if truncated else ""
-prompt = f"""あなたは経験豊富なシニアソフトウェアエンジニアです。
-以下のPR（プルリクエスト）の diff を詳しくレビューしてください。
+prompt = f"""以下のPR（プルリクエスト）の diff を詳しくレビューしてください。
 **説明・提案・コメントは必ず日本語で記述してください。変数名・関数名・ファイル名などの識別子はそのまま英語で表記して構いません。**
 
 ## レビュー観点
@@ -41,7 +43,13 @@ prompt = f"""あなたは経験豊富なシニアソフトウェアエンジニ�
 {diff}{truncated_note}
 ```"""
 
-response = model.generate_content(prompt)
+response = client.models.generate_content(
+    model="gemini-3.1-pro-preview",
+    contents=prompt,
+    config=types.GenerateContentConfig(
+        system_instruction="あなたは経験豊富なシニアソフトウェアエンジニアです。日本語でコードレビューを行います。説明文・コメント・提案はすべて日本語で記述してください。ただし、変数名・関数名・クラス名・ファイル名などのコード上の識別子はそのまま英語で表記して構いません。",
+    ),
+)
 review_text = response.text
 
 g = Github(os.environ["GITHUB_TOKEN"])
