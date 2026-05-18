@@ -10,9 +10,10 @@ type SignInProps = {
     email: string
     password: string
   }) => void | Promise<void>
+  onNavigateToRegister?: () => void
 }
 
-export function SignIn({ onSubmit }: SignInProps) {
+export function SignIn({ onSubmit, onNavigateToRegister }: SignInProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -120,6 +121,7 @@ export function SignIn({ onSubmit }: SignInProps) {
             <Button
               label="新規登録はこちら"
               disabled={isSubmitting}
+              onClick={onNavigateToRegister}
               variant="secondary"
               className="w-full"
             />
