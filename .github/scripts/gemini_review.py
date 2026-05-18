@@ -44,7 +44,7 @@ prompt = f"""以下のPR（プルリクエスト）の diff を詳しくレビ�
 ```"""
 
 response = client.models.generate_content(
-    model="gemini-3.1-pro-preview",
+    model="gemini-2.5-flash",
     contents=prompt,
     config=types.GenerateContentConfig(
         system_instruction="あなたは経験豊富なシニアソフトウェアエンジニアです。日本語でコードレビューを行います。説明文・コメント・提案はすべて日本語で記述してください。ただし、変数名・関数名・クラス名・ファイル名などのコード上の識別子はそのまま英語で表記して構いません。",
