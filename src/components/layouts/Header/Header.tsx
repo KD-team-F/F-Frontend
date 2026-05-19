@@ -30,7 +30,7 @@ export function Header() {
 
           {/* ランキング */}
           <Link
-            href="/ranking"
+            href="/articles/ranking"
             className="flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-2 text-sm font-bold text-white shadow hover:scale-105 transition-transform"
           >
             <Crown size={18} />
