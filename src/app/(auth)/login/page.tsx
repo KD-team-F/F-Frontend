@@ -15,14 +15,10 @@ export default function LoginPage() {
     router.push('/articles')
   }
 
-  const navigateToRegister = () => {
-    router.push('/register')
-  }
 
   return (
     <SignIn
       onSubmit={handleSubmit}
-      onNavigateToRegister={navigateToRegister}
     />
   )
 }
