@@ -37,9 +37,9 @@ export function Header() {
             ランキング
           </Link>
 
-          {/* マイページ */}
+          {/* プロフィール */}
           <Link
-            href="/mypage"
+            href="/articles/profile"
             className="text-white hover:scale-110 transition-transform"
           >
             <UserCircle size={38} />
