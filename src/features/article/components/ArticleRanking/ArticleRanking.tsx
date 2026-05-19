@@ -102,7 +102,11 @@ export function ArticleRanking({
               if (!item.id) return <div key={index}>{itemNode}</div>
 
               return (
-                <Link key={item.id} href={`/articles/${item.id}`} className="block hover:opacity-80 transition-opacity">
+                <Link
+                  key={item.id}
+                  href={`/articles/${item.id}`}
+                  className="block hover:opacity-80 transition-opacity"
+                >
                   {itemNode}
                 </Link>
               )
