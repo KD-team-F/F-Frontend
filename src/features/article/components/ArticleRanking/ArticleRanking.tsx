@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import { Header } from '@/components/layouts/Header/Header'
 import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
@@ -60,51 +61,55 @@ export function ArticleRanking({
   }, [currentItems])
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
-        <Title>{`${selectedFilter === 'question' ? '質問' : '制作物'}ランキング`}</Title>
-        <FilterTab
-          options={FILTER_CONFIG}
-          selected={selectedFilter}
-          onChange={(val) => setSelectedFilter(val as FilterType)}
-        />
-      </div>
+    <>
+      <Header />
 
-      <div className="space-y-6">
-        {sortedItems.length === 0 ? (
-          <p className="text-gray-500 text-center py-10">データがありません</p>
-        ) : (
-          sortedItems.map((item, index) => {
-            const rank = index + RANK_OFFSET;
-            
-            const itemNode = (
-              <div className="relative pl-12">
-                <div className={`absolute left-0 top-0 w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm ${getRankBadgeStyle(rank)}`}>
-                  {rank}
+      <div className="max-w-3xl mx-auto px-4 py-8">
+        <div className="flex items-center justify-between mb-8">
+          <Title>{`${selectedFilter === 'question' ? '質問' : '制作物'}ランキング`}</Title>
+          <FilterTab
+            options={FILTER_CONFIG}
+            selected={selectedFilter}
+            onChange={(val) => setSelectedFilter(val as FilterType)}
+          />
+        </div>
+
+        <div className="space-y-6">
+          {sortedItems.length === 0 ? (
+            <p className="text-gray-500 text-center py-10">データがありません</p>
+          ) : (
+            sortedItems.map((item, index) => {
+              const rank = index + RANK_OFFSET;
+              
+              const itemNode = (
+                <div className="relative pl-12">
+                  <div className={`absolute left-0 top-0 w-10 h-10 flex items-center justify-center rounded-full font-bold text-sm ${getRankBadgeStyle(rank)}`}>
+                    {rank}
+                  </div>
+                  
+                  <Item
+                    title={item.title}
+                    content={item.content}
+                    date={item.date}
+                    tags={item.tags}
+                    likeCount={item.likeCount}
+                    isLikedByCurrentUser={item.isLikedByCurrentUser}
+                    selectedTagIds={[]}
+                  />
                 </div>
-                
-                <Item
-                  title={item.title}
-                  content={item.content}
-                  date={item.date}
-                  tags={item.tags}
-                  likeCount={item.likeCount}
-                  isLikedByCurrentUser={item.isLikedByCurrentUser}
-                  selectedTagIds={[]}
-                />
-              </div>
-            )
+              )
 
-            if (!item.id) return <div key={index}>{itemNode}</div>
+              if (!item.id) return <div key={index}>{itemNode}</div>
 
-            return (
-              <Link key={item.id} href={`/articles/${item.id}`} className="block hover:opacity-80 transition-opacity">
-                {itemNode}
-              </Link>
-            )
-          })
-        )}
+              return (
+                <Link key={item.id} href={`/articles/${item.id}`} className="block hover:opacity-80 transition-opacity">
+                  {itemNode}
+                </Link>
+              )
+            })
+          )}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
