@@ -36,8 +36,11 @@ export function useArticleList({
     fetcher,
   )
 
-  const questionItems = updatedData?.questionItems ?? (shouldFetch ? (questionData ?? []) : (initialQuestionItems ?? []))
-  const workItems = updatedData?.workItems ?? (shouldFetch ? (workData ?? []) : (initialWorkItems ?? []))
+  const sortByDateDesc = (items: ArticleItem[]) =>
+    [...items].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
+  const questionItems = sortByDateDesc(updatedData?.questionItems ?? (shouldFetch ? (questionData ?? []) : (initialQuestionItems ?? [])))
+  const workItems = sortByDateDesc(updatedData?.workItems ?? (shouldFetch ? (workData ?? []) : (initialWorkItems ?? [])))
 
   const handleRefresh = async () => {
     setIsRefreshing(true)
