@@ -30,7 +30,7 @@ export const WithTags: Story = {
   args: {
     title: "ReactのuseEffectはいつ使うべきですか？",
     content: "useEffectの適切な使いどころが分からず困っています。",
-    date: "2026-04-24",
+    date: "2026-04-24T10:30:00",
     tags: [
       { id: "react", label: "React" },
       { id: "typescript", label: "TypeScript" },
@@ -42,7 +42,7 @@ export const WithActiveTags: Story = {
   args: {
     title: "ReactのuseEffectはいつ使うべきですか？",
     content: "useEffectの適切な使いどころが分からず困っています。",
-    date: "2026-04-24",
+    date: "2026-04-24T10:30:00",
     tags: [
       { id: "react", label: "React" },
       { id: "typescript", label: "TypeScript" },
@@ -57,7 +57,7 @@ export const LongContent: Story = {
     content: `これは長い質問内容です。
 改行もちゃんと表示されるかテストしています。
 Tailwindのwhitespace-pre-wrapが効いているか確認。`,
-    date: "2026/04/23",
+    date: "2026-04-23T14:00:00",
   },
 };
   // 評価数0・自分も未評価

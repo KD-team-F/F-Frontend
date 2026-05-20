@@ -27,21 +27,21 @@ const questionItems = [
 		title: 'ReactのuseEffectはいつ使うべきですか？',
 		content:
 			'useEffectの適切な使いどころが分からず困っています。どのような場合に使うべきか教えてください。',
-		date: '2026-04-24',
+		date: '2026-04-24T10:30:00',
 	},
 	{
 		id: 'question-2',
 		title: 'TypeScriptのジェネリクスについて',
 		content:
 			'ジェネリクスの概念は理解しているつもりですが、実際のコードでどう活用すればいいか分かりません。',
-		date: '2026-04-23',
+		date: '2026-04-23T15:00:00',
 	},
 	{
 		id: 'question-3',
 		title: 'Next.jsのApp RouterとPages Routerの違いは？',
 		content:
 			'既存プロジェクトをApp Routerに移行すべきか悩んでいます。メリット・デメリットを教えてください。',
-		date: '2026-04-22',
+		date: '2026-04-22T09:15:00',
 	},
 ]
 
@@ -51,21 +51,21 @@ const workItems = [
 		title: 'ポートフォリオサイト',
 		content:
 			'Next.js + TailwindCSSで制作した個人ポートフォリオです。Storybookも導入しています。',
-		date: '2026-04-24',
+		date: '2026-04-24T11:00:00',
 	},
 	{
 		id: 'work-2',
 		title: 'タスク管理アプリ',
 		content:
 			'ReactとFirebaseを使ったリアルタイムタスク管理アプリです。認証機能も実装しています。',
-		date: '2026-04-20',
+		date: '2026-04-20T16:45:00',
 	},
 	{
 		id: 'work-3',
 		title: 'ECサイトLP',
 		content:
 			'クライアント案件で制作したランディングページです。レスポンシブ対応済み。',
-		date: '2026-04-15',
+		date: '2026-04-15T13:20:00',
 	},
 ]
 
