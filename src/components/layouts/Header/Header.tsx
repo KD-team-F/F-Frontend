@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Crown, FileText, UserCircle } from 'lucide-react'
 
 export function Header() {
@@ -7,44 +8,44 @@ export function Header() {
 
         {/* アプリ名 */}
         <div className="flex items-center">
-          <a
+          <Link
             href="/"
             className="text-xl font-extrabold tracking-tight text-white hover:opacity-80 transition-opacity"
           >
             アプリ名
-          </a>
+          </Link>
         </div>
 
         {/* 右側エリア */}
         <div className="ml-auto flex items-center gap-4">
 
           {/* 記事一覧 */}
-          <a
+          <Link
             href="/articles"
             className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-[#4AA3D8] shadow hover:scale-105 transition-transform"
           >
             <FileText size={18} />
             記事一覧
-          </a>
+          </Link>
 
           {/* ランキング */}
-          <a
-            href="/ranking"
+          <Link
+            href="/articles/ranking"
             className="flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-2 text-sm font-bold text-white shadow hover:scale-105 transition-transform"
           >
             <Crown size={18} />
             ランキング
-          </a>
+          </Link>
 
-          {/* マイページ */}
-          <a
-            href="/mypage"
+          {/* プロフィール */}
+          <Link
+            href="/articles/profile"
             className="text-white hover:scale-110 transition-transform"
           >
             <UserCircle size={38} />
-          </a>
-        </div>
+          </Link>
 
+        </div>
       </div>
     </header>
   )
