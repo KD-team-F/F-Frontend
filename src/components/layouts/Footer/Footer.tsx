@@ -12,6 +12,8 @@ export function Footer() {
     <footer className="bg-[#ABE1FA] px-4 py-8 mt-auto">
       <div className="mx-auto max-w-7xl flex flex-col items-center gap-6">
 
+        {/* // TODO: ボタン配置予定地です。 */}
+
         {/* ここから */}
 
         <div className="flex items-center gap-8">
@@ -19,6 +21,7 @@ export function Footer() {
           <Link
             href="https://github.com/KD-team-F/F-Frontend"
             target="_blank"
+            rel="noopener noreferrer"
             className="hover:opacity-70 transition"
           >
             <FaGithub size={28} />
@@ -27,6 +30,7 @@ export function Footer() {
           <Link
             href="https://www.instagram.com/kobedenshi/"
             target="_blank"
+            rel="noopener noreferrer"
             className="hover:opacity-70 transition"
           >
             <FaInstagram size={28} />
@@ -35,6 +39,7 @@ export function Footer() {
           <Link
             href="https://www.youtube.com/user/Kobedenshi"
             target="_blank"
+            rel="noopener noreferrer"
             className="hover:opacity-70 transition"
           >
             <FaYoutube size={28} />
@@ -43,6 +48,7 @@ export function Footer() {
           <Link
             href="https://x.com/kobedenshi?lang=ja"
             target="_blank"
+            rel="noopener noreferrer"
             className="hover:opacity-70 transition"
           >
             <FaXTwitter size={28} />
