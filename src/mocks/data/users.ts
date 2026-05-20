@@ -5,7 +5,7 @@ export const users: User[] = [
     userId: 'yamada tarou',
     grade: 1,
     department: '4',
-    email: 'yamadatarou@example.com',
+    email: 'kd0000000@st.kobedenshi.ac.jp',
     password: '00000000',
   },
 ]

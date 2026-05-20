@@ -13,9 +13,9 @@ export const loginHandlers = [
       const body = (await request.json()) as LoginRequestBody
       const { email, password } = body
 
-      if (!email || typeof email !== 'string' || !email.includes('@')) {
+      if (!email || typeof email !== 'string' || !email.includes('@st.kobedenshi.ac.jp')) {
         return HttpResponse.json(
-          { message: 'email は有効なメールアドレスを指定してください' },
+          { message: 'email は神戸電子専門学校のメールアドレスを指定してください' },
           { status: 400 },
         )
       }
