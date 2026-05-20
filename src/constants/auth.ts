@@ -1,0 +1,1 @@
+export const ALLOWED_EMAIL_DOMAIN = '@st.kobedenshi.ac.jp'

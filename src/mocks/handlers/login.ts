@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw'
 import { users } from '@/mocks/data/users'
 import { tokens } from '@/mocks/data/tokens'
+import { ALLOWED_EMAIL_DOMAIN } from '@/constants/auth'
 
 type LoginRequestBody = {
   email: string
@@ -13,9 +14,9 @@ export const loginHandlers = [
       const body = (await request.json()) as LoginRequestBody
       const { email, password } = body
 
-      if (!email || typeof email !== 'string' || !email.includes('@st.kobedenshi.ac.jp')) {
+      if (!email || typeof email !== 'string' || !email.endsWith(ALLOWED_EMAIL_DOMAIN)) {
         return HttpResponse.json(
-          { message: 'email は神戸電子専門学校のメールアドレスを指定してください' },
+          { message: 'email は有効なメールアドレスを指定してください' },
           { status: 400 },
         )
       }
