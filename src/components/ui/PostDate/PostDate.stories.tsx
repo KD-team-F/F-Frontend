@@ -12,6 +12,6 @@ type Story = StoryObj<typeof PostDate>
 
 export const Default: Story = {
   args: {
-    date: '2025/04/23',
+    date: '2025-04-23T12:34:00',
   },
 }
