@@ -10,10 +10,9 @@ type SignInProps = {
     email: string
     password: string
   }) => void | Promise<void>
-  onNavigateToRegister?: () => void
 }
 
-export function SignIn({ onSubmit, onNavigateToRegister }: SignInProps) {
+export function SignIn({ onSubmit }: SignInProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -111,18 +110,6 @@ export function SignIn({ onSubmit, onNavigateToRegister }: SignInProps) {
               onClick={handleSubmit}
               disabled={isSubmitting}
               variant="primary"
-              className="w-full"
-            />
-          </div>
-          <div className="text-center text-sm text-gray-600 py-4">
-            はじめてご利用の方（新規会員登録）
-          </div>
-          <div className="flex justify-center">
-            <Button
-              label="新規登録はこちら"
-              disabled={isSubmitting}
-              onClick={onNavigateToRegister}
-              variant="secondary"
               className="w-full"
             />
           </div>
