@@ -13,6 +13,9 @@ function isValidTag(value: unknown): value is Tag {
   return typeof id === "string" && typeof label === "string";
 }
 
+const INVALID_MASTER_DATA_MESSAGE =
+  "タグマスターデータの形式が不正です";
+
 export const tagListHandlers = [
   http.get("/api/tags", async ({ request }) => {
     try {
@@ -31,7 +34,7 @@ export const tagListHandlers = [
 
       if (!Array.isArray(tags)) {
         return HttpResponse.json(
-          { message: "タグデータの形式が不正です" },
+          { message: INVALID_MASTER_DATA_MESSAGE },
           { status: 500 },
         );
       }
@@ -39,7 +42,7 @@ export const tagListHandlers = [
       const invalid = tags.some((tag) => !isValidTag(tag));
       if (invalid) {
         return HttpResponse.json(
-          { message: "タグデータの形式が不正です" },
+          { message: INVALID_MASTER_DATA_MESSAGE },
           { status: 500 },
         );
       }
@@ -49,7 +52,8 @@ export const tagListHandlers = [
       console.error("MSW Handler Error:", error);
       return HttpResponse.json(
         {
-          message: "タグの取得に失敗しました",
+          message:
+            "タグ一覧の取得処理でサーバーエラーが発生しました",
           details: error instanceof Error ? error.message : String(error),
         },
         { status: 500 },
