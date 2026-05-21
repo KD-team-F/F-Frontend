@@ -25,5 +25,9 @@ export default function ProfilePage() {
     return <p>Loading...</p>
   }
 
-  return <Profile {...profile} />
+  return (
+    <div className="relative">
+      <Profile {...profile} />
+    </div>
+  )
 }
