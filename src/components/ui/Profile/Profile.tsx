@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 
+import { PasswordChangeModal } from '@/components/ui/Profile/ChangePasswordModal'
 import { IconCircle } from '@/components/ui/Icon/Icon'
 import { Item } from '@/components/ui/Item/Item'
 
@@ -39,9 +40,16 @@ export function Profile({
 	defaultTab = 'questions',
 }: ProfileProps) {
 	const [activeTab, setActiveTab] = useState<ProfileTab>(defaultTab)
+	const [open, setOpen] = useState(false)
 	const items = activeTab === 'questions' ? questionItems : workItems
 
-	return (
+	return (<>{
+		open && (
+			<PasswordChangeModal
+				onClose={() => setOpen(false)}
+			/>
+		)
+	}
 		<section className="mx-auto w-full max-w-5xl overflow-hidden rounded-[28px] border border-gray-200 bg-[#f7f7f7] shadow-sm">
 			<div className="h-24 w-full bg-[#c5e5ff] sm:h-32" />
 
@@ -59,9 +67,33 @@ export function Profile({
 						<p>{specialty}</p>
 					</div>
 
-					<p className="max-w-2xl text-sm leading-7 text-gray-700 sm:text-base">
-						{bio}
-					</p>
+					<div className="flex flex-1 flex-col justify-between gap-4">
+						<p className="max-w-2xl text-sm leading-7 text-gray-700 sm:text-base">
+							{bio}
+						</p>
+
+						<div className="flex justify-end">
+							<button
+								type="button"
+								onClick={() => setOpen(true)}
+								className="
+            					rounded-full
+								border
+								border-gray-300            
+								bg-white
+								px-6
+								py-2
+								text-sm
+								text-[#5aa9ff]
+								shadow-sm
+								transition
+								hover:bg-gray-50
+          						"
+							>
+								パスワード変更
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -107,7 +139,7 @@ export function Profile({
 					)}
 				</div>
 			</div>
-		</section>
+		</section> </>
 	)
 }
 
