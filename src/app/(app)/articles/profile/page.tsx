@@ -1,4 +1,7 @@
+'use client'
+
 import type { ComponentProps } from 'react'
+
 import { Profile } from '@/components/ui/Profile/Profile'
 
 const profileProps = {
@@ -12,5 +15,12 @@ const profileProps = {
 } as ComponentProps<typeof Profile>
 
 export default function ProfilePage() {
-  return <Profile {...profileProps} />
+
+  return (
+    <div className="relative">
+
+      <Profile {...profileProps} />
+
+    </div>
+  )
 }
