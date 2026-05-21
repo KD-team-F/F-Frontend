@@ -1,0 +1,63 @@
+import { http, HttpResponse } from "msw";
+import { tags } from "@/mocks/data/tags";
+import type { ArticleCategory } from "@/types/article";
+import type { Tag } from "@/types/tag";
+
+function isArticleItem(value: string | null): value is ArticleCategory {
+  return value === "question" || value === "work";
+}
+
+function isValidTag(value: unknown): value is Tag {
+  if (!value || typeof value !== "object") return false;
+  const { id, label } = value as Tag;
+  return typeof id === "string" && typeof label === "string";
+}
+
+const INVALID_MASTER_DATA_MESSAGE =
+  "タグマスターデータの形式が不正です";
+
+export const tagListHandlers = [
+  http.get("/api/tags", async ({ request }) => {
+    try {
+      const url = new URL(request.url);
+      const item = url.searchParams.get("item");
+
+      if (item !== null && !isArticleItem(item)) {
+        return HttpResponse.json(
+          {
+            message:
+              "item クエリパラメータには question または work を指定してください",
+          },
+          { status: 400 },
+        );
+      }
+
+      if (!Array.isArray(tags)) {
+        return HttpResponse.json(
+          { message: INVALID_MASTER_DATA_MESSAGE },
+          { status: 500 },
+        );
+      }
+
+      const invalid = tags.some((tag) => !isValidTag(tag));
+      if (invalid) {
+        return HttpResponse.json(
+          { message: INVALID_MASTER_DATA_MESSAGE },
+          { status: 500 },
+        );
+      }
+
+      return HttpResponse.json(tags);
+    } catch (error) {
+      console.error("MSW Handler Error:", error);
+      return HttpResponse.json(
+        {
+          message:
+            "タグ一覧の取得処理でサーバーエラーが発生しました",
+          details: error instanceof Error ? error.message : String(error),
+        },
+        { status: 500 },
+      );
+    }
+  }),
+];
