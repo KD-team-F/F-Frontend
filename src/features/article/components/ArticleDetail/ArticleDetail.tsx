@@ -1,5 +1,7 @@
 'use client'
 
+import BackButton from '@/components/assets/backbutton'
+
 import { ArticleContent } from '@/components/ui/ArticleContent/ArticleContent'
 import { PostDate } from '@/components/ui/PostDate/PostDate'
 import { Title } from '@/components/ui/Title/Title'
@@ -68,6 +70,12 @@ export function ArticleDetail({
 
   return (
     <article className="max-w-3xl mx-auto px-4 py-8">
+
+      {/* 戻るボタン */}
+      <div className="mb-4">
+        <BackButton />
+      </div>
+
       <Title>{title}</Title>
 
       <div className="flex items-center justify-between mt-2">
