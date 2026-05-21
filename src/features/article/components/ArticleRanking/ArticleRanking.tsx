@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
+import { useArticleRanking } from '@/features/article/hooks/useArticleRanking'
 import type { ArticleItem } from '@/types/articleItem'
 
 const DISPLAY_LIMIT = 10;
@@ -17,8 +18,8 @@ const RANK_OFFSET = 1;
 type FilterType = 'question' | 'work'
 
 type ArticleRankingProps = {
-  questionItems: ArticleItem[]
-  workItems: ArticleItem[]
+  questionItems?: ArticleItem[]
+  workItems?: ArticleItem[]
 }
 
 const FILTER_CONFIG: { id: FilterType; label: string }[] = [
@@ -39,10 +40,15 @@ const getRankBadgeStyle = (rank: number): string => {
 }
 
 export function ArticleRanking({
-  questionItems,
-  workItems,
+  questionItems: initialQuestionItems,
+  workItems: initialWorkItems,
 }: ArticleRankingProps) {
   const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
+
+  const { questionItems, workItems, isLoading } = useArticleRanking({
+    initialQuestionItems,
+    initialWorkItems,
+  })
 
   const currentItems = selectedFilter === 'question' ? questionItems : workItems
 
@@ -58,6 +64,14 @@ export function ArticleRanking({
       })
       .slice(0, DISPLAY_LIMIT)
   }, [currentItems])
+
+  if (isLoading) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 py-16 text-center text-gray-500">
+        読み込み中…
+      </div>
+    )
+  }
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
