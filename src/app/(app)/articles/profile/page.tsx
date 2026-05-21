@@ -16,13 +16,10 @@ const profileProps = {
 
 export default function ProfilePage() {
 
-
   return (
     <div className="relative">
 
       <Profile {...profileProps} />
-
-  
 
     </div>
   )
