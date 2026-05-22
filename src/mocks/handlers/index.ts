@@ -7,6 +7,7 @@ import { loginHandlers } from '@/mocks/handlers/login'
 import { articleRankingHandlers } from '@/mocks/handlers/articleRanking'
 import { articleEditHandlers } from '@/mocks/handlers/articleEdit'
 import { profileHandlers } from '@/mocks/handlers/profile'
+import { tagListHandlers } from '@/mocks/handlers/tagList'
 
 export const handlers = [
   ...articleListHandlers,
@@ -18,4 +19,5 @@ export const handlers = [
   ...loginHandlers,
   ...articleRankingHandlers,
   ...profileHandlers,
+  ...tagListHandlers,
 ]

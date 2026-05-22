@@ -37,7 +37,8 @@ export default function ProfilePage() {
 
   return (
     <div className="relative">
-      <Profile {...profile} />
+      <Profile {...profile} /
+
     </div>
   )
 }
