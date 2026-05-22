@@ -57,6 +57,7 @@ export function ArticleDetail({
       <hr className="my-8 border-gray-200" />
 
       <CommentSection
+        key={initialComments?.length ?? 0}  
         initialComments={initialComments}
         onSubmit={onSubmit}
       />

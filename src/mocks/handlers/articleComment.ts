@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw'
-import { articles } from '@/mocks/data/articles'
+import { mockarticles } from '@/mocks/data/db'
 import type { Comment } from '@/features/comment/types/comment'
 
 type ArticleCommentRequestBody = {
@@ -7,7 +7,7 @@ type ArticleCommentRequestBody = {
 }
 
 export const articleCommentHandlers = [
-  http.post('/api/article/:id/comments', async ({ params, request }) => {
+  http.post('/api/articles/:id/comments', async ({ params, request }) => {
     try {
       const id = params.id as string
       const body = (await request.json()) as ArticleCommentRequestBody
@@ -20,7 +20,11 @@ export const articleCommentHandlers = [
         )
       }
 
-      const article = articles.find((a) => a.id === id)
+      const now = new Date()
+      const jstDate = now.toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' }).replace(/\//g, '-')
+      const jstTime = now.toLocaleTimeString('ja-JP', { hour: '2-digit', minute: '2-digit', hour12: false })
+      
+      const article = mockarticles.find((a) => a.id === id)
       if (!article) {
         return HttpResponse.json(
           { message: `id: ${id} の記事は存在しません` },
@@ -31,7 +35,11 @@ export const articleCommentHandlers = [
       const newComment: Comment = {
         id: crypto.randomUUID(),
         content,
-        date: new Date().toISOString().slice(0, 10),
+        date: `${jstDate} ${jstTime}`,
+      }
+
+      if (!article.initialComments) {
+        article.initialComments = []
       }
 
       article.initialComments.push(newComment)
