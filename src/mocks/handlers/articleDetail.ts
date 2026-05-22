@@ -1,12 +1,12 @@
 import { http, HttpResponse } from 'msw'
-import { mockarticles } from '@/mocks/data/db'
+import { articles } from '@/mocks/data/articles'
 
 export const articleDetailHandlers = [
   http.get('/api/article/detail/:id', async ({ params }) => {
     try {
       const id = params.id as string
 
-      const article = mockarticles.find((a) => a.id === id)
+      const article = articles.find((a) => a.id === id)
 
       if (!article) {
         return HttpResponse.json(

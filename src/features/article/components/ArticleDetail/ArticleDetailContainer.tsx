@@ -14,7 +14,7 @@ export function ArticleDetailContainer({ articleId }: Props) {
 
   return (
     <ArticleDetail
-      id={article.id}
+      articleId={article.id}
       title={article.title}
       date={article.date}
       content={article.content}
