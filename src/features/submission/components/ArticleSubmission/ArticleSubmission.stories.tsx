@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import { ArticleSubmission } from './ArticleSubmission'
+import type { ArticleCategory } from '@/types/article'
+import type { Tag } from '@/types/tag'
 
 const meta: Meta<typeof ArticleSubmission> = {
   title: 'Features/Submission/ArticleSubmission',
@@ -13,24 +15,39 @@ const meta: Meta<typeof ArticleSubmission> = {
 export default meta
 type Story = StoryObj<typeof ArticleSubmission>
 
-const successSubmit = async (title: string, content: string): Promise<void> => {
+const successSubmit = async (
+  title: string,
+  content: string,
+  item: ArticleCategory,
+  tags: Tag[],
+): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, 500))
+  console.log('カテゴリ:', item)
   console.log('投稿タイトル:', title)
   console.log('投稿内容:', content)
+  console.log('タグ:', tags)
 }
 
-const failureSubmit = async (_title: string, _content: string): Promise<void> => {
+const failureSubmit = async (): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, 500))
   throw new Error('投稿に失敗しました')
 }
 
-const loadingSubmit = async (_title: string, _content: string): Promise<void> => {
+const loadingSubmit = async (): Promise<void> => {
   return new Promise(() => {})
 }
 
 /** 初期状態（未入力） */
 export const Default: Story = {
   args: {
+    onSubmit: successSubmit,
+  },
+}
+
+/** 制作物カテゴリで初期表示 */
+export const WorkCategory: Story = {
+  args: {
+    defaultItem: 'work',
     onSubmit: successSubmit,
   },
 }
@@ -49,7 +66,7 @@ export const WithFailure: Story = {
   },
 }
 
-/** onSubmit を渡さないケース（投稿ボタンは何もしない） */
+/** onSubmit を渡さないケース（mock API へ POST する） */
 export const WithoutHandler: Story = {
   args: {},
 }
