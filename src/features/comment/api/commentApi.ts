@@ -1,12 +1,6 @@
 import type { Comment } from '@/features/comment/types/comment'
 
-export async function postComment(content: string): Promise<Comment> {
-
-  const articleId = typeof window !== 'undefined' ? window.location.pathname.split('/').pop() : ''
-
-  if (!articleId) {
-    throw new Error('記事IDが取得できませんでした')
-  }
+export async function postComment(articleId: string, content: string): Promise<Comment> {
 
   const response = await fetch(`/api/articles/${articleId}/comments`, {
     method: 'POST',
