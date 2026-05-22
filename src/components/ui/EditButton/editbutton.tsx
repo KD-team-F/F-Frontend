@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 
 type EditButtonProps = {
-  id?: string
+  id: string
   className?: string
 }
 

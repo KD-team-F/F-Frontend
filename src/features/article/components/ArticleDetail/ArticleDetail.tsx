@@ -12,7 +12,7 @@ import { EditButton } from "@/components/ui/EditButton/editbutton";
 import { useArticleById } from "@/features/article/hooks/useArticleById";
 
 type ArticleDetailProps = {
-  articleId?: string;
+  articleId: string;
   title?: string;
   date?: string;
   content?: string;
@@ -75,7 +75,7 @@ export function ArticleDetail({
         <PostDate date={date} />
 
         <div className="flex items-center gap-2">
-          <EditButton id={articleId || undefined} />
+          <EditButton id={articleId} />
           <RatingHeart />
         </div>
       </div>
