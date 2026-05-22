@@ -166,11 +166,9 @@ export function ArticleEdit({
     <section className="relative max-w-3xl mx-auto px-4 py-8">
 
       <div className="absolute -left-16 top-6">
-
         <BackButton
-          href={`/articles/${articleId}`}
+          href={articleId ? `/articles/${articleId}` : '/articles'}
         />
-
       </div>
 
       {submitError ? (
