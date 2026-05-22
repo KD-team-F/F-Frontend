@@ -3,16 +3,23 @@
 import { useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
 
-export default function BackButton() {
+type BackButtonProps = {
+  href: string
+}
+
+export default function BackButton({
+  href,
+}: BackButtonProps) {
 
   const router = useRouter()
 
   const handleBack = () => {
-    router.back()
+    router.push(href)
   }
 
   return (
     <button
+      type="button"
       onClick={handleBack}
       className="p-2 rounded-full hover:bg-gray-200 transition"
     >
