@@ -1,18 +1,30 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
+
 type EditButtonProps = {
-  onClick?: () => void
+  id: string
   className?: string
 }
 
 export const EditButton = ({
-  onClick,
+  id,
   className = '',
 }: EditButtonProps) => {
+  const router = useRouter()
+  console.log('EditButton rendered with id:', id);
+
+  const handleClick = () => {
+    console.log(`Edit article with id: ${id}`)
+    router.push(`/articles/edit/${id}`)
+  }
+
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={handleClick}
       aria-label="編集"
-      className={`flex items-center justify-center ${className}`}
+      className={`flex items-center justify-center transition-transform hover:scale-105 ${className}`}
     >
       <svg
         width="48"

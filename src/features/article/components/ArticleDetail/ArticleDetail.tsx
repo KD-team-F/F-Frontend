@@ -9,6 +9,7 @@ import type { Tag as TagType } from '@/types/tag'
 import { EditButton } from '@/components/ui/EditButton/editbutton'
 
 type ArticleDetailProps = {
+  id: string
   title: string
   date: string
   content: string
@@ -18,6 +19,7 @@ type ArticleDetailProps = {
 }
 
 export function ArticleDetail({
+  id,
   title,
   date,
   content,
@@ -33,7 +35,7 @@ export function ArticleDetail({
         <PostDate date={date} />
 
         <div className="flex items-center gap-2">
-          <EditButton />
+          <EditButton id={id} />
           <RatingHeart />
         </div>
       </div>

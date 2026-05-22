@@ -32,6 +32,7 @@ export function ArticleEdit({
     try {
       setIsSubmitting(true);
       setSubmitError(null);
+
       if (onSubmit) {
         await onSubmit(title, content);
       } else if (articleId) {
@@ -40,6 +41,7 @@ export function ArticleEdit({
           title,
           content,
         );
+
         if (!result.ok) {
           setSubmitError(result.message);
         }
@@ -54,54 +56,56 @@ export function ArticleEdit({
   };
 
   return (
-    <section className="max-w-3xl mx-auto px-4 py-8">
-      {submitError ? (
-        <p role="alert" className="mb-6 text-center text-sm text-red-600">
-          {submitError}
-        </p>
-      ) : null}
+    <section className="min-h-screen w-full bg-black px-4 py-10">
+      <div className="mx-auto w-full max-w-3xl">
+        {submitError ? (
+          <p role="alert" className="mb-6 text-center text-sm text-red-600">
+            {submitError}
+          </p>
+        ) : null}
 
-      <div className="mb-8">
-        <Title>記事を編集する</Title>
-      </div>
+        <div className="mb-8">
+          <Title>記事を編集する</Title>
+        </div>
 
-      <div className="mb-8">
-        <Input
-          id="article-title"
-          name="title"
-          label="タイトル"
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="記事のタイトルを入力してください"
-        />
-      </div>
+        <div className="mb-8">
+          <Input
+            id="article-title"
+            name="title"
+            label="タイトル"
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="記事のタイトルを入力してください"
+          />
+        </div>
 
-      <div className="mb-8">
-        <MarkdownEditor
-          id="article-content"
-          name="content"
-          label="内容"
-          required
-          value={content}
-          onChange={setContent}
-          placeholder="内容を入力してください（マークダウン可）"
-        />
-      </div>
+        <div className="mb-8">
+          <MarkdownEditor
+            id="article-content"
+            name="content"
+            label="内容"
+            required
+            value={content}
+            onChange={setContent}
+            placeholder="内容を入力してください（マークダウン可）"
+          />
+        </div>
 
-      <div className="flex justify-end items-center gap-4">
-        {onDelete && <DeleteIcon onClick={onDelete} />}
+        <div className="flex items-center justify-end gap-4">
+          {onDelete && <DeleteIcon onClick={onDelete} />}
 
-        <Button
-          label="更新"
-          onClick={handleSubmit}
-          disabled={
-            isSubmitting ||
-            !title.trim() ||
-            !content.trim() ||
-            (!onSubmit && !articleId)
-          }
-        />
+          <Button
+            label="更新"
+            onClick={handleSubmit}
+            disabled={
+              isSubmitting ||
+              !title.trim() ||
+              !content.trim() ||
+              (!onSubmit && !articleId)
+            }
+          />
+        </div>
       </div>
     </section>
   );
