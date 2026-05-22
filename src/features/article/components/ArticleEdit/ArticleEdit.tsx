@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/Input/Input";
 import { MarkdownEditor } from "@/features/submission/components/MarkdownEditor/MarkdownEditor";
 import { DeleteIcon } from "@/components/ui/Delete-icon/delete-icon";
 import { updateArticleWithMockApi } from "@/features/article/actions/updateArticleWithMockApi";
+import { deleteArticleWithMockApi } from "@/features/article/actions/deleteArticleWithMockApi";
 import { useArticleById } from "@/features/article/hooks/useArticleById";
 
 type ArticleEditProps = {
@@ -38,6 +39,7 @@ export function ArticleEdit({
   const [title, setTitle] = useState(defaultTitle ?? "");
   const [content, setContent] = useState(defaultContent ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -46,6 +48,29 @@ export function ArticleEdit({
       setContent(article.content);
     }
   }, [article]);
+
+  const handleDelete = async () => {
+    try {
+      setIsDeleting(true);
+      setSubmitError(null);
+      if (onDelete) {
+        onDelete();
+      } else if (articleId) {
+        const result = await deleteArticleWithMockApi(articleId);
+        if (!result.ok) {
+          setSubmitError(result.message);
+        } else {
+          router.push("/articles");
+        }
+      }
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "削除に失敗しました",
+      );
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -135,13 +160,16 @@ export function ArticleEdit({
       </div>
 
       <div className="flex justify-end items-center gap-4">
-        {onDelete && <DeleteIcon onClick={onDelete} />}
+        {(onDelete || articleId) && (
+          <DeleteIcon onClick={handleDelete} />
+        )}
 
         <Button
           label="更新"
           onClick={handleSubmit}
           disabled={
             isSubmitting ||
+            isDeleting ||
             !title.trim() ||
             !content.trim() ||
             (!onSubmit && !articleId)
