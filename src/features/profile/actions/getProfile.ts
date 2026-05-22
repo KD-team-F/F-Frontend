@@ -1,7 +1,4 @@
-import type { ComponentProps } from 'react'
-import { Profile } from '@/components/ui/Profile/Profile'
-
-type ProfileData = ComponentProps<typeof Profile>
+import type { ProfileData } from '@/types/profile'
 
 export const getProfile = async (): Promise<ProfileData> => {
   const response = await fetch('/api/profile')

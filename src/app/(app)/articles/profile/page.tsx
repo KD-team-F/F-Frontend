@@ -1,12 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import type { ComponentProps } from 'react'
 import { getProfile } from '@/features/profile/actions/getProfile'
-
 import { Profile } from '@/components/ui/Profile/Profile'
-
-type ProfileData = ComponentProps<typeof Profile>
+import type { ProfileData } from '@/types/profile'
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState<ProfileData | null>(null)
