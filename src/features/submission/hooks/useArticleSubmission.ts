@@ -9,7 +9,7 @@ import { createArticleWithMockApi } from '@/features/article/actions/createArtic
 import { useTagList } from '@/features/tag/hooks/useTagList'
 import type { ArticleCategory } from '@/types/article'
 
-export function useArticleSubmission({ item, onSubmit }: ArticleSubmissionProps) {
+export function useArticleSubmission({ defaultItem, onSubmit }: ArticleSubmissionProps) {
   const router = useRouter()
   const {
     tags: availableTags,
@@ -19,7 +19,7 @@ export function useArticleSubmission({ item, onSubmit }: ArticleSubmissionProps)
   } = useTagList()
 
   const [selectedItem, setSelectedItem] = useState<ArticleCategory>(
-    item ?? 'question',
+    defaultItem ?? 'question',
   )
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')

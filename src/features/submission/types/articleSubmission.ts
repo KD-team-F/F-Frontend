@@ -9,6 +9,6 @@ export type ArticleSubmissionOnSubmit = (
 ) => void | Promise<void>
 
 export type ArticleSubmissionProps = {
-  item?: ArticleCategory
+  defaultItem?: ArticleCategory
   onSubmit?: ArticleSubmissionOnSubmit
 }

@@ -47,7 +47,7 @@ export const Default: Story = {
 /** 制作物カテゴリで初期表示 */
 export const WorkCategory: Story = {
   args: {
-    item: 'work',
+    defaultItem: 'work',
     onSubmit: successSubmit,
   },
 }
