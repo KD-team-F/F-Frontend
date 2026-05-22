@@ -22,22 +22,22 @@ import { EditButton } from '@/components/ui/EditButton/editbutton'
 import { useArticleById } from '@/features/article/hooks/useArticleById'
 
 type ArticleDetailProps = {
-  articleId?: string
-  title?: string
-  date?: string
-  content?: string
+  id: string
+  title: string
+  date: string
+  content: string
   tags?: TagType[]
   initialComments?: Comment[]
   onSubmit?: (content: string) => Promise<Comment>
 }
 
 export function ArticleDetail({
-  articleId,
-  title: initialTitle,
-  date: initialDate,
-  content: initialContent,
-  tags: initialTags,
-  initialComments: initialCommentsProp,
+  id,
+  title,
+  date,
+  content,
+  tags = [],
+  initialComments,
   onSubmit,
 }: ArticleDetailProps) {
 
@@ -129,7 +129,7 @@ export function ArticleDetail({
         <PostDate date={date} />
 
         <div className="flex items-center gap-2">
-          <EditButton />
+          <EditButton id={id} />
           <RatingHeart />
         </div>
 
@@ -158,6 +158,7 @@ export function ArticleDetail({
       <hr className="my-8 border-gray-200" />
 
       <CommentSection
+        key={initialComments?.length ?? 0}  
         initialComments={initialComments}
         onSubmit={onSubmit}
       />

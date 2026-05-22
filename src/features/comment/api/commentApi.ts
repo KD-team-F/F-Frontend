@@ -1,11 +1,20 @@
 import type { Comment } from '@/features/comment/types/comment'
 
-export async function postComment(content: string): Promise<Comment> {
-  await new Promise((resolve) => setTimeout(resolve, 500))
+export async function postComment(articleId: string, content: string): Promise<Comment> {
 
-  return {
-    id: crypto.randomUUID(),
-    content,
-    date: new Date().toISOString().split('T')[0],
+  const response = await fetch(`/api/articles/${articleId}/comments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ content }),
+  })
+
+  if (!response.ok) {
+    throw new Error('コメントの送信に失敗しました')
   }
+
+  const newComment = await response.json()
+
+  return newComment
 }
