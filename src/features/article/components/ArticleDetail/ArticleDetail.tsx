@@ -68,24 +68,43 @@ export function ArticleDetail({
     : initialCommentsProp;
 
   return (
-    <article className="max-w-3xl mx-auto px-4 py-8">
+    <article className="relative max-w-3xl mx-auto px-4 py-8">
+
+      <div className="absolute -left-16 top-6">
+
+        <BackButton
+          href={
+            from === 'ranking'
+              ? '/articles/ranking'
+              : '/articles'
+          }
+        />
+
+      </div>
+
       <Title>{title}</Title>
 
       <div className="flex items-center justify-between mt-2">
+
         <PostDate date={date} />
 
         <div className="flex items-center gap-2">
           <EditButton id={articleId} />
           <RatingHeart />
         </div>
+
       </div>
 
       {tags.length > 0 && (
+
         <div className="flex flex-wrap gap-2 mt-4 mb-8">
+
           {tags.map((tag: TagType) => (
             <TagUI key={tag.id} tagId={tag.id} label={tag.label} />
           ))}
+
         </div>
+
       )}
 
       <ArticleContent content={content} />
@@ -97,6 +116,7 @@ export function ArticleDetail({
         initialComments={initialComments}
         onSubmit={onSubmit}
       />
+
     </article>
   );
 }

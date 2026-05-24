@@ -2,13 +2,20 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { ARTICLE_LIST_EXPANDED_LIMIT, ARTICLE_LIST_INITIAL_LIMIT } from '@/constants/articleList'
+import {
+  ARTICLE_LIST_EXPANDED_LIMIT,
+  ARTICLE_LIST_INITIAL_LIMIT,
+} from '@/constants/articleList'
+
 import { Item } from '@/components/ui/Item/Item'
 import { Title } from '@/components/ui/Title/Title'
 import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 import { Tag } from '@/components/ui/tag/tag'
+
 import type { ArticleItem } from '@/types/articleItem'
+
 import { RefreshCw } from 'lucide-react'
+
 import { useArticleList } from '@/features/article/hooks/useArticleList'
 
 type FilterType = 'question' | 'work'
@@ -34,38 +41,64 @@ export function ArticleList({
   workItems: initialWorkItems,
   onRefresh,
 }: ArticleListProps) {
-  const [selectedFilter, setSelectedFilter] = useState<FilterType>('question')
-  const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
+
+  const [selectedFilter, setSelectedFilter] =
+    useState<FilterType>('question')
+
+  const [selectedTagIds, setSelectedTagIds] =
+    useState<string[]>([])
+
   const [expanded, setExpanded] = useState(false)
 
-  const { questionItems, workItems, isRefreshing, handleRefresh } = useArticleList({
+  const {
+    questionItems,
+    workItems,
+    isRefreshing,
+    handleRefresh,
+  } = useArticleList({
     initialQuestionItems,
     initialWorkItems,
     onRefresh,
   })
 
-  const currentItems = selectedFilter === 'question' ? questionItems : workItems
-  const currentTitle = selectedFilter === 'question' ? '質問' : '制作物'
+  const currentItems =
+    selectedFilter === 'question'
+      ? questionItems
+      : workItems
+
+  const currentTitle =
+    selectedFilter === 'question'
+      ? '質問'
+      : '制作物'
 
   const filteredItems =
     selectedTagIds.length === 0
       ? currentItems
       : currentItems.filter((item) =>
-          item.tags?.some((tag) => selectedTagIds.includes(tag.id))
+          item.tags?.some((tag) =>
+            selectedTagIds.includes(tag.id)
+          )
         )
 
   const displayItems = expanded
     ? filteredItems.slice(0, ARTICLE_LIST_EXPANDED_LIMIT)
     : filteredItems.slice(0, ARTICLE_LIST_INITIAL_LIMIT)
-  const showMore = !expanded && filteredItems.length > ARTICLE_LIST_INITIAL_LIMIT
+
+  const showMore =
+    !expanded &&
+    filteredItems.length > ARTICLE_LIST_INITIAL_LIMIT
 
   const allTags = Array.from(
     new Map(
-      currentItems.flatMap((item) => item.tags ?? []).map((tag) => [tag.id, tag])
+      currentItems
+        .flatMap((item) => item.tags ?? [])
+        .map((tag) => [tag.id, tag])
     ).values()
   )
 
-  const handleFilterChange = (newFilter: FilterType) => {
+  const handleFilterChange = (
+    newFilter: FilterType
+  ) => {
     setSelectedFilter(newFilter)
     setSelectedTagIds([])
     setExpanded(false)
@@ -73,8 +106,11 @@ export function ArticleList({
 
   const handleTagToggle = (tagId: string) => {
     setSelectedTagIds((prev) =>
-      prev.includes(tagId) ? prev.filter((id) => id !== tagId) : [...prev, tagId]
+      prev.includes(tagId)
+        ? prev.filter((id) => id !== tagId)
+        : [...prev, tagId]
     )
+
     setExpanded(false)
   }
 
@@ -85,7 +121,9 @@ export function ArticleList({
 
   return (
     <div className="max-w-3xl mx-auto px-4 py-8">
+
       <div className="flex items-center justify-between mb-6">
+
         <div className="flex items-center gap-3">
           <Title>{currentTitle}</Title>
         </div>
@@ -95,10 +133,13 @@ export function ArticleList({
           selected={selectedFilter}
           onChange={handleFilterChange}
         />
+
       </div>
 
       <div className="flex items-center justify-between mb-4">
+
         <div className="flex flex-wrap items-center gap-2">
+
           {allTags.map((tag) => (
             <Tag
               key={tag.id}
@@ -117,6 +158,7 @@ export function ArticleList({
               クリア
             </button>
           )}
+
         </div>
 
         <button
@@ -124,12 +166,18 @@ export function ArticleList({
           disabled={isRefreshing}
           className="p-2 rounded-full hover:bg-gray-200 transition disabled:opacity-50"
         >
-          <RefreshCw size={18} className={isRefreshing ? 'animate-spin' : ''} />
+          <RefreshCw
+            size={18}
+            className={isRefreshing ? 'animate-spin' : ''}
+          />
         </button>
+
       </div>
 
       <div className="mt-6">
+
         {displayItems.map((item, index) => {
+
           const itemNode = (
             <Item
               key={item.id ?? index}
@@ -148,11 +196,17 @@ export function ArticleList({
           }
 
           return (
-            <Link key={item.id} href={`/articles/${item.id}`} className="block">
+            <Link
+              key={item.id}
+              href={`/articles/${item.id}?from=articles`}
+              className="block"
+            >
               {itemNode}
             </Link>
           )
+
         })}
+
         {showMore && (
           <button
             onClick={() => setExpanded(true)}
@@ -161,7 +215,9 @@ export function ArticleList({
             ...
           </button>
         )}
+
       </div>
+
     </div>
   )
 }
