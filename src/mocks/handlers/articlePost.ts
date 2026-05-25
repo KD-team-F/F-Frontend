@@ -65,7 +65,7 @@ export const articlePostHandlers = [
         item,
         title,
         content,
-        date: new Date().toISOString().slice(0, 10),
+        date: new Date().toISOString(),
         tags,
         likeCount: 0,
         isLikedByCurrentUser: false,
