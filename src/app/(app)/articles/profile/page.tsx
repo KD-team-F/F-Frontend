@@ -1,26 +1,33 @@
 'use client'
 
-import type { ComponentProps } from 'react'
-
+import { useEffect, useState } from 'react'
+import { getProfile } from '@/features/profile/actions/getProfile'
 import { Profile } from '@/components/ui/Profile/Profile'
-
-const profileProps = {
-  userName: 'User Name',
-  grade: 'Grade',
-  specialty: 'Specialty',
-  bio: 'Bio description',
-  items: [],
-  questionItems: [],
-  workItems: [],
-} as ComponentProps<typeof Profile>
+import type { ProfileData } from '@/types/profile'
 
 export default function ProfilePage() {
+  const [profile, setProfile] = useState<ProfileData | null>(null)
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfile()
+        setProfile(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchProfile()
+  }, [])
+
+  if (!profile) {
+    return <p>Loading...</p>
+  }
 
   return (
     <div className="relative">
-
-      <Profile {...profileProps} />
-
+      <Profile {...profile} />
     </div>
   )
 }
