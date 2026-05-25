@@ -10,6 +10,7 @@ import { FilterTab } from '@/components/ui/FilterTab/FilterTab'
 
 import { useArticleRanking } from '@/features/article/hooks/useArticleRanking'
 import type { ArticleItem } from '@/types/articleItem'
+import { CreatePostButton } from '@/components/ui/PostButton/CreatePostButton'
 
 const DISPLAY_LIMIT = 10
 const EPOCH_TIME = 0
@@ -102,6 +103,7 @@ export function ArticleRanking({
   }
 
   return (
+    <>
     <div className="max-w-3xl mx-auto px-4 py-8">
 
       <div className="flex items-center justify-between mb-8">
@@ -191,7 +193,8 @@ export function ArticleRanking({
         )}
 
       </div>
-
+      <CreatePostButton />
     </div>
-  )
+    </>
+  );
 }
