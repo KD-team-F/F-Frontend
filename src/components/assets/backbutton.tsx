@@ -4,14 +4,19 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
 type BackButtonProps = {
-  href: string;
+  href?: string;
 };
 
 export default function BackButton({ href }: BackButtonProps) {
   const router = useRouter();
 
   const handleBack = () => {
-    router.push(href);
+    if (href) {
+      router.push(href);
+      return;
+    }
+
+    router.back();
   };
 
   return (
