@@ -1,7 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { Input } from '@/components/ui/Input/Input'
+import { users } from '@/mocks/data/users'
 
 type PasswordChangeModalProps = {
   onClose?: () => void
@@ -10,6 +12,13 @@ type PasswordChangeModalProps = {
 export function PasswordChangeModal({
   onClose,
 }: PasswordChangeModalProps) {
+  const [newPassword, setNewPassword] = useState('')
+
+  const handleChange = () => {
+    users[0].password = newPassword
+    onClose?.()
+  }
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
       <div className="relative w-full max-w-[520px] border border-gray-300 bg-white px-10 py-12 shadow-lg">
@@ -38,6 +47,8 @@ export function PasswordChangeModal({
           <Input
             type="password"
             placeholder="新しいパスワード"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
           />
 
           <Input
@@ -50,7 +61,7 @@ export function PasswordChangeModal({
         {/* ボタン */}
         <div className="mt-16 flex justify-center">
           <button
-            onClick={onClose}
+            onClick={handleChange}
             className="
               w-[260px]
               rounded-full
