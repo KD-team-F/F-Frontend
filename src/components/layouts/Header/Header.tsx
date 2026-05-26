@@ -12,7 +12,7 @@ export function Header() {
             href="/articles"
             className="text-xl font-extrabold tracking-tight text-white hover:opacity-80 transition-opacity"
           >
-            アプリ名
+            Dev Hub
           </Link>
         </div>
 
