@@ -11,7 +11,6 @@ import { RatingHeart } from "@/components/ui/rating/rating";
 import type { Tag as TagType } from "@/types/tag";
 import { EditButton } from "@/components/ui/EditButton/editbutton";
 import { useArticleById } from "@/features/article/hooks/useArticleById";
-import BackButton from "@/components/assets/backbutton";
 import { useSearchParams } from "next/navigation";
 import { CreatePostButton } from "@/components/ui/PostButton/CreatePostButton";
 
