@@ -9,7 +9,7 @@ export function Header() {
         {/* アプリ名 */}
         <div className="flex items-center">
           <Link
-            href="/"
+            href="/articles"
             className="text-xl font-extrabold tracking-tight text-white hover:opacity-80 transition-opacity"
           >
             アプリ名

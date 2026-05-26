@@ -16,7 +16,19 @@ const RANK_SILVER = 2;
 const RANK_BRONZE = 3;
 const RANK_OFFSET = 1;
 
-type FilterType = "question" | "work";
+import { useArticleRanking } from '@/features/article/hooks/useArticleRanking'
+import type { ArticleItem } from '@/types/articleItem'
+import { CreatePostButton } from '@/components/ui/PostButton/CreatePostButton'
+
+const DISPLAY_LIMIT = 10
+const EPOCH_TIME = 0
+
+const RANK_GOLD = 1
+const RANK_SILVER = 2
+const RANK_BRONZE = 3
+const RANK_OFFSET = 1
+
+type FilterType = 'question' | 'work'
 
 type ArticleRankingProps = {
   questionItems?: ArticleItem[];
@@ -73,6 +85,7 @@ export function ArticleRanking({
   }
 
   return (
+    <>
     <div className="max-w-3xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-8">
         <Title>
@@ -134,6 +147,8 @@ export function ArticleRanking({
           })
         )}
       </div>
+      <CreatePostButton />
     </div>
+    </>
   );
 }

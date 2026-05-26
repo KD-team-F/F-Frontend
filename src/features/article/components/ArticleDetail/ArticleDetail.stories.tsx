@@ -28,6 +28,7 @@ const mockSubmit = async (content: string) => {
 
 export const Default: Story = {
   args: {
+    articleId: 'q-1',
     title: 'ReactとNext.jsで記事詳細ページを作成する',
     date: '2026-05-14',
     content: `

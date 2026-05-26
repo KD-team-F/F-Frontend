@@ -1,7 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-
 import BackButton from "@/components/assets/backbutton";
 import { ArticleContent } from "@/components/ui/ArticleContent/ArticleContent";
 import { PostDate } from "@/components/ui/PostDate/PostDate";
@@ -13,9 +11,12 @@ import { RatingHeart } from "@/components/ui/rating/rating";
 import type { Tag as TagType } from "@/types/tag";
 import { EditButton } from "@/components/ui/EditButton/editbutton";
 import { useArticleById } from "@/features/article/hooks/useArticleById";
+import BackButton from "@/components/assets/backbutton";
+import { useSearchParams } from "next/navigation";
+import { CreatePostButton } from "@/components/ui/PostButton/CreatePostButton";
 
 type ArticleDetailProps = {
-  articleId?: string;
+  articleId: string;
   title?: string;
   date?: string;
   content?: string;
@@ -25,7 +26,7 @@ type ArticleDetailProps = {
 };
 
 export function ArticleDetail({
-  articleId,
+  articleId: articleId,
   title: initialTitle,
   date: initialDate,
   content: initialContent,
@@ -35,6 +36,7 @@ export function ArticleDetail({
 }: ArticleDetailProps) {
   const searchParams = useSearchParams();
   const from = searchParams.get("from");
+
   const shouldFetch = articleId !== undefined && initialTitle === undefined;
   const { article, isLoading, error } = useArticleById(
     shouldFetch ? articleId : undefined,
@@ -51,8 +53,7 @@ export function ArticleDetail({
   if (error) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-16 text-center text-red-500">
-        記事の読み込み中にエラーが発生しました:
-        {error.message}
+        記事の読み込み中にエラーが発生しました: {error.message}
       </div>
     );
   }
@@ -69,12 +70,12 @@ export function ArticleDetail({
   const date = shouldFetch ? article!.date : (initialDate ?? "");
   const content = shouldFetch ? article!.content : (initialContent ?? "");
   const tags = shouldFetch ? article!.tags : (initialTags ?? []);
-
   const initialComments = shouldFetch
     ? article!.initialComments
     : initialCommentsProp;
 
   return (
+    <>
     <article className="relative max-w-3xl mx-auto px-4 py-8">
       <div className="absolute -left-16 top-6">
         <BackButton
@@ -85,7 +86,7 @@ export function ArticleDetail({
       <div className="flex items-center justify-between mt-2">
         <PostDate date={date} />
         <div className="flex items-center gap-2">
-          <EditButton />
+          <EditButton id={articleId} />
           <RatingHeart />
         </div>
       </div>
@@ -100,7 +101,14 @@ export function ArticleDetail({
 
       <ArticleContent content={content} />
       <hr className="my-8 border-gray-200" />
-      <CommentSection initialComments={initialComments} onSubmit={onSubmit} />
+
+      <CommentSection
+        key={initialComments?.length ?? 0}
+        initialComments={initialComments}
+        onSubmit={onSubmit}
+      />
     </article>
+    <CreatePostButton />
+    </>
   );
 }

@@ -1,6 +1,6 @@
 import { Header } from '@/components/layouts/Header/Header'
 import { Footer } from '@/components/layouts/Footer/Footer'
-import { ArticleDetail } from '@/features/article/components/ArticleDetail/ArticleDetail'
+import { ArticleDetailContainer } from '@/features/article/components/ArticleDetail/ArticleDetailContainer'
 
 type Props = {
   params: Promise<{ id: string }>
@@ -14,7 +14,7 @@ export default async function ArticleDetailPage({ params }: Props) {
       <Header />
 
       <main className="flex-1">
-        <ArticleDetail articleId={id} />
+        <ArticleDetailContainer articleId={id} />
       </main>
 
       <Footer />

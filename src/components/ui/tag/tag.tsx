@@ -19,7 +19,7 @@ export const Tag = ({ label, className = "", onClick, isActive = false }: TagPro
         rounded-full
         text-base
         font-medium
-        ${isActive ? 'bg-gray-700 text-white' : 'bg-gray-300 text-black'}
+        ${isActive ? 'bg-[#4169e1] text-white' : 'bg-gray-300 text-black'}
         ${onClick ? 'cursor-pointer hover:opacity-80' : ''}
         ${className}
       `}

@@ -15,7 +15,7 @@ import { Tag } from "@/components/ui/tag/tag";
 import type { ArticleItem } from "@/types/articleItem";
 
 import { RefreshCw } from "lucide-react";
-
+import { CreatePostButton } from "@/components/ui/PostButton/CreatePostButton";
 import { useArticleList } from "@/features/article/hooks/useArticleList";
 
 type FilterType = "question" | "work";
@@ -103,89 +103,95 @@ export function ArticleList({
   };
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <Title>{currentTitle}</Title>
+    <>
+      <div className="max-w-3xl mx-auto px-4 py-8">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <Title>{currentTitle}</Title>
+          </div>
+
+          <FilterTab
+            options={FILTER_CONFIG}
+            selected={selectedFilter}
+            onChange={handleFilterChange}
+          />
         </div>
 
-        <FilterTab
-          options={FILTER_CONFIG}
-          selected={selectedFilter}
-          onChange={handleFilterChange}
-        />
-      </div>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-wrap items-center gap-2">
+            {allTags.map((tag) => (
+              <Tag
+                key={tag.id}
+                tagId={tag.id}
+                label={tag.label}
+                isActive={selectedTagIds.includes(tag.id)}
+                onClick={() => handleTagToggle(tag.id)}
+              />
+            ))}
 
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex flex-wrap items-center gap-2">
-          {allTags.map((tag) => (
-            <Tag
-              key={tag.id}
-              tagId={tag.id}
-              label={tag.label}
-              isActive={selectedTagIds.includes(tag.id)}
-              onClick={() => handleTagToggle(tag.id)}
+            {selectedTagIds.length > 0 && (
+              <button
+                onClick={handleClearTags}
+                className="text-sm text-gray-500 underline hover:text-gray-700"
+              >
+                クリア
+              </button>
+            )}
+          </div>
+
+          <button
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="p-2 rounded-full hover:bg-gray-200 transition disabled:opacity-50"
+          >
+            <RefreshCw
+              size={18}
+              className={isRefreshing ? "animate-spin" : ""}
             />
-          ))}
+          </button>
+        </div>
 
-          {selectedTagIds.length > 0 && (
+        <div className="mt-6">
+          {displayItems.map((item, index) => {
+            const itemNode = (
+              <Item
+                key={item.id ?? index}
+                title={item.title}
+                content={item.content}
+                date={item.date}
+                tags={item.tags}
+                selectedTagIds={selectedTagIds}
+                likeCount={item.likeCount}
+                isLikedByCurrentUser={item.isLikedByCurrentUser}
+              />
+            );
+
+            if (!item.id) {
+              return itemNode;
+            }
+
+            return (
+              <Link
+                key={item.id}
+                href={`/articles/${item.id}?from=articles`}
+                className="block"
+              >
+                {itemNode}
+              </Link>
+            );
+          })}
+
+          {showMore && (
             <button
-              onClick={handleClearTags}
-              className="text-sm text-gray-500 underline hover:text-gray-700"
+              onClick={() => setExpanded(true)}
+              className="w-full text-center text-gray-400 text-xl tracking-widest mt-2 hover:text-gray-600 transition-colors"
             >
-              クリア
+              ...
             </button>
           )}
         </div>
-
-        <button
-          onClick={handleRefresh}
-          disabled={isRefreshing}
-          className="p-2 rounded-full hover:bg-gray-200 transition disabled:opacity-50"
-        >
-          <RefreshCw size={18} className={isRefreshing ? "animate-spin" : ""} />
-        </button>
+        <CreatePostButton />
       </div>
-
-      <div className="mt-6">
-        {displayItems.map((item, index) => {
-          const itemNode = (
-            <Item
-              key={item.id ?? index}
-              title={item.title}
-              content={item.content}
-              date={item.date}
-              tags={item.tags}
-              selectedTagIds={selectedTagIds}
-              likeCount={item.likeCount}
-              isLikedByCurrentUser={item.isLikedByCurrentUser}
-            />
-          );
-
-          if (!item.id) {
-            return itemNode;
-          }
-
-          return (
-            <Link
-              key={item.id}
-              href={`/articles/${item.id}?from=articles`}
-              className="block"
-            >
-              {itemNode}
-            </Link>
-          );
-        })}
-
-        {showMore && (
-          <button
-            onClick={() => setExpanded(true)}
-            className="w-full text-center text-gray-400 text-xl tracking-widest mt-2 hover:text-gray-600 transition-colors"
-          >
-            ...
-          </button>
-        )}
-      </div>
-    </div>
+    </>
   );
 }
