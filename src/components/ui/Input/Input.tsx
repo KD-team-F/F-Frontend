@@ -4,11 +4,13 @@ import { cn } from "@/lib/utils";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
+  suffix?: ReactNode;
 }
 
 export function Input({
   label,
   error,
+  suffix,
   id: externalId,
   className,
   ...props
@@ -44,6 +46,7 @@ export function Input({
           )}
           {...props}
         />
+        {suffix}
       </div>
 
       {error && <p className="text-xs font-medium text-red-500">{error}</p>}

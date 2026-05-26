@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
 import { Button } from '@/components/ui/Button/Button'
 import { Input } from '@/components/ui/Input/Input'
 import { login } from '@/features/user/actions/login'
@@ -15,6 +16,7 @@ type SignInProps = {
 export function SignIn({ onSubmit }: SignInProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
   const [statusType, setStatusType] = useState<'info' | 'error'>('info')
@@ -97,11 +99,20 @@ export function SignIn({ onSubmit }: SignInProps) {
               id="password"
               name="password"
               label="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               disabled={isSubmitting}
+              suffix={
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              }
             />
           </div>
           <div className="flex justify-center pt-4">

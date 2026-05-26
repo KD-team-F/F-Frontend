@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import BackButton from "@/components/assets/backbutton";
 
@@ -41,9 +42,13 @@ export function Profile({
   workItems,
   defaultTab = "questions",
 }: ProfileProps) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<ProfileTab>(defaultTab);
-
   const [open, setOpen] = useState(false);
+
+  const handleLogout = () => {
+    router.push("/login");
+  };
 
   const items = activeTab === "questions" ? questionItems : workItems;
 
@@ -78,7 +83,7 @@ export function Profile({
                 {bio}
               </p>
 
-              <div className="flex justify-end">
+              <div className="flex justify-end gap-3">
                 <button
                   type="button"
                   onClick={() => setOpen(true)}
@@ -97,6 +102,25 @@ export function Profile({
 									"
                 >
                   パスワード変更
+                </button>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="
+										rounded-full
+										border
+										border-gray-300
+										bg-white
+										px-6
+										py-2
+										text-sm
+										text-gray-500
+										shadow-sm
+										transition
+										hover:bg-gray-50
+									"
+                >
+                  ログアウト
                 </button>
               </div>
             </div>
