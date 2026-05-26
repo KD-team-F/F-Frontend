@@ -19,6 +19,8 @@ export function ArticleDetailContainer({ articleId }: Props) {
       date={article.date}
       content={article.content}
       tags={article.tags}
+      likeCount={article.likeCount}
+      isLikedByCurrentUser={article.isLikedByCurrentUser}
       initialComments={article.initialComments}
     />
   )

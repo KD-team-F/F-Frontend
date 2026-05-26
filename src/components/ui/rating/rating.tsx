@@ -1,31 +1,55 @@
-"use client"
-import { useState } from "react";
+"use client";
+import { useEffect, useState } from "react";
+import { toggleArticleLikeWithMockApi } from "@/features/article/actions/toggleArticleLikeWithMockApi";
+import { LIKE_COUNT_STEP } from "@/constants/articleLike";
 
 type Props = {
+  articleId?: string;
   defaultLiked?: boolean;
   defaultCount?: number;
   isReadOnly?: boolean;
 };
 
 export const RatingHeart = ({
+  articleId,
   defaultLiked = false,
   defaultCount = 0,
   isReadOnly = false,
 }: Props) => {
   const [isLiked, setIsLiked] = useState(defaultLiked);
   const [likeCount, setLikeCount] = useState(defaultCount);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLiked(defaultLiked);
+    setLikeCount(defaultCount);
+  }, [defaultLiked, defaultCount]);
 
   const heartStrokeColor = isLiked ? "#ff0062" : "#5b5f6d";
 
-  const handleHeartClick = () => {
-    if (isReadOnly) {
+  const handleHeartClick = async () => {
+    if (isReadOnly || isLoading) {
+      return;
+    }
+
+    if (articleId) {
+      setIsLoading(true);
+      try {
+        const result = await toggleArticleLikeWithMockApi(articleId);
+        setIsLiked(result.isLikedByCurrentUser);
+        setLikeCount(result.likeCount);
+      } catch {
+        // 失敗時は state を維持
+      } finally {
+        setIsLoading(false);
+      }
       return;
     }
 
     if (isLiked) {
-      setLikeCount((prev) => prev - 1);
+      setLikeCount((prev) => prev - LIKE_COUNT_STEP);
     } else {
-      setLikeCount((prev) => prev + 1);
+      setLikeCount((prev) => prev + LIKE_COUNT_STEP);
     }
 
     setIsLiked((prev) => !prev);
@@ -35,11 +59,11 @@ export const RatingHeart = ({
     <button
       type="button"
       onClick={handleHeartClick}
-      className={`flex items-center gap-2 select-none ${isReadOnly ? "cursor-default" : "cursor-pointer"}`}
+      disabled={isLoading}
+      className={`flex items-center gap-2 select-none ${isReadOnly ? "cursor-default" : "cursor-pointer"} ${isLoading ? "opacity-60" : ""}`}
       aria-label={`likes: ${likeCount}`}
-      aria-disabled={isReadOnly}
+      aria-disabled={isReadOnly || isLoading}
     >
-      {/* ハート */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -55,7 +79,6 @@ export const RatingHeart = ({
         />
       </svg>
 
-      {/* 数字 */}
       <span className="text-lg font-medium">{likeCount}</span>
     </button>
   );
