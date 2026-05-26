@@ -43,7 +43,10 @@ export function MarkdownEditor({
         <ModeTabs mode={mode} onChange={setMode} />
       </div>
 
-      <div className="relative rounded-xl bg-[#f3f4f8] border border-gray-200">
+      <div
+        className="relative rounded-xl bg-[#f3f4f8] border border-gray-200"
+        style={{ minHeight: `calc(${rows} * 1.5rem + 3rem)` }}
+      >
         {mode === 'edit' ? (
           <Textarea
             id={id}

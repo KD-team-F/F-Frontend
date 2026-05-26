@@ -1,0 +1,25 @@
+import { articleListHandlers } from '@/mocks/handlers/articleList'
+import { articleDetailHandlers } from '@/mocks/handlers/articleDetail'
+import { articleCommentHandlers } from '@/mocks/handlers/articleComment'
+import { articleLikeHandlers } from '@/mocks/handlers/articleLike'
+import { articlePostHandlers } from '@/mocks/handlers/articlePost'
+import { articleDeleteHandlers } from '@/mocks/handlers/articleDelete'
+import { loginHandlers } from '@/mocks/handlers/login'
+import { articleRankingHandlers } from '@/mocks/handlers/articleRanking'
+import { articleEditHandlers } from '@/mocks/handlers/articleEdit'
+import { profileHandlers } from '@/mocks/handlers/profile'
+import { tagListHandlers } from '@/mocks/handlers/tagList'
+
+export const handlers = [
+  ...articleListHandlers,
+  ...articleDetailHandlers,
+  ...articleCommentHandlers,
+  ...articleLikeHandlers,
+  ...articlePostHandlers,
+  ...articleDeleteHandlers,
+  ...articleEditHandlers,
+  ...loginHandlers,
+  ...articleRankingHandlers,
+  ...profileHandlers,
+  ...tagListHandlers,
+]

@@ -1,133 +1,127 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
+import { fn } from 'storybook/test'
 import { ArticleList } from './ArticleList'
 
 const meta: Meta<typeof ArticleList> = {
   title: 'Features/ArticleList',
   component: ArticleList,
   tags: ['autodocs'],
-  argTypes: {
-    title: { control: 'text' },
-  },
 }
 
 export default meta
 type Story = StoryObj<typeof ArticleList>
 
-const sampleItems = [
+const render: Story['render'] = (args) => (
+  <ArticleList key={JSON.stringify(args)} {...args} />
+)
+
+const questionItems = [
   {
     title: 'ReactのuseEffectはいつ使うべきですか？',
     content: 'useEffectの適切な使いどころが分からず困っています。どのような場合に使うべきか教えてください。',
     date: '2026-04-24',
+    tags: [
+      { id: 'react', label: 'React' },
+      { id: 'typescript', label: 'TypeScript' },
+    ],
+    likeCount: 5,
+    isLikedByCurrentUser: true,
   },
   {
     title: 'TypeScriptのジェネリクスについて',
     content: 'ジェネリクスの概念は理解しているつもりですが、実際のコードでどう活用すればいいか分かりません。',
     date: '2026-04-23',
+    tags: [
+      { id: 'typescript', label: 'TypeScript' },
+    ],
+    likeCount: 3,
+    isLikedByCurrentUser: false,
   },
   {
     title: 'Next.jsのApp RouterとPages Routerの違いは？',
     content: '既存プロジェクトをApp Routerに移行すべきか悩んでいます。メリット・デメリットを教えてください。',
     date: '2026-04-22',
+    tags: [
+      { id: 'nextjs', label: 'Next.js' },
+    ],
+    likeCount: 0,
+    isLikedByCurrentUser: false,
   },
 ]
 
-// 質問一覧
-export const Question: Story = {
-  args: {
-    title: '質問',
-    items: sampleItems,
-  },
-}
-
-// 制作物一覧
-export const Works: Story = {
-  args: {
-    title: '制作物',
-    items: [
-      {
-        title: 'ポートフォリオサイト',
-        content: 'Next.js + TailwindCSSで制作した個人ポートフォリオです。Storybookも導入しています。',
-        date: '2026-04-24',
-      },
-      {
-        title: 'タスク管理アプリ',
-        content: 'ReactとFirebaseを使ったリアルタイムタスク管理アプリです。認証機能も実装しています。',
-        date: '2026-04-20',
-      },
-      {
-        title: 'ECサイトLP',
-        content: 'クライアント案件で制作したランディングページです。レスポンシブ対応済み。',
-        date: '2026-04-15',
-      },
+const workItems = [
+  {
+    title: 'ポートフォリオサイト',
+    content: 'Next.js + TailwindCSSで制作した個人ポートフォリオです。Storybookも導入しています。',
+    date: '2026-04-24',
+    tags: [
+      { id: 'nextjs', label: 'Next.js' },
+      { id: 'tailwind', label: 'Tailwind' },
     ],
+    likeCount: 10,
+    isLikedByCurrentUser: true,
   },
-}
-
-// アイテム1件
-export const SingleItem: Story = {
-  args: {
-    title: '質問',
-    items: [sampleItems[0]],
-  },
-}
-
-// アイテム多数
-export const ManyItems: Story = {
-  args: {
-    title: '質問',
-    items: [
-      ...sampleItems,
-      {
-        title: 'CSSのflexboxとgridはどう使い分けるべきですか？',
-        content: '一次元か二次元かで使い分けると聞きましたが、具体的な判断基準が知りたいです。',
-        date: '2026-04-21',
-      },
-      {
-        title: 'Gitのrebaseとmergeはどちらを使うべきですか？',
-        content: 'チーム開発でどちらを採用すべきか議論になっています。それぞれのメリットを教えてください。',
-        date: '2026-04-20',
-      },
-      {
-        title: 'Dockerの基本的な使い方を教えてください',
-        content: '開発環境をDocker化したいと思っているのですが、何から始めればよいか分かりません。',
-        date: '2026-04-19',
-      },
+  {
+    title: 'タスク管理アプリ',
+    content: 'ReactとFirebaseを使ったリアルタイムタスク管理アプリです。認証機能も実装しています。',
+    date: '2026-04-20',
+    tags: [
+      { id: 'react', label: 'React' },
     ],
+    likeCount: 2,
+    isLikedByCurrentUser: false,
+  },
+  {
+    title: 'ECサイトLP',
+    content: 'クライアント案件で制作したランディングページです。レスポンシブ対応済み。',
+    date: '2026-04-15',
+    likeCount: 7,
+    isLikedByCurrentUser: false,
+  },
+]
+
+export const Default: Story = {
+  render,
+  args: {
+    questionItems,
+    workItems,
   },
 }
 
-// アイテムなし（空状態）
+export const OnlyQuestions: Story = {
+  render,
+  args: {
+    questionItems,
+    workItems: [],
+  },
+}
+
+export const OnlyWorks: Story = {
+  render,
+  args: {
+    questionItems: [],
+    workItems,
+  },
+}
+
 export const Empty: Story = {
+  render,
   args: {
-    title: '質問',
-    items: [],
+    questionItems: [],
+    workItems: [],
   },
 }
 
-// タイトルが長いアイテム
-export const LongTitle: Story = {
-  args: {
-    title: '質問',
-    items: [
-      {
-        title: 'これは非常に長いタイトルのテストです。タイトルが折り返された場合にレイアウトが崩れないか確認するためのストーリーです。',
-        content: '通常の内容です。',
-        date: '2026-04-24',
-      },
-    ],
-  },
-}
-
-// 11件以上（...表示）
 export const OverLimit: Story = {
+  render,
   args: {
-    title: '質問',
-    items: [
-      ...sampleItems,
+    questionItems: [
+      ...questionItems,
       {
         title: 'CSSのflexboxとgridはどう使い分けるべきですか？',
         content: '一次元か二次元かで使い分けると聞きましたが、具体的な判断基準が知りたいです。',
         date: '2026-04-21',
+        tags: [{ id: 'css', label: 'CSS' }],
       },
       {
         title: 'Gitのrebaseとmergeはどちらを使うべきですか？',
@@ -138,6 +132,7 @@ export const OverLimit: Story = {
         title: 'Dockerの基本的な使い方を教えてください',
         content: '開発環境をDocker化したいと思っているのですが、何から始めればよいか分かりません。',
         date: '2026-04-19',
+        tags: [{ id: 'docker', label: 'Docker' }],
       },
       {
         title: 'REST APIとGraphQLはどちらを選ぶべきですか？',
@@ -148,6 +143,7 @@ export const OverLimit: Story = {
         title: 'JestとVitestどちらを使うべきか',
         content: 'テストフレームワークの選定で悩んでいます。Vite環境ではVitestが良いと聞きましたが実際どうでしょうか。',
         date: '2026-04-17',
+        tags: [{ id: 'typescript', label: 'TypeScript' }],
       },
       {
         title: 'Zustandの状態管理はどこに書くべきですか？',
@@ -158,6 +154,7 @@ export const OverLimit: Story = {
         title: 'SSRとSSGはどう使い分けるべきですか？',
         content: 'Next.jsを使っていますが、ページごとにどちらを選ぶか判断基準が知りたいです。',
         date: '2026-04-15',
+        tags: [{ id: 'nextjs', label: 'Next.js' }],
       },
       {
         title: 'この件もAPIで取得されるか確認用（11件目）',
@@ -165,26 +162,127 @@ export const OverLimit: Story = {
         date: '2026-04-14',
       },
     ],
+    workItems,
   },
 }
 
-// 内容が長いアイテム
-export const LongContent: Story = {
+// 評価数0・自分も未評価
+export const RatingNoLikes: Story = {
+  render,
   args: {
-    title: '質問',
-    items: [
+    questionItems: [
       {
-        title: '長文コンテンツのテスト',
-        content: `これは非常に長い内容のテストです。
-複数行にわたる内容が正しく表示されるか確認します。
-
-1. 箇条書きの項目1
-2. 箇条書きの項目2
-3. 箇条書きの項目3
-
-改行やスペースが意図通りに表示されているか、レイアウトが崩れていないかを確認してください。`,
-        date: '2026-04-24',
+        title: '質問題名(仮)',
+        content: '質問内容\nooooooooooooooo',
+        date: '20xx/xx/xx',
+        likeCount: 0,
+        isLikedByCurrentUser: false,
       },
     ],
+    workItems: [],
+  },
+}
+
+// 評価数1・自分のみ評価済み
+export const RatingLikedByUserOnly: Story = {
+  render,
+  args: {
+    questionItems: [
+      {
+        title: '質問題名(仮)',
+        content: '質問内容\nooooooooooooooo',
+        date: '20xx/xx/xx',
+        likeCount: 1,
+        isLikedByCurrentUser: true,
+      },
+    ],
+    workItems: [],
+  },
+}
+
+// 評価数5・他ユーザーが評価済み・自分は未評価
+export const RatingLikedByOthers: Story = {
+  render,
+  args: {
+    questionItems: [
+      {
+        title: '質問題名(仮)',
+        content: '質問内容\nooooooooooooooo',
+        date: '20xx/xx/xx',
+        likeCount: 5,
+        isLikedByCurrentUser: false,
+      },
+    ],
+    workItems: [],
+  },
+}
+
+// 評価数10・他ユーザーも自分も評価済み
+export const RatingLikedByAll: Story = {
+  render,
+  args: {
+    questionItems: [
+      {
+        title: '質問題名(仮)',
+        content: '質問内容\nooooooooooooooo',
+        date: '20xx/xx/xx',
+        likeCount: 10,
+        isLikedByCurrentUser: true,
+      },
+    ],
+    workItems: [],
+  },
+}
+
+// 更新ボタン押下で質問3件・制作物3件が追加されるパターン
+export const WithRefresh: Story = {
+  render,
+  args: {
+    questionItems,
+    workItems,
+    onRefresh: fn(async () => ({
+      questionItems: [
+        ...questionItems,
+        {
+          title: 'Reactのエラーバウンダリの使い方',
+          content: 'ErrorBoundaryを使ってコンポーネントのエラーをキャッチしたいのですが、関数コンポーネントでの書き方を教えてください。',
+          date: '2026-05-10',
+          tags: [{ id: 'react', label: 'React' }, { id: 'typescript', label: 'TypeScript' }],
+        },
+        {
+          title: 'Vitestで非同期テストを書く方法',
+          content: 'resolves/rejectsとasync/awaitの使い分けが分からず困っています。推奨パターンを教えてください。',
+          date: '2026-05-09',
+          tags: [{ id: 'vitest', label: 'Vitest' }, { id: 'typescript', label: 'TypeScript' }],
+        },
+        {
+          title: 'Zustandのsliceパターンについて',
+          content: 'ストアが大きくなってきたのでsliceパターンで分割したいのですが、TypeScriptでの型定義が難しくて困っています。',
+          date: '2026-05-08',
+          tags: [{ id: 'zustand', label: 'Zustand' }, { id: 'typescript', label: 'TypeScript' }],
+        },
+      ],
+      workItems: [
+        ...workItems,
+        {
+          title: 'AIチャットアプリを作りました',
+          content: 'OpenAI APIとNext.js App Routerで作ったストリーミング対応のチャットアプリです。Vercel AI SDKを使っています。',
+          date: '2026-05-10',
+          tags: [{ id: 'openai', label: 'OpenAI' }, { id: 'nextjs', label: 'Next.js' }],
+        },
+        {
+          title: 'ブラウザ拡張機能を作りました',
+          content: 'GitHubのPRレビューを効率化するChrome拡張機能です。ファイルツリー表示やレビュー管理機能を実装しました。',
+          date: '2026-05-07',
+          tags: [{ id: 'chrome-extension', label: 'Chrome Extension' }, { id: 'react', label: 'React' }],
+        },
+        {
+          title: 'デザインシステムを構築しました',
+          content: '社内プロジェクト向けにStorybookベースのコンポーネントライブラリを構築しました。アクセシビリティにも対応しています。',
+          date: '2026-05-05',
+          tags: [{ id: 'storybook', label: 'Storybook' }, { id: 'react', label: 'React' }],
+        },
+      ],
+    })),
   },
 }

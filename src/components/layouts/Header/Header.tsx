@@ -1,28 +1,51 @@
+import Link from 'next/link'
+import { Crown, FileText, UserCircle } from 'lucide-react'
+
 export function Header() {
   return (
     <header className="bg-[#ABE1FA] px-4 py-4 shadow-sm">
-      <div className="mx-auto max-w-7xl grid grid-cols-3 items-center">
-        
+      <div className="mx-auto max-w-7xl flex items-center">
+
         {/* アプリ名 */}
-        <div className="flex justify-start">
-          <a 
-            href="/" 
-            className="text-xl font-extrabold tracking-tight text-[#FFFFFF] hover:opacity-80 transition-opacity"
+        <div className="flex items-center">
+          <Link
+            href="/articles"
+            className="text-xl font-extrabold tracking-tight text-white hover:opacity-80 transition-opacity"
           >
-            アプリ名
-          </a>
+            Dev Hub
+          </Link>
         </div>
 
-        {/* // TODO: ボタン配置予定地です。 */}
+        {/* 右側エリア */}
+        <div className="ml-auto flex items-center gap-4">
 
-        {/* ここから */}
+          {/* 記事一覧 */}
+          <Link
+            href="/articles"
+            className="flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-bold text-[#4AA3D8] shadow hover:scale-105 transition-transform"
+          >
+            <FileText size={18} />
+            記事一覧
+          </Link>
 
-        
-        {/* ここまで */}
+          {/* ランキング */}
+          <Link
+            href="/articles/ranking"
+            className="flex items-center gap-2 rounded-full bg-yellow-400 px-4 py-2 text-sm font-bold text-white shadow hover:scale-105 transition-transform"
+          >
+            <Crown size={18} />
+            ランキング
+          </Link>
 
-        {/* 余白 */}
-        <div className="hidden md:block"></div>
-        
+          {/* プロフィール */}
+          <Link
+            href="/articles/profile"
+            className="text-white hover:scale-110 transition-transform"
+          >
+            <UserCircle size={38} />
+          </Link>
+
+        </div>
       </div>
     </header>
   )
