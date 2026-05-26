@@ -1,21 +1,23 @@
-'use client'
+"use client";
 
-import { useRouter } from 'next/navigation'
-import { ArrowLeft } from 'lucide-react'
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 
 type BackButtonProps = {
-  href: string
-}
+  href?: string;
+};
 
-export default function BackButton({
-  href,
-}: BackButtonProps) {
-
-  const router = useRouter()
+export default function BackButton({ href }: BackButtonProps) {
+  const router = useRouter();
 
   const handleBack = () => {
-    router.push(href)
-  }
+    if (href) {
+      router.push(href);
+      return;
+    }
+
+    router.back();
+  };
 
   return (
     <button
@@ -25,5 +27,5 @@ export default function BackButton({
     >
       <ArrowLeft size={20} />
     </button>
-  )
+  );
 }

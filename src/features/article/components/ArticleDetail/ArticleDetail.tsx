@@ -1,5 +1,6 @@
 "use client";
 
+import BackButton from "@/components/assets/backbutton";
 import { ArticleContent } from "@/components/ui/ArticleContent/ArticleContent";
 import { PostDate } from "@/components/ui/PostDate/PostDate";
 import { Title } from "@/components/ui/Title/Title";
@@ -81,12 +82,9 @@ export function ArticleDetail({
           href={from === "ranking" ? "/articles/ranking" : "/articles"}
         />
       </div>
-
       <Title>{title}</Title>
-
       <div className="flex items-center justify-between mt-2">
         <PostDate date={date} />
-
         <div className="flex items-center gap-2">
           <EditButton id={articleId} />
           <RatingHeart />
@@ -102,7 +100,6 @@ export function ArticleDetail({
       )}
 
       <ArticleContent content={content} />
-
       <hr className="my-8 border-gray-200" />
 
       <CommentSection

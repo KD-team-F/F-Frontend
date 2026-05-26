@@ -1,21 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import { useRouter } from "next/navigation";
 
 import BackButton from "@/components/assets/backbutton";
-
 import { Title } from "@/components/ui/Title/Title";
 import { Button } from "@/components/ui/Button/Button";
 import { Input } from "@/components/ui/Input/Input";
-
 import { MarkdownEditor } from "@/features/submission/components/MarkdownEditor/MarkdownEditor";
-
 import { DeleteIcon } from "@/components/ui/Delete-icon/delete-icon";
-
 import { updateArticleWithMockApi } from "@/features/article/actions/updateArticleWithMockApi";
-
 import { deleteArticleWithMockApi } from "@/features/article/actions/deleteArticleWithMockApi";
 import { useArticleById } from "@/features/article/hooks/useArticleById";
 
@@ -23,10 +17,7 @@ type ArticleEditProps = {
   articleId?: string;
   defaultTitle?: string;
   defaultContent?: string;
-  onSubmit?: (
-    title: string,
-    content: string
-  ) => void | Promise<void>;
+  onSubmit?: (title: string, content: string) => void | Promise<void>;
   onDelete?: () => void;
 };
 
@@ -37,22 +28,14 @@ export function ArticleEdit({
   onSubmit,
   onDelete,
 }: ArticleEditProps) {
-
   const router = useRouter();
-
   const shouldFetch =
     articleId !== undefined &&
     defaultTitle === undefined &&
     defaultContent === undefined;
-
-  const {
-    article,
-    isLoading,
-    error,
-  } = useArticleById(
+  const { article, isLoading, error } = useArticleById(
     shouldFetch ? articleId : undefined,
   );
-
   const [title, setTitle] = useState(defaultTitle ?? "");
   const [content, setContent] = useState(defaultContent ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -88,51 +71,31 @@ export function ArticleEdit({
       setIsDeleting(false);
     }
   };
-
   const handleSubmit = async () => {
-
     try {
-
       setIsSubmitting(true);
-
       setSubmitError(null);
-
       if (onSubmit) {
-
         await onSubmit(title, content);
-
       } else if (articleId) {
-
-        const result =
-          await updateArticleWithMockApi(
-            articleId,
-            title,
-            content,
-          );
+        const result = await updateArticleWithMockApi(
+          articleId,
+          title,
+          content,
+        );
 
         if (!result.ok) {
-
           setSubmitError(result.message);
-
         } else {
-
           router.push(`/articles/${articleId}`);
-
         }
       }
-
     } catch (error) {
-
       setSubmitError(
-        error instanceof Error
-          ? error.message
-          : "更新に失敗しました",
+        error instanceof Error ? error.message : "更新に失敗しました",
       );
-
     } finally {
-
       setIsSubmitting(false);
-
     }
   };
 
@@ -162,54 +125,31 @@ export function ArticleEdit({
   }
 
   return (
-
     <section className="relative max-w-3xl mx-auto px-4 py-8">
-
       <div className="absolute -left-16 top-6">
-
-        <BackButton
-          href={`/articles/${articleId}`}
-        />
-
+        <BackButton href={articleId ? `/articles/${articleId}` : "/articles"} />
       </div>
-
       {submitError ? (
-
-        <p
-          role="alert"
-          className="mb-6 text-center text-sm text-red-600"
-        >
+        <p role="alert" className="mb-6 text-center text-sm text-red-600">
           {submitError}
         </p>
-
       ) : null}
 
       <div className="mb-8">
-
-        <Title>
-          記事を編集する
-        </Title>
-
+        <Title>記事を編集する</Title>
       </div>
-
       <div className="mb-8">
-
         <Input
           id="article-title"
           name="title"
           label="タイトル"
           required
           value={title}
-          onChange={(e) =>
-            setTitle(e.target.value)
-          }
+          onChange={(e) => setTitle(e.target.value)}
           placeholder="記事のタイトルを入力してください"
         />
-
       </div>
-
       <div className="mb-8">
-
         <MarkdownEditor
           id="article-content"
           name="content"
@@ -219,14 +159,9 @@ export function ArticleEdit({
           onChange={setContent}
           placeholder="内容を入力してください（マークダウン可）"
         />
-
       </div>
-
       <div className="flex justify-end items-center gap-4">
-        {(onDelete || articleId) && (
-          <DeleteIcon onClick={handleDelete} />
-        )}
-
+        {(onDelete || articleId) && <DeleteIcon onClick={handleDelete} />}
         <Button
           label="更新"
           onClick={handleSubmit}
@@ -238,9 +173,7 @@ export function ArticleEdit({
             (!onSubmit && !articleId)
           }
         />
-
       </div>
-
     </section>
   );
 }
