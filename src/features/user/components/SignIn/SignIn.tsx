@@ -30,11 +30,6 @@ export function SignIn({ onSubmit }: SignInProps) {
       setStatusType('error')
       return
     }
-    if (password.length < 8) {
-      setStatusMessage('password は8文字以上で指定してください')
-      setStatusType('error')
-      return
-    }
     
     setIsSubmitting(true)
 

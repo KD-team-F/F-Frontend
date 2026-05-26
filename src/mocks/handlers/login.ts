@@ -16,13 +16,13 @@ export const loginHandlers = [
 
       if (!email || typeof email !== 'string' || !email.endsWith(ALLOWED_EMAIL_DOMAIN)) {
         return HttpResponse.json(
-          { message: 'email は有効なメールアドレスを指定してください' },
+          { message: 'メールアドレスまたはパスワードが正しくありません' },
           { status: 400 },
         )
       }
       if (!password || typeof password !== 'string') {
         return HttpResponse.json(
-          { message: 'password は必須です' },
+          { message: 'メールアドレスまたはパスワードが正しくありません' },
           { status: 400 },
         )
       }
