@@ -9,15 +9,6 @@ import { FilterTab } from "@/components/ui/FilterTab/FilterTab";
 import { useArticleRanking } from "@/features/article/hooks/useArticleRanking";
 import type { ArticleItem } from "@/types/articleItem";
 
-const DISPLAY_LIMIT = 10;
-const EPOCH_TIME = 0;
-const RANK_GOLD = 1;
-const RANK_SILVER = 2;
-const RANK_BRONZE = 3;
-const RANK_OFFSET = 1;
-
-import { useArticleRanking } from '@/features/article/hooks/useArticleRanking'
-import type { ArticleItem } from '@/types/articleItem'
 import { CreatePostButton } from '@/components/ui/PostButton/CreatePostButton'
 
 const DISPLAY_LIMIT = 10
