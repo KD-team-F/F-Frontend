@@ -31,7 +31,7 @@ export function SignIn({ onSubmit }: SignInProps) {
       return
     }
     if (password.length < 8) {
-      setStatusMessage('password は8文字以上で指定してください')
+      setStatusMessage('メールアドレスまたはパスワードが正しくありません')
       setStatusType('error')
       return
     }
