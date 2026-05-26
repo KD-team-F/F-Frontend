@@ -50,6 +50,7 @@ export function PasswordChangeModal({
         {/* ボタン */}
         <div className="mt-16 flex justify-center">
           <button
+            onClick={onClose}
             className="
               w-[260px]
               rounded-full
