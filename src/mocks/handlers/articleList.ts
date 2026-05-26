@@ -8,13 +8,17 @@ function isArticleItem(value: string | null): value is ArticleCategory {
 }
 
 function toResponse(list: typeof articles) {
-  return list.map(({ id, title, content, date, tags }) => ({
-    id,
-    title,
-    content,
-    date,
-    tags,
-  }));
+  return list.map(
+    ({ id, title, content, date, tags, likeCount, isLikedByCurrentUser }) => ({
+      id,
+      title,
+      content,
+      date,
+      tags,
+      likeCount,
+      isLikedByCurrentUser,
+    }),
+  );
 }
 
 export const articleListHandlers = [

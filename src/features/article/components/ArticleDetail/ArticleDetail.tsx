@@ -11,9 +11,12 @@ import { RatingHeart } from "@/components/ui/rating/rating";
 import type { Tag as TagType } from "@/types/tag";
 import { EditButton } from "@/components/ui/EditButton/editbutton";
 import { useArticleById } from "@/features/article/hooks/useArticleById";
-import BackButton from "@/components/assets/backbutton";
 import { useSearchParams } from "next/navigation";
 import { CreatePostButton } from "@/components/ui/PostButton/CreatePostButton";
+import {
+  DEFAULT_IS_LIKED,
+  DEFAULT_LIKE_COUNT,
+} from "@/constants/articleLike";
 
 type ArticleDetailProps = {
   articleId: string;
@@ -21,6 +24,8 @@ type ArticleDetailProps = {
   date?: string;
   content?: string;
   tags?: TagType[];
+  likeCount?: number;
+  isLikedByCurrentUser?: boolean;
   initialComments?: Comment[];
   onSubmit?: (content: string) => Promise<Comment>;
 };
@@ -31,6 +36,8 @@ export function ArticleDetail({
   date: initialDate,
   content: initialContent,
   tags: initialTags,
+  likeCount: initialLikeCount,
+  isLikedByCurrentUser: initialIsLikedByCurrentUser,
   initialComments: initialCommentsProp,
   onSubmit,
 }: ArticleDetailProps) {
@@ -73,6 +80,12 @@ export function ArticleDetail({
   const initialComments = shouldFetch
     ? article!.initialComments
     : initialCommentsProp;
+  const likeCount = shouldFetch
+    ? article!.likeCount
+    : (initialLikeCount ?? DEFAULT_LIKE_COUNT);
+  const isLikedByCurrentUser = shouldFetch
+    ? article!.isLikedByCurrentUser
+    : (initialIsLikedByCurrentUser ?? DEFAULT_IS_LIKED);
 
   return (
     <>
@@ -87,7 +100,11 @@ export function ArticleDetail({
         <PostDate date={date} />
         <div className="flex items-center gap-2">
           <EditButton id={articleId} />
-          <RatingHeart />
+          <RatingHeart
+            articleId={articleId}
+            defaultCount={likeCount}
+            defaultLiked={isLikedByCurrentUser}
+          />
         </div>
       </div>
 

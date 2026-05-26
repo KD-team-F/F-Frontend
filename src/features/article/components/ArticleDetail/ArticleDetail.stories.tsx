@@ -56,6 +56,8 @@ export const Default: Story = {
         label: 'TypeScript',
       },
     ],
+    likeCount: 120,
+    isLikedByCurrentUser: false,
     initialComments: [
       {
         id: 'comment-1',
