@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/Button/Button";
 import { Input } from "@/components/ui/Input/Input";
 import { MarkdownEditor } from "@/features/submission/components/MarkdownEditor/MarkdownEditor";
 import { DeleteIcon } from "@/components/ui/Delete-icon/delete-icon";
+import { DeleteConfirmModal } from "@/components/ui/DeleteConfirmModal/DeleteConfirmModal";
 import { updateArticleWithMockApi } from "@/features/article/actions/updateArticleWithMockApi";
 import { deleteArticleWithMockApi } from "@/features/article/actions/deleteArticleWithMockApi";
 import { useArticleById } from "@/features/article/hooks/useArticleById";
@@ -40,6 +41,7 @@ export function ArticleEdit({
   const [content, setContent] = useState(defaultContent ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -49,7 +51,7 @@ export function ArticleEdit({
     }
   }, [article]);
 
-  const handleDelete = async () => {
+  const handleDeleteConfirm = async () => {
     try {
       setIsDeleting(true);
       setSubmitError(null);
@@ -59,6 +61,7 @@ export function ArticleEdit({
         const result = await deleteArticleWithMockApi(articleId);
         if (!result.ok) {
           setSubmitError(result.message);
+          setShowDeleteModal(false);
         } else {
           router.push("/articles");
         }
@@ -67,6 +70,7 @@ export function ArticleEdit({
       setSubmitError(
         error instanceof Error ? error.message : "削除に失敗しました",
       );
+      setShowDeleteModal(false);
     } finally {
       setIsDeleting(false);
     }
@@ -160,8 +164,17 @@ export function ArticleEdit({
           placeholder="内容を入力してください（マークダウン可）"
         />
       </div>
+      {showDeleteModal && (
+        <DeleteConfirmModal
+          onConfirm={handleDeleteConfirm}
+          onCancel={() => setShowDeleteModal(false)}
+          isDeleting={isDeleting}
+        />
+      )}
       <div className="flex justify-end items-center gap-4">
-        {(onDelete || articleId) && <DeleteIcon onClick={handleDelete} />}
+        {(onDelete || articleId) && (
+          <DeleteIcon onClick={() => setShowDeleteModal(true)} />
+        )}
         <Button
           label="更新"
           onClick={handleSubmit}
