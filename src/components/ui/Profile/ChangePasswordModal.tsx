@@ -25,6 +25,7 @@ export function PasswordChangeModal({
   const [showNew, setShowNew] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
   const [errors, setErrors] = useState<FormErrors>({})
+  const [succeeded, setSucceeded] = useState(false)
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {}
@@ -56,7 +57,7 @@ export function PasswordChangeModal({
   const handleChange = () => {
     if (!validate()) return
     users[0].password = newPassword
-    onClose?.()
+    setSucceeded(true)
   }
 
   const EyeToggle = ({
@@ -77,6 +78,19 @@ export function PasswordChangeModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 px-4">
+      {succeeded && (
+        <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/40 px-4">
+          <div className="w-full max-w-sm rounded-2xl bg-white px-8 py-10 shadow-xl text-center">
+            <p className="mb-6 text-xl font-bold text-gray-800">パスワードを変更しました</p>
+            <button
+              onClick={onClose}
+              className="rounded-full bg-sky-500 px-8 py-2 text-base font-bold text-white transition hover:bg-sky-600"
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      )}
       <div className="relative w-full max-w-[520px] border border-gray-300 bg-white px-10 py-12 shadow-lg">
 
         {/* 戻るボタン */}
